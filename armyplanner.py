@@ -1,74 +1,90 @@
 # class ArmyPlanner():
 #   """
-#   Want to explor some functions that would allow me to easily build armies in this damn game
+#   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
 class Barracks():
-  props_levels_capacity = {}
-  # props_levels_capacity[1] =
-  # props_levels_capacity[2] =
-  # props_levels_capacity[3] =
-  props_levels_capacity[4] = 35
-  props_levels_capacity[5] = 40
-  props_levels_capacity[6] = 45
+  _prop_levels_capacity = {}
+  # _prop_levels_capacity[1] =
+  # _prop_levels_capacity[2] =
+  # _prop_levels_capacity[3] =
+  _prop_levels_capacity[4] = 35
+  _prop_levels_capacity[5] = 40
+  _prop_levels_capacity[6] = 45
 
   def __init__(self, level=1):
-    self.capacity = self.props_levels_capacity[level]
+    self.capacity = self._prop_levels_capacity[level]
     self.level = level
 
 class Unit():
-  prop_levels_hp = {}
-  prop_levels_dps = {}
-  prop_levels_cost = {}
 
   def __init__(self, level=1):
-    x = 10
+    pass
+
+  def printStats(self):
+    print "Unit Type: ", self.name
+    print "  hp: ", self.hp
+    print "  dps: ", self.dps
+    print "  cost: ", self.cost
+    print ""
+
+  def printHpLevels(self):
+    print self._prop_levels_hp
 
   
 class Barbarian(Unit):
-  Unit.prop_levels_hp[2]=54
-  Unit.prop_levels_hp[3]=65
+  name = "Barbarian"
+  _prop_levels_hp = { 
+      2:54, 
+      3:65,
+  }
 
-  Unit.prop_levels_dps[2] = 11
-  Unit.prop_levels_dps[3] = 14
+  _prop_levels_dps = { 
+      2:11, 
+      3:14,
+  }
 
-  Unit.prop_levels_cost[2] = 40
-  Unit.prop_levels_cost[3] = 60
+  _prop_levels_cost = { 
+      2:40, 
+      3:60,
+  }
 
   def __init__(self, level=1):
-    Unit.__init__(self)
-    self.hp = self.prop_levels_hp[level]
-    self.dps = self.prop_levels_dps[level]
-    self.cost = self.prop_levels_cost[level]
+    self.hp = self._prop_levels_hp[level]
+    self.dps = self._prop_levels_dps[level]
+    self.cost = self._prop_levels_cost[level]
 
 class Archer(Unit):
-  Unit.prop_levels_hp[2]=23
-  Unit.prop_levels_hp[3]=28
+  name = "Archer"
+  _prop_levels_hp = { 
+      2:23, 
+      3:28,
+  }
 
-  Unit.prop_levels_dps[2] = 9
-  Unit.prop_levels_dps[3] = 12
+  _prop_levels_dps = { 
+      2:9, 
+      3:12,
+  }
 
-  Unit.prop_levels_cost[2] = 80
-  Unit.prop_levels_cost[3] = 40
+  _prop_levels_cost = { 
+      2:40, 
+      3:80,
+  }
 
   def __init__(self, level=2):
-    Unit.__init__(self)
-    self.hp = self.prop_levels_hp[level]
-    self.dps = self.prop_levels_dps[level]
-    self.cost = self.prop_levels_cost[level]
+    self.hp = self._prop_levels_hp[level]
+    self.dps = self._prop_levels_dps[level]
+    self.cost = self._prop_levels_cost[level]
 
-firstBarb = Barbarian(2)
+barbarian = Barbarian(2)
 archer = Archer(2)
 
 barracks = Barracks(4)
 
-print "Barbarian.hp: ", firstBarb.hp
-print "Barbarian.dps: ", firstBarb.dps
-print "Barbarian.cost: ", firstBarb.cost
-
-print "archer.hp: ", archer.hp
-print "archer.dps: ", archer.dps
-print "archer.cost: ", archer.cost
+barbarian.printStats()
 
 print "barracks.level: ", barracks.level
 print "barracks.capacity: ", barracks.capacity
+
+archer.printStats()
+archer.printHpLevels()
