@@ -105,8 +105,22 @@ class Archer(Unit):
       3:80,
   }
 
+class GameInstance:
+  _units = []
+
+  def addUnit(self, newUnit):
+    self._units.append( newUnit )
+
+  def numUnits(self):
+    return len(self._units)
+
+curGame = GameInstance()
 barbarian = Barbarian(2)
+curGame.addUnit(barbarian)
 archer = Archer(2)
+curGame.addUnit(archer)
+
+print "Active units: ", curGame.numUnits()
 
 barracks = Barracks(4)
 
