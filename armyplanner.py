@@ -49,8 +49,10 @@ class Unit():
   def printLevels(self, prop_levels):
     print "Values: ", prop_levels.values()
 
-  def attack(self, target):
-    target.hp_cur -= self.dps
+  def attack(self):
+    self._target.hp_cur -= self.dps
+    if ( self._target.isAlive() == False ):
+      del self._target
 
   def isAlive(self):
     return ( self.hp_cur > 0 )
@@ -157,13 +159,10 @@ print "Has target: ", barbarian.hasTarget()
 print "Target: ", barbarian.getTarget()
 
 while ( archer.isAlive() ):
-  barbarian.attack(archer)
+  barbarian.attack()
   archer.printHpCur()
 
-del barbarian._target
 print "Has target: ", barbarian.hasTarget()
-# print "Target: ", barbarian.getTarget()
-# print "Target: ", barbarian.getTarget()
 
 
 archer.mapHpLevels()
