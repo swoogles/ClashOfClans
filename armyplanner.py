@@ -61,6 +61,8 @@ class Unit():
   def getTarget(self):
     return self._target
 
+  def hasTarget(self):
+    return hasattr( barbarian, '_target' )
   
 class Barbarian(Unit):
   name = "Barbarian"
@@ -151,7 +153,7 @@ print "Archer: ", archer
 archer.printHpCur()
 barbarian.setTarget(archer)
 
-print "Has target: ", hasattr( barbarian, '_target' )
+print "Has target: ", barbarian.hasTarget()
 print "Target: ", barbarian.getTarget()
 
 while ( archer.isAlive() ):
@@ -159,7 +161,8 @@ while ( archer.isAlive() ):
   archer.printHpCur()
 
 del barbarian._target
-print "Has target: ", hasattr( barbarian, '_target' )
+print "Has target: ", barbarian.hasTarget()
+# print "Target: ", barbarian.getTarget()
 # print "Target: ", barbarian.getTarget()
 
 
