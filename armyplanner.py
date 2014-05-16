@@ -54,6 +54,12 @@ class Unit():
     if ( self._target.isAlive() == False ):
       del self._target
 
+  def kill(self):
+    while hasattr( self, '_target' ):
+      self._target.printHpCur()
+      self.attack()
+
+
   def isAlive(self):
     return ( self.hp_cur > 0 )
 
@@ -64,7 +70,7 @@ class Unit():
     return self._target
 
   def hasTarget(self):
-    return hasattr( barbarian, '_target' )
+    return hasattr( self, '_target' )
   
 class Barbarian(Unit):
   name = "Barbarian"
@@ -158,9 +164,11 @@ barbarian.setTarget(archer)
 print "Has target: ", barbarian.hasTarget()
 print "Target: ", barbarian.getTarget()
 
-while ( archer.isAlive() ):
-  barbarian.attack()
-  archer.printHpCur()
+barbarian.kill()
+
+# while ( archer.isAlive() ):
+#   barbarian.attack()
+#   archer.printHpCur()
 
 print "Has target: ", barbarian.hasTarget()
 
