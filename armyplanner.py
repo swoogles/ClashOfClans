@@ -135,20 +135,32 @@ class GameInstance:
   def numDefendingUnits(self):
     return len(self._defending_units)
 
+  def acquireTargets(self):
+    pass
+
 curGame = GameInstance()
 barbarian = Barbarian(2)
 curGame.addDefendingUnit(barbarian)
 archer = Archer(2)
 curGame.addAttackingUnit(archer)
 
-print "Active units: ", curGame.numDefendingUnits() + curGame.numAttackingUnits()
-
 barracks = Barracks(4)
 
+print "Archer: ", archer
+
 archer.printHpCur()
+barbarian.setTarget(archer)
+
+print "Has target: ", hasattr( barbarian, '_target' )
+print "Target: ", barbarian.getTarget()
+
 while ( archer.isAlive() ):
   barbarian.attack(archer)
   archer.printHpCur()
+
+del barbarian._target
+print "Has target: ", hasattr( barbarian, '_target' )
+# print "Target: ", barbarian.getTarget()
 
 
 archer.mapHpLevels()
