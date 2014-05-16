@@ -19,7 +19,9 @@ class Barracks():
 class Unit():
 
   def __init__(self, level=1):
-    pass
+    self.hp = self._prop_levels_hp[level]
+    self.dps = self._prop_levels_dps[level]
+    self.cost = self._prop_levels_cost[level]
 
   def printStats(self):
     print "Unit Type: ", self.name
@@ -30,6 +32,12 @@ class Unit():
 
   def printHpLevels(self):
     print self._prop_levels_hp
+
+  def printCostLevels(self):
+    self.printLevels( self._prop_levels_cost )
+
+  def printLevels(self, prop_levels):
+    print "Values: ", prop_levels.values()
 
   
 class Barbarian(Unit):
@@ -70,16 +78,6 @@ class Barbarian(Unit):
       150
   ]
 
-
-
-  def __init__(self, level=1):
-    self.hp = self._prop_levels_hp[level]
-    self.dps = self._prop_levels_dps[level]
-    self.cost = self._prop_levels_cost[level]
-
-  def printCostLevels(self):
-    print "Items: ", self._prop_levels_cost.values()
-
 class Archer(Unit):
   name = "Archer"
   _prop_levels_hp = { 
@@ -97,11 +95,6 @@ class Archer(Unit):
       3:80,
   }
 
-  def __init__(self, level=2):
-    self.hp = self._prop_levels_hp[level]
-    self.dps = self._prop_levels_dps[level]
-    self.cost = self._prop_levels_cost[level]
-
 barbarian = Barbarian(2)
 archer = Archer(2)
 
@@ -116,3 +109,4 @@ archer.printStats()
 archer.printHpLevels()
 
 barbarian.printCostLevels()
+archer.printCostLevels()
