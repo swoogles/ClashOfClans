@@ -19,16 +19,20 @@ class Barracks():
 class Unit():
 
   def __init__(self, level=1):
-    self.hp = self._prop_levels_hp[level]
+    self.hp_init = self._prop_levels_hp[level]
+    self.hp_cur = self.hp_init 
     self.dps = self._prop_levels_dps[level]
     self.cost = self._prop_levels_cost[level]
 
   def printStats(self):
     print "Unit Type: ", self.name
-    print "  hp: ", self.hp
+    print "  hp: ", self.hp_cur
     print "  dps: ", self.dps
     print "  cost: ", self.cost
     print ""
+
+  def printHpCur(self):
+    print "HpCur: ", self.hp_cur
 
   def printHpLevels(self):
     print self._prop_levels_hp
@@ -38,6 +42,12 @@ class Unit():
 
   def printLevels(self, prop_levels):
     print "Values: ", prop_levels.values()
+
+  def attack(self, target):
+    target.hp_cur -= self.dps
+
+  def isAlive(self):
+    return ( self.hp_cur > 0 )
 
   
 class Barbarian(Unit):
@@ -100,13 +110,9 @@ archer = Archer(2)
 
 barracks = Barracks(4)
 
-barbarian.printStats()
+archer.printHpCur()
+while ( archer.isAlive() ):
+  barbarian.attack(archer)
+  archer.printHpCur()
 
-print "barracks.level: ", barracks.level
-print "barracks.capacity: ", barracks.capacity
 
-archer.printStats()
-archer.printHpLevels()
-
-barbarian.printCostLevels()
-archer.printCostLevels()
