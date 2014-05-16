@@ -35,24 +35,54 @@ class Unit():
 class Barbarian(Unit):
   name = "Barbarian"
   _prop_levels_hp = { 
+      1:45,
       2:54, 
       3:65,
+      4:78,
+      5:95,
+      6:110
   }
 
   _prop_levels_dps = { 
+      1:8,
       2:11, 
       3:14,
+      4:18,
+      5:23,
+      6:26,
   }
 
   _prop_levels_cost = { 
+      1:25,
       2:40, 
       3:60,
+      4:80,
+      5:100,
+      6:150
   }
+
+  _prop_levels_cost_list = [ 
+      25,
+      40, 
+      60,
+      80,
+      100,
+      150
+  ]
+
+
 
   def __init__(self, level=1):
     self.hp = self._prop_levels_hp[level]
     self.dps = self._prop_levels_dps[level]
     self.cost = self._prop_levels_cost[level]
+
+  def printCostLevels(self):
+    print self._prop_levels_cost_list[2:-1]
+    _tmp_list = []
+    for key, value in self._prop_levels_cost.iteritems():
+      _tmp_list.append( value )
+    print "newlist: ", _tmp_list
 
 class Archer(Unit):
   name = "Archer"
@@ -88,3 +118,5 @@ print "barracks.capacity: ", barracks.capacity
 
 archer.printStats()
 archer.printHpLevels()
+
+barbarian.printCostLevels()
