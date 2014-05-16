@@ -16,6 +16,9 @@ class Barracks():
     self.capacity = self._prop_levels_capacity[level]
     self.level = level
 
+def double(target):
+  return target*2
+
 class Unit():
 
   def __init__(self, level=1):
@@ -34,8 +37,11 @@ class Unit():
   def printHpCur(self):
     print "HpCur: ", self.hp_cur
 
-  def printHpLevels(self):
+
+  def mapHpLevels(self):
+    newmap = map(double, self._prop_levels_hp.values() )
     print self._prop_levels_hp
+    print newmap
 
   def printCostLevels(self):
     self.printLevels( self._prop_levels_cost )
@@ -48,6 +54,12 @@ class Unit():
 
   def isAlive(self):
     return ( self.hp_cur > 0 )
+
+  def setTarget(self, target):
+    self._target = target
+
+  def getTarget(self):
+    return self._target
 
   
 class Barbarian(Unit):
@@ -108,19 +120,28 @@ class Archer(Unit):
 class GameInstance:
   _units = []
 
-  def addUnit(self, newUnit):
-    self._units.append( newUnit )
+  _attacking_units = []
+  _defending_units = []
 
-  def numUnits(self):
-    return len(self._units)
+  def addAttackingUnit(self, newUnit):
+    self._attacking_units.append( newUnit )
+
+  def numAttackingUnits(self):
+    return len(self._attacking_units)
+
+  def addDefendingUnit(self, newUnit):
+    self._defending_units.append( newUnit )
+
+  def numDefendingUnits(self):
+    return len(self._defending_units)
 
 curGame = GameInstance()
 barbarian = Barbarian(2)
-curGame.addUnit(barbarian)
+curGame.addDefendingUnit(barbarian)
 archer = Archer(2)
-curGame.addUnit(archer)
+curGame.addAttackingUnit(archer)
 
-print "Active units: ", curGame.numUnits()
+print "Active units: ", curGame.numDefendingUnits() + curGame.numAttackingUnits()
 
 barracks = Barracks(4)
 
@@ -130,3 +151,4 @@ while ( archer.isAlive() ):
   archer.printHpCur()
 
 
+archer.mapHpLevels()
