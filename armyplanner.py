@@ -78,11 +78,7 @@ class Barbarian(Unit):
     self.cost = self._prop_levels_cost[level]
 
   def printCostLevels(self):
-    print self._prop_levels_cost_list[2:-1]
-    _tmp_list = []
-    for key, value in self._prop_levels_cost.iteritems():
-      _tmp_list.append( value )
-    print "newlist: ", _tmp_list
+    print "Items: ", self._prop_levels_cost.values()
 
 class Archer(Unit):
   name = "Archer"
