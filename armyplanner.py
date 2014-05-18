@@ -3,6 +3,8 @@
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
+import random
+
 class Barracks():
   _prop_levels_capacity = {}
   # _prop_levels_capacity[1] =
@@ -22,32 +24,35 @@ def double(target):
 class Unit():
 
   def __init__(self, level=1):
-    self.hp_init = self._prop_levels_hp[level]
-    self.hp_cur = self.hp_init 
+    self.hp_max = self._prop_levels_hp[level]
+    self.hp_cur = self.hp_max 
     self.dps = self._prop_levels_dps[level]
     self.cost = self._prop_levels_cost[level]
 
   def printStats(self):
-    print "Unit Type: ", self.name
-    print "  hp: ", self.hp_cur
-    print "  dps: ", self.dps
-    print "  cost: ", self.cost
-    print ""
+    print("Unit Type: ", self.name)
+    print("  hp: ", self.hp_cur)
+    print("  dps: ", self.dps)
+    print("  cost: ", self.cost)
+    print("")
 
   def printHpCur(self):
-    print "HpCur: ", self.hp_cur
+    print("HpCur: ", self.hp_cur)
 
 
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
-    print self._prop_levels_hp
-    print newmap
+    print(self._prop_levels_hp)
+    # Python 2 way 
+    # print(*newmap)
+    # Python 3 way 
+    #print(*newmap)
 
   def printCostLevels(self):
     self.printLevels( self._prop_levels_cost )
 
   def printLevels(self, prop_levels):
-    print "Values: ", prop_levels.values()
+    print("Values: ", prop_levels.values())
 
   def attack(self):
     self._target.hp_cur -= self.dps
@@ -74,6 +79,7 @@ class Unit():
   
 class Barbarian(Unit):
   name = "Barbarian"
+  _range = 1
   _prop_levels_hp = { 
       1:45,
       2:54, 
@@ -104,6 +110,7 @@ class Barbarian(Unit):
   _prop_levels_cost_list = [ 
       25,
       40, 
+
       60,
       80,
       100,
@@ -112,6 +119,7 @@ class Barbarian(Unit):
 
 class Archer(Unit):
   name = "Archer"
+  _range = 5
   _prop_levels_hp = { 
       2:23, 
       3:28,
@@ -127,7 +135,7 @@ class Archer(Unit):
       3:80,
   }
 
-class GameInstance:
+class Battle:
   _units = []
 
   _attacking_units = []
@@ -148,29 +156,31 @@ class GameInstance:
   def acquireTargets(self):
     pass
 
-curGame = GameInstance()
+  def step(self):
+    for curAttacker in self._attacking_units:
+      findTarget(curAttacker, self._defending_units)
+      print("CurAttacker: ", curAttacker)
+
+def findTarget(attacker, targets):
+  attacker.setTarget( random.choice(targets) )
+  
+
+curGame = Battle()
+archer = Archer(2)
+barbarian = Barbarian(2)
+curGame.addAttackingUnit(archer)
+
 barbarian = Barbarian(2)
 curGame.addDefendingUnit(barbarian)
 archer = Archer(2)
-curGame.addAttackingUnit(archer)
+curGame.addDefendingUnit(archer)
 
-barracks = Barracks(4)
+findTarget(archer, curGame._defending_units)
 
-print "Archer: ", archer
+curGame.step()
 
-archer.printHpCur()
+newTuple = (archer, curGame._defending_units)
+print("Tuple: ", newTuple)
+
+
 barbarian.setTarget(archer)
-
-print "Has target: ", barbarian.hasTarget()
-print "Target: ", barbarian.getTarget()
-
-barbarian.kill()
-
-# while ( archer.isAlive() ):
-#   barbarian.attack()
-#   archer.printHpCur()
-
-print "Has target: ", barbarian.hasTarget()
-
-
-archer.mapHpLevels()
