@@ -4,6 +4,14 @@
 #   """
 
 import random
+from numpy import array,arange
+
+class GameBoard():
+  width = 40
+  height = 40
+
+  def __init__(self):
+    self._boardSpots = arange(1600).reshape(40,40)
 
 class Barracks():
   _prop_levels_capacity = {}
@@ -166,21 +174,28 @@ def findTarget(attacker, targets):
   
 
 curGame = Battle()
-archer = Archer(2)
-barbarian = Barbarian(2)
-curGame.addAttackingUnit(archer)
 
 barbarian = Barbarian(2)
 curGame.addDefendingUnit(barbarian)
 archer = Archer(2)
 curGame.addDefendingUnit(archer)
 
-findTarget(archer, curGame._defending_units)
+archer = Archer(2)
+barbarian = Barbarian(2)
+curGame.addAttackingUnit(archer)
+
+# findTarget(archer, curGame._defending_units)
+
 
 curGame.step()
 
-newTuple = (archer, curGame._defending_units)
-print("Tuple: ", newTuple)
+print("TargetNew: ", archer.getTarget() )
+
+# newTuple = (archer, curGame._defending_units)
+# print("Tuple: ", newTuple)
 
 
 barbarian.setTarget(archer)
+
+board = GameBoard()
+print(board._boardSpots)
