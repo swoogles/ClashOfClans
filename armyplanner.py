@@ -36,6 +36,7 @@ class Unit():
     self.hp_cur = self.hp_max 
     self.dps = self._prop_levels_dps[level]
     self.cost = self._prop_levels_cost[level]
+    self.pos = (random.random((0,40)),random.random((0,40)))
 
   def printStats(self):
     print("Unit Type: ", self.name)
