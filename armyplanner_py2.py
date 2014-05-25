@@ -205,13 +205,18 @@ last_names = [ 'Rob', 'John' ]
 cluster = Cluster()
 session = cluster.connect('demo')
 
-query = "SELECT * FROM users WHERE lastname=%s"
+jsonNames = {'last_name':'Rob' }
+
+query = "SELECT * FROM users WHERE lastname=%(last_name)s"
 # future = session.execute_async(query, [last_names])
 
 futures = []
 
-for last_name in last_names:
-  futures.append(session.execute_async( query, [last_name] ))
+# for last_name in last_names:
+#   futures.append(session.execute_async( query, [last_name] ))
+
+# for last_name in last_names:
+futures.append(session.execute_async( query, jsonNames ))
 
 for future in futures:
   user_row = future.result()
