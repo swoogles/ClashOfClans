@@ -59,8 +59,15 @@ def findTarget(attacker, targets):
 # class DBAccess:
 #   _units = []
 
-def queryAll(targetUnit):
+def insertUnit(targetUnit):
   _query = "SELECT * FROM %s(table_name)s"
+  table = targetUnit.sql_getTable
+  _query = " INSERT INTO unit (name, level , cost , dps , hp_max  ) \
+  VALUES (%(name)s, %(level)s , %(cost)s , %(dps)s , %(hp_max)s  ) ";
+  print "Query: ", _query
+
+def queryAll(targetUnit):
+  _query = "SELECT * FROM %(table_name)s"
   table = targetUnit.sql_getTable
   tableName = {'table_name':table}
   futures = []
@@ -107,6 +114,7 @@ futures = []
 futures.append(session.execute_async( query, jsonNames ))
 
 queryAll(Barbarian)
+insertUnit(Barbarian)
 
 print "TargetNew: ", archer.getTarget() 
 
