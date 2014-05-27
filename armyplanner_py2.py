@@ -17,9 +17,6 @@ class GameBoard():
 
 class Barracks():
   _prop_levels_capacity = {}
-  # _prop_levels_capacity[1] =
-  # _prop_levels_capacity[2] =
-  # _prop_levels_capacity[3] =
   _prop_levels_capacity[4] = 35
   _prop_levels_capacity[5] = 40
   _prop_levels_capacity[6] = 45
@@ -31,7 +28,6 @@ class Barracks():
 def double(target):
   return target*2
 
-  
 class Battle:
   _units = []
 
@@ -72,16 +68,7 @@ archer = Archer(2)
 barbarian = Barbarian(2)
 curGame.addAttackingUnit(archer)
 
-# findTarget(archer, curGame._defending_units)
-
-
 curGame.step()
-
-
-# newTuple = (archer, curGame._defending_units)
-# print "Tuple: ", newTuple
-
-
 barbarian.setTarget(archer)
 
 board = GameBoard()
@@ -96,12 +83,8 @@ jsonNames = {'last_name':'Rob' }
 
 query = "SELECT * FROM users WHERE lastname=%(last_name)s"
 query = "SELECT * FROM unit"
-# future = session.execute_async(query, [last_names])
 
 futures = []
-
-# for last_name in last_names:
-#   futures.append(session.execute_async( query, [last_name] ))
 
 # for last_name in last_names:
 # futures.append(session.execute_async( query, jsonNames ))
