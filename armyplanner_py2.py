@@ -109,3 +109,5 @@ futures.append(session.execute_async( query, jsonNames ))
 queryAll(Barbarian)
 
 print "TargetNew: ", archer.getTarget() 
+
+session.shutdown();
