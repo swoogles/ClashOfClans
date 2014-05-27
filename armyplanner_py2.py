@@ -56,6 +56,22 @@ class Battle:
 def findTarget(attacker, targets):
   attacker.setTarget( random.choice(targets) )
   
+# class DBAccess:
+#   _units = []
+
+def queryAll(targetUnit):
+  _query = "SELECT * FROM %s(table_name)s"
+  table = targetUnit.sql_getTable
+  tableName = {'table_name':table}
+  futures = []
+  futures.append(session.execute_async( query, jsonNames ))
+
+  for future in futures:
+    user_rows = future.result()
+    for row in user_rows:
+      print "Row: ", row.name, row.cost
+
+
 
 curGame = Battle()
 
@@ -90,9 +106,6 @@ futures = []
 # futures.append(session.execute_async( query, jsonNames ))
 futures.append(session.execute_async( query, jsonNames ))
 
-for future in futures:
-  user_rows = future.result()
-  for row in user_rows:
-    print "Row: ", row.name, row.cost
+queryAll(Barbarian)
 
 print "TargetNew: ", archer.getTarget() 
