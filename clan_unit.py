@@ -1,4 +1,5 @@
 class Unit():
+  _table = "unit"
 
   def __init__(self, level=1):
     self.hp_max = self._prop_levels_hp[level]
@@ -51,3 +52,5 @@ class Unit():
   def hasTarget(self):
     return hasattr( self, '_target' )
 
+  def sql_getTable(session):
+    return _table 
