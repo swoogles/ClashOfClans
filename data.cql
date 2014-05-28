@@ -19,4 +19,4 @@ VALUES( 'barbarian_4', 4, 80, 18, 78 );
 INSERT INTO unit (name, level , cost , dps , hp_max  ) 
 VALUES( 'barbarian_5', 5, 100, 23, 95 );
 INSERT INTO unit (name, level , cost , dps , hp_max  ) 
-VALUES( 'barbarian_5', 5, 150, 26, 110 );
+VALUES( 'barbarian_6', 6, 150, 26, 110 );
