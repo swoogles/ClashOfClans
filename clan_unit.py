@@ -54,3 +54,6 @@ class Unit():
 
   def sql_getTable(session):
     return _table 
+
+  def reprJSON(self):
+    return dict(hp_max=self.hp_max, hp_cur=self.hp_cur, dps=self.dps, cost=self.cost)

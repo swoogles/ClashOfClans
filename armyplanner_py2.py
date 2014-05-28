@@ -7,6 +7,7 @@ import random
 from units_specific import Barbarian, Archer
 from numpy import array,arange
 from cassandra.cluster import Cluster
+import json
 
 class GameBoard():
   width = 40
@@ -80,6 +81,28 @@ def queryAll(targetUnit):
 
 
 
+# class Abc:
+#   def __init__(self):
+#     self.name="abc name"
+# def jsonable(self):
+#   return self.name
+# 
+# class Doc:
+#   def __init__(self):
+#     self.abc=Abc()
+# def jsonable(self):
+#   return self.__dict__
+# 
+# def ComplexHandler(Obj):
+#   if hasattr(Obj, 'jsonable'):
+#     return Obj.jsonable()
+#   else:
+#     raise TypeError, 'Object of type %s with value of %s is not JSON serializable' % (type(Obj), repr(Obj))
+# 
+# doc=Doc()
+# print json.dumps(doc, default=ComplexHandler)
+
+
 curGame = Battle()
 
 barbarian = Barbarian(2)
@@ -100,7 +123,7 @@ board = GameBoard()
 last_names = [ 'Rob', 'John' ]
 
 cluster = Cluster()
-session = cluster.connect('demo')
+# session = cluster.connect('demo')
 
 jsonNames = {'last_name':'Rob' }
 
@@ -109,13 +132,11 @@ query = "SELECT * FROM unit"
 
 futures = []
 
-# for last_name in last_names:
 # futures.append(session.execute_async( query, jsonNames ))
-futures.append(session.execute_async( query, jsonNames ))
 
-queryAll(Barbarian)
-insertUnit(Barbarian)
+# queryAll(Barbarian)
+# insertUnit(Barbarian)
 
-print "TargetNew: ", archer.getTarget() 
+print "TargetNew: ", archer.reprJSON() 
 
-session.shutdown();
+# session.shutdown();

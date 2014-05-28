@@ -40,7 +40,6 @@ class Barbarian(Unit):
       150
   ]
 
-
 class Archer(Unit):
   name = "Archer"
   _range = 5
