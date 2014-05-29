@@ -37,21 +37,14 @@ def insertUnit(session, targetUnit):
 
   columns = [ val for val in values]
   columns = str(columns).strip('[]').replace("\'","")
-  # columns = columns[:-1]
-
-  print "Columns: ", columns
 
   valueSubs = ['%(' + val + ')s' for val in values]
 
   valueSubsString = str(valueSubs).strip('[]').replace("\'","")
-  print "ValueSubs: ", valueSubsString 
-
 
   _query = " INSERT INTO " + table + " ( " + columns + " ) \
   VALUES ( " + valueSubsString + ") ";
 
-  futures = []
-  futures.append(session.execute_async( _query, targetUnit.reprJSON() ))
   session.execute( _query, json)
 
 def queryAll(session, targetUnit):
