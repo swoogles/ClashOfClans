@@ -3,8 +3,8 @@
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
-import random
 from units_specific import Barbarian, Archer
+from game_mechanics import Battle
 from numpy import array,arange
 from cassandra.cluster import Cluster
 import json
@@ -29,39 +29,10 @@ class Barracks():
 def double(target):
   return target*2
 
-class Battle:
-  _units = []
-
-  _attacking_units = []
-  _defending_units = []
-
-  def addAttackingUnit(self, newUnit):
-    self._attacking_units.append( newUnit )
-
-  def numAttackingUnits(self):
-    return len(self._attacking_units)
-
-  def addDefendingUnit(self, newUnit):
-    self._defending_units.append( newUnit )
-
-  def numDefendingUnits(self):
-    return len(self._defending_units)
-
-  def acquireTargets(self):
-    pass
-
-  def step(self):
-    for curAttacker in self._attacking_units:
-      findTarget(curAttacker, self._defending_units)
-
-def findTarget(attacker, targets):
-  attacker.setTarget( random.choice(targets) )
-  
 # class DBAccess:
 #   _units = []
 
 def insertUnit(targetUnit):
-  _query = "SELECT * FROM %s(table_name)s"
   table = targetUnit.sql_getTable
   _query = " INSERT INTO unit (name, level , cost , dps , hp_max  ) \
   VALUES (%(name)s, %(level)s , %(cost)s , %(dps)s , %(hp_max)s  ) ";
@@ -80,41 +51,18 @@ def queryAll(targetUnit):
       print "Row: ", row.name, row.cost
 
 
-
-# class Abc:
-#   def __init__(self):
-#     self.name="abc name"
-# def jsonable(self):
-#   return self.name
-# 
-# class Doc:
-#   def __init__(self):
-#     self.abc=Abc()
-# def jsonable(self):
-#   return self.__dict__
-# 
-# def ComplexHandler(Obj):
-#   if hasattr(Obj, 'jsonable'):
-#     return Obj.jsonable()
-#   else:
-#     raise TypeError, 'Object of type %s with value of %s is not JSON serializable' % (type(Obj), repr(Obj))
-# 
-# doc=Doc()
-# print json.dumps(doc, default=ComplexHandler)
-
-
-curGame = Battle()
+curBattle = Battle()
 
 barbarian = Barbarian(2)
-curGame.addDefendingUnit(barbarian)
+curBattle.addDefendingUnit(barbarian)
 archer = Archer(2)
-curGame.addDefendingUnit(archer)
+curBattle.addDefendingUnit(archer)
 
 archer = Archer(2)
 barbarian = Barbarian(2)
-curGame.addAttackingUnit(archer)
+curBattle.addAttackingUnit(archer)
 
-curGame.step()
+curBattle.step()
 barbarian.setTarget(archer)
 
 board = GameBoard()
