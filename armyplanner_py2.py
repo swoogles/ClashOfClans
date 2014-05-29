@@ -34,12 +34,23 @@ def double(target):
 
 def insertUnit(session, targetUnit):
   table = targetUnit.sql_getTable()
-  _query = " INSERT INTO unit (name, level , cost , dps , hp_max  ) \
-  VALUES (%(name)s, %(level)s , %(cost)s , %(dps)s , %(hp_max)s  ) ";
-  # print "Query: ", _query
+
+  json = targetUnit.reprJSON()
+  values = json.keys()
+  columns = ""
+  for value in values:
+    columns += (value + ",")
+
+  columns = columns[:-1]
+
+  print "Columns: ", columns
+
+  _query = " INSERT INTO unit ( " + columns + " ) \
+  VALUES ( %(hp_cur)s , %(cost)s , %(dps)s , %(hp_max)s , %(level)s , %(name)s) ";
+
   futures = []
   futures.append(session.execute_async( _query, targetUnit.reprJSON() ))
-  session.execute( _query, targetUnit.reprJSON())
+  session.execute( _query, json)
 
 def queryAll(session, targetUnit):
   _query = "SELECT * FROM %(table_name)s"
