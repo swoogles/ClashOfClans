@@ -45,8 +45,14 @@ def insertUnit(session, targetUnit):
 
   print "Columns: ", columns
 
-  _query = " INSERT INTO unit ( " + columns + " ) \
-  VALUES ( %(hp_cur)s , %(cost)s , %(dps)s , %(hp_max)s , %(level)s , %(name)s) ";
+  valueSubs = ['%(' + val + ')s' for val in values]
+
+  valueSubsString = str(valueSubs).strip('[]').replace("\'","")
+  print "ValueSubs: ", valueSubsString 
+
+
+  _query = " INSERT INTO " + table + " ( " + columns + " ) \
+  VALUES ( " + valueSubsString + ") ";
 
   futures = []
   futures.append(session.execute_async( _query, targetUnit.reprJSON() ))
