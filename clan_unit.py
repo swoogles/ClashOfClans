@@ -1,7 +1,9 @@
 class Unit():
   _table = "unit"
+  name = "Abstract Unit"
 
   def __init__(self, level=1):
+    self.level = level
     self.hp_max = self._prop_levels_hp[level]
     self.hp_cur = self.hp_max 
     self.dps = self._prop_levels_dps[level]
@@ -56,4 +58,11 @@ class Unit():
     return _table 
 
   def reprJSON(self):
-    return dict(hp_max=self.hp_max, hp_cur=self.hp_cur, dps=self.dps, cost=self.cost)
+    return dict(
+        cost=self.cost,
+        dps=self.dps, 
+        hp_cur=self.hp_cur, 
+        hp_max=self.hp_max, 
+        level=self.level, 
+        name=self.name, 
+    )

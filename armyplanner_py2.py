@@ -32,24 +32,24 @@ def double(target):
 # class DBAccess:
 #   _units = []
 
-def insertUnit(targetUnit):
+def insertUnit(session, targetUnit):
   table = targetUnit.sql_getTable
   _query = " INSERT INTO unit (name, level , cost , dps , hp_max  ) \
   VALUES (%(name)s, %(level)s , %(cost)s , %(dps)s , %(hp_max)s  ) ";
   print "Query: ", _query
-
-def queryAll(targetUnit):
-  _query = "SELECT * FROM %(table_name)s"
-  table = targetUnit.sql_getTable
-  tableName = {'table_name':table}
   futures = []
-  futures.append(session.execute_async( query, jsonNames ))
+  futures.append(session.execute_async( _query, targetUnit.reprJSON() ))
 
   for future in futures:
     user_rows = future.result()
     for row in user_rows:
       print "Row: ", row.name, row.cost
 
+def queryAll(session, targetUnit):
+  _query = "SELECT * FROM %(table_name)s"
+  table = targetUnit.sql_getTable
+  tableName = {'table_name':table}
+  session.execute( query, jsonNames )
 
 curBattle = Battle()
 
@@ -68,23 +68,12 @@ barbarian.setTarget(archer)
 board = GameBoard()
 # print board._boardSpots
 
-last_names = [ 'Rob', 'John' ]
-
 cluster = Cluster()
-# session = cluster.connect('demo')
+session = cluster.connect('demo')
 
-jsonNames = {'last_name':'Rob' }
+print "TargetNew: ", barbarian.reprJSON() 
+# queryAll(session, Barbarian)
+insertUnit(session, barbarian)
 
-query = "SELECT * FROM users WHERE lastname=%(last_name)s"
-query = "SELECT * FROM unit"
 
-futures = []
-
-# futures.append(session.execute_async( query, jsonNames ))
-
-# queryAll(Barbarian)
-# insertUnit(Barbarian)
-
-print "TargetNew: ", archer.reprJSON() 
-
-# session.shutdown();
+session.shutdown();
