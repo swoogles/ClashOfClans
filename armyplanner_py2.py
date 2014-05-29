@@ -33,23 +33,29 @@ def double(target):
 #   _units = []
 
 def insertUnit(session, targetUnit):
-  table = targetUnit.sql_getTable
+  table = targetUnit.sql_getTable()
   _query = " INSERT INTO unit (name, level , cost , dps , hp_max  ) \
   VALUES (%(name)s, %(level)s , %(cost)s , %(dps)s , %(hp_max)s  ) ";
-  print "Query: ", _query
+  # print "Query: ", _query
   futures = []
   futures.append(session.execute_async( _query, targetUnit.reprJSON() ))
+  session.execute( _query, targetUnit.reprJSON())
+
+def queryAll(session, targetUnit):
+  _query = "SELECT * FROM %(table_name)s"
+  table = targetUnit.sql_getTable()
+  tableName = {'table_name':table}
+  print "TableName: ", tableName
+  # session.execute( query, tableName )
+
+  futures = []
+  futures.append(session.execute_async( _query,  tableName ))
 
   for future in futures:
     user_rows = future.result()
     for row in user_rows:
       print "Row: ", row.name, row.cost
 
-def queryAll(session, targetUnit):
-  _query = "SELECT * FROM %(table_name)s"
-  table = targetUnit.sql_getTable
-  tableName = {'table_name':table}
-  session.execute( query, jsonNames )
 
 curBattle = Battle()
 
@@ -72,7 +78,7 @@ cluster = Cluster()
 session = cluster.connect('demo')
 
 print "TargetNew: ", barbarian.reprJSON() 
-# queryAll(session, Barbarian)
+# queryAll(session, barbarian)
 insertUnit(session, barbarian)
 
 

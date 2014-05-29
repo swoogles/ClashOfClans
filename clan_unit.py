@@ -54,8 +54,8 @@ class Unit():
   def hasTarget(self):
     return hasattr( self, '_target' )
 
-  def sql_getTable(session):
-    return _table 
+  def sql_getTable(self):
+    return self._table 
 
   def reprJSON(self):
     return dict(
