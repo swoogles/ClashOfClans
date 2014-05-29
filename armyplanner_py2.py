@@ -29,19 +29,15 @@ class Barracks():
 def double(target):
   return target*2
 
-# class DBAccess:
-#   _units = []
-
 def insertUnit(session, targetUnit):
   table = targetUnit.sql_getTable()
 
   json = targetUnit.reprJSON()
   values = json.keys()
-  columns = ""
-  for value in values:
-    columns += (value + ",")
 
-  columns = columns[:-1]
+  columns = [ val for val in values]
+  columns = str(columns).strip('[]').replace("\'","")
+  # columns = columns[:-1]
 
   print "Columns: ", columns
 
