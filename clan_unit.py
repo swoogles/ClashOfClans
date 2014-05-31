@@ -10,6 +10,13 @@ class Unit():
     self.cost = self._prop_levels_cost[level]
     # self.pos = (random.random((0,40)),random.random((0,40)))
 
+  def copyFromJSON(self, json):
+    self.level = json.get('cost',None)
+    self.hp_max = json.get('hp_max',None)
+    self.hp_cur = json.get('hp_cur',None)
+    self.dps = json.get('dps',None)
+    self.cost = json.get('cost',None)
+
   def printStats(self):
     print "Unit Type: ", self.name
     print "  hp: ", self.hp_cur

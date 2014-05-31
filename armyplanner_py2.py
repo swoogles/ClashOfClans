@@ -50,7 +50,7 @@ def queryAll(session, targetUnit):
 
   user_rows = session.execute( _query )
   for row in user_rows:
-    print "Row: ", row.name, row.cost
+    print "Row: ", row
 
 curBattle = Battle()
 
@@ -72,7 +72,10 @@ board = GameBoard()
 cluster = Cluster()
 session = cluster.connect('demo')
 
-print "TargetNew: ", barbarian.reprJSON() 
+copiedBarbarian = Barbarian()
+copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
+
+print "TargetNew: ", copiedBarbarian.reprJSON() 
 queryAll(session, barbarian)
 insertUnit(session, barbarian)
 
