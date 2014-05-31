@@ -48,20 +48,12 @@ def insertUnit(session, targetUnit):
   session.execute( _query, json)
 
 def queryAll(session, targetUnit):
-  _query = "SELECT * FROM %(table_name)s"
   table = targetUnit.sql_getTable()
-  tableName = {'table_name':table}
-  print "TableName: ", tableName
-  # session.execute( query, tableName )
+  _query = "SELECT * FROM " + table
 
-  futures = []
-  futures.append(session.execute_async( _query,  tableName ))
-
-  for future in futures:
-    user_rows = future.result()
-    for row in user_rows:
-      print "Row: ", row.name, row.cost
-
+  user_rows = session.execute( _query )
+  for row in user_rows:
+    print "Row: ", row.name, row.cost
 
 curBattle = Battle()
 
@@ -84,7 +76,7 @@ cluster = Cluster()
 session = cluster.connect('demo')
 
 print "TargetNew: ", barbarian.reprJSON() 
-# queryAll(session, barbarian)
+queryAll(session, barbarian)
 insertUnit(session, barbarian)
 
 
