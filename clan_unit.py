@@ -17,17 +17,6 @@ class Unit():
     self.dps = json.get('dps',None)
     self.cost = json.get('cost',None)
 
-  def printStats(self):
-    print "Unit Type: ", self.name
-    print "  hp: ", self.hp_cur
-    print "  dps: ", self.dps
-    print "  cost: ", self.cost
-    print ""
-
-  def printHpCur(self):
-    print "HpCur: ", self.hp_cur
-
-
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
     print self._prop_levels_hp
