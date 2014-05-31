@@ -26,9 +26,6 @@ class Barracks():
     self.capacity = self._prop_levels_capacity[level]
     self.level = level
 
-def double(target):
-  return target*2
-
 def insertUnit(session, targetUnit):
   table = targetUnit.sql_getTable()
 
