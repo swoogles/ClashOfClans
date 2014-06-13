@@ -5,7 +5,8 @@ CREATE TABLE unit (
   cost int, 
   dps int, 
   hp_max int , 
-  PRIMARY KEY (name)
+  hp_cur int ,
+  PRIMARY KEY (name,level)
 );
 
 INSERT INTO unit (name, level , cost , dps , hp_max  ) 
