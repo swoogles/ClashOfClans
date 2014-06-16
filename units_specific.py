@@ -1,5 +1,5 @@
-from clan_unit import Unit
-class Barbarian(Unit):
+from clan_active_unit import ActiveUnit
+class Barbarian(ActiveUnit):
   name = "Barbarian"
   _range = 1
 
@@ -40,7 +40,7 @@ class Barbarian(Unit):
       150
   ]
 
-class Archer(Unit):
+class Archer(ActiveUnit):
   name = "Archer"
   _range = 5
   _prop_levels_hp = { 

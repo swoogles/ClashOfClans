@@ -19,36 +19,17 @@ class Unit():
 
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
-    print self._prop_levels_hp
+    print( self._prop_levels_hp)
 
   def printCostLevels(self):
     self.printLevels( self._prop_levels_cost )
 
   def printLevels(self, prop_levels):
-    print "Values: ", prop_levels.values()
-
-  def attack(self):
-    self._target.hp_cur -= self.dps
-    if ( self._target.isAlive() == False ):
-      del self._target
-
-  def kill(self):
-    while hasattr( self, '_target' ):
-      self._target.printHpCur()
-      self.attack()
+    print( "Values: ", prop_levels.values())
 
 
   def isAlive(self):
     return ( self.hp_cur > 0 )
-
-  def setTarget(self, target):
-    self._target = target
-
-  def getTarget(self):
-    return self._target
-
-  def hasTarget(self):
-    return hasattr( self, '_target' )
 
   def sql_getTable(self):
     return self._table 
