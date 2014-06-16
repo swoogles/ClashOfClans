@@ -3,8 +3,11 @@
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
-import random
+from units_specific import Barbarian, Archer
+from game_mechanics import Battle
 from numpy import array,arange
+from cassandra.cluster import Cluster
+import json
 
 class GameBoard():
   width = 40
@@ -15,9 +18,6 @@ class GameBoard():
 
 class Barracks():
   _prop_levels_capacity = {}
-  # _prop_levels_capacity[1] =
-  # _prop_levels_capacity[2] =
-  # _prop_levels_capacity[3] =
   _prop_levels_capacity[4] = 35
   _prop_levels_capacity[5] = 40
   _prop_levels_capacity[6] = 45
@@ -26,177 +26,58 @@ class Barracks():
     self.capacity = self._prop_levels_capacity[level]
     self.level = level
 
-def double(target):
-  return target*2
+def insertUnit(session, targetUnit):
+  table = targetUnit.sql_getTable()
 
-class Unit():
+  json = targetUnit.reprJSON()
+  values = json.keys()
 
-  def __init__(self, level=1):
-    self.hp_max = self._prop_levels_hp[level]
-    self.hp_cur = self.hp_max 
-    self.dps = self._prop_levels_dps[level]
-    self.cost = self._prop_levels_cost[level]
-    self.pos = (random.random((0,40)),random.random((0,40)))
+  columns = [ val for val in values]
+  columns = str(columns).strip('[]').replace("\'","")
 
-  def printStats(self):
-    print("Unit Type: ", self.name)
-    print("  hp: ", self.hp_cur)
-    print("  dps: ", self.dps)
-    print("  cost: ", self.cost)
-    print("")
+  valueSubs = ['%(' + val + ')s' for val in values]
 
-  def printHpCur(self):
-    print("HpCur: ", self.hp_cur)
+  valueSubsString = str(valueSubs).strip('[]').replace("\'","")
 
+  _query = " INSERT INTO " + table + " ( " + columns + " ) \
+  VALUES ( " + valueSubsString + ") ";
 
-  def mapHpLevels(self):
-    newmap = map(double, self._prop_levels_hp.values() )
-    print(self._prop_levels_hp)
-    # Python 2 way 
-    # print(*newmap)
-    # Python 3 way 
-    #print(*newmap)
+  session.execute( _query, json)
 
-  def printCostLevels(self):
-    self.printLevels( self._prop_levels_cost )
+def queryAll(session, targetUnit):
+  table = targetUnit.sql_getTable()
+  _query = "SELECT * FROM " + table
 
-  def printLevels(self, prop_levels):
-    print("Values: ", prop_levels.values())
+  user_rows = session.execute( _query )
+  for row in user_rows:
+    print( "Row: ", row)
 
-  def attack(self):
-    self._target.hp_cur -= self.dps
-    if ( self._target.isAlive() == False ):
-      del self._target
-
-  def kill(self):
-    while hasattr( self, '_target' ):
-      self._target.printHpCur()
-      self.attack()
-
-
-  def isAlive(self):
-    return ( self.hp_cur > 0 )
-
-  def setTarget(self, target):
-    self._target = target
-
-  def getTarget(self):
-    return self._target
-
-  def hasTarget(self):
-    return hasattr( self, '_target' )
-  
-class Barbarian(Unit):
-  name = "Barbarian"
-  _range = 1
-  _prop_levels_hp = { 
-      1:45,
-      2:54, 
-      3:65,
-      4:78,
-      5:95,
-      6:110
-  }
-
-  _prop_levels_dps = { 
-      1:8,
-      2:11, 
-      3:14,
-      4:18,
-      5:23,
-      6:26,
-  }
-
-  _prop_levels_cost = { 
-      1:25,
-      2:40, 
-      3:60,
-      4:80,
-      5:100,
-      6:150
-  }
-
-  _prop_levels_cost_list = [ 
-      25,
-      40, 
-
-      60,
-      80,
-      100,
-      150
-  ]
-
-class Archer(Unit):
-  name = "Archer"
-  _range = 5
-  _prop_levels_hp = { 
-      2:23, 
-      3:28,
-  }
-
-  _prop_levels_dps = { 
-      2:9, 
-      3:12,
-  }
-
-  _prop_levels_cost = { 
-      2:40, 
-      3:80,
-  }
-
-class Battle:
-  _units = []
-
-  _attacking_units = []
-  _defending_units = []
-
-  def addAttackingUnit(self, newUnit):
-    self._attacking_units.append( newUnit )
-
-  def numAttackingUnits(self):
-    return len(self._attacking_units)
-
-  def addDefendingUnit(self, newUnit):
-    self._defending_units.append( newUnit )
-
-  def numDefendingUnits(self):
-    return len(self._defending_units)
-
-  def acquireTargets(self):
-    pass
-
-  def step(self):
-    for curAttacker in self._attacking_units:
-      findTarget(curAttacker, self._defending_units)
-      print("CurAttacker: ", curAttacker)
-
-def findTarget(attacker, targets):
-  attacker.setTarget( random.choice(targets) )
-  
-
-curGame = Battle()
+curBattle = Battle()
 
 barbarian = Barbarian(2)
-curGame.addDefendingUnit(barbarian)
+curBattle.addDefendingUnit(barbarian)
 archer = Archer(2)
-curGame.addDefendingUnit(archer)
+curBattle.addDefendingUnit(archer)
 
 archer = Archer(2)
 barbarian = Barbarian(2)
-curGame.addAttackingUnit(archer)
+curBattle.addAttackingUnit(archer)
 
-# findTarget(archer, curGame._defending_units)
-
-
-curGame.step()
-
-print("TargetNew: ", archer.getTarget() )
-
-# newTuple = (archer, curGame._defending_units)
-# print("Tuple: ", newTuple)
-
-
+curBattle.step()
 barbarian.setTarget(archer)
 
 board = GameBoard()
-print(board._boardSpots)
+# print board._boardSpots
+
+cluster = Cluster()
+session = cluster.connect('demo')
+
+copiedBarbarian = Barbarian()
+copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
+
+print( "TargetNew: ", copiedBarbarian.reprJSON() )
+queryAll(session, barbarian)
+insertUnit(session, barbarian)
+
+
+session.shutdown();
