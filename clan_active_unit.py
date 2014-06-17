@@ -2,6 +2,10 @@ from clan_unit import Unit
 class ActiveUnit(Unit):
   name = "Abstract ActiveUnit"
 
+  def __init__(self, level=1):
+    super(ActiveUnit, self).__init__(level)
+    self.dps = self._prop_levels_dps[level]
+
   def attack(self):
     self._target.hp_cur -= self.dps
     if ( self._target.isAlive() == False ):
@@ -20,4 +24,11 @@ class ActiveUnit(Unit):
 
   def hasTarget(self):
     return hasattr( self, '_target' )
+
+  def reprJSON(self):
+    stats = dict(
+        dps=self.dps, 
+    )
+    parentStats = super(ActiveUnit, self).reprJSON()
+    return dict(list(parentStats.items()) + list(stats.items()))
 

@@ -6,7 +6,6 @@ class Unit():
     self.level = level
     self.hp_max = self._prop_levels_hp[level]
     self.hp_cur = self.hp_max 
-    self.dps = self._prop_levels_dps[level]
     self.cost = self._prop_levels_cost[level]
     # self.pos = (random.random((0,40)),random.random((0,40)))
 
@@ -37,7 +36,6 @@ class Unit():
   def reprJSON(self):
     return dict(
         cost=self.cost,
-        dps=self.dps, 
         hp_cur=self.hp_cur, 
         hp_max=self.hp_max, 
         level=self.level, 
