@@ -3,7 +3,10 @@
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
+from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
+from units_specific import Barbarian, Archer
+from clan_unit import Unit
 from game_mechanics import Battle
 from numpy import array,arange
 from cassandra.cluster import Cluster
@@ -75,9 +78,10 @@ session = cluster.connect('demo')
 copiedBarbarian = Barbarian()
 copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
 
-print( "TargetNew: ", copiedBarbarian.reprJSON() )
-queryAll(session, barbarian)
+print( "\nTargetNew: ", copiedBarbarian.reprJSON() )
+# queryAll(session, barbarian)
 insertUnit(session, barbarian)
 
+bomb = Bomb(2)
 
 session.shutdown();
