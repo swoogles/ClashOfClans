@@ -47,6 +47,17 @@ def insertUnit(session, targetUnit):
 
   session.execute( _query, json)
 
+def resetDB(session, schemaDataFile):
+  # session.execute( cqlCommands)
+  line_number = 0
+  with open('./data.cql', encoding='utf-8') as schemaDataFile:
+    for command in schemaDataFile:
+      print('{:>4} {}'.format(line_number, command.rstrip()))  
+      session.execute(command.strip())
+      # line_number += 1
+
+
+
 def queryAll(session, targetUnit):
   table = targetUnit.sql_getTable()
   _query = "SELECT * FROM " + table
@@ -74,6 +85,10 @@ board = GameBoard()
 
 cluster = Cluster()
 session = cluster.connect('demo')
+
+cqlFile = open('./data.cql', encoding='utf-8')
+
+resetDB(session, cqlFile)
 
 copiedBarbarian = Barbarian()
 copiedBarbarian.copyFromJSON( barbarian.reprJSON() )

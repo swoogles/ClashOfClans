@@ -1,3 +1,5 @@
+from numpy import random
+
 class Unit():
   _table = "unit"
   name = "Abstract Unit"
@@ -7,7 +9,7 @@ class Unit():
     self.hp_max = self._prop_levels_hp[level]
     self.hp_cur = self.hp_max 
     self.cost = self._prop_levels_cost[level]
-    # self.pos = (random.random((0,40)),random.random((0,40)))
+    self.pos = (random.random((0,40)),random.random((0,40)))
 
   def copyFromJSON(self, json):
     self.level = json.get('cost',None)
@@ -15,6 +17,7 @@ class Unit():
     self.hp_cur = json.get('hp_cur',None)
     self.dps = json.get('dps',None)
     self.cost = json.get('cost',None)
+    self.pos = json.get('pos',None)
 
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
@@ -40,4 +43,5 @@ class Unit():
         hp_max=self.hp_max, 
         level=self.level, 
         name=self.name, 
+        pos=self.pos, 
     )
