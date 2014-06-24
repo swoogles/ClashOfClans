@@ -1,4 +1,4 @@
-DROP TABLE unit;
+DROP TABLE demo.unit;
 CREATE TABLE unit ( name text , level int, cost int, dps int, hp_max int , hp_cur int , pos int, PRIMARY KEY (name,level));
 INSERT INTO unit (name, level , cost , dps , hp_max  ) VALUES ( 'barbarian_1', 1, 25, 8, 45 );
 INSERT INTO unit (name, level , cost , dps , hp_max  ) VALUES( 'barbarian_2', 2, 40, 11, 54 );

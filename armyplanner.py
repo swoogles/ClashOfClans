@@ -45,6 +45,9 @@ def insertUnit(session, targetUnit):
   _query = " INSERT INTO " + table + " ( " + columns + " ) \
   VALUES ( " + valueSubsString + ") ";
 
+  
+  print( "\n\nInsertJson: ", json )
+  print( "Query: ", _query )
   session.execute( _query, json)
 
 def resetDB(session, schemaDataFile):

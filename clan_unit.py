@@ -9,7 +9,8 @@ class Unit():
     self.hp_max = self._prop_levels_hp[level]
     self.hp_cur = self.hp_max 
     self.cost = self._prop_levels_cost[level]
-    self.pos = (random.random((0,40)),random.random((0,40)))
+    self.pos = random.randint(0,40)
+    # self.pos = (random.random((0,40)),random.random((0,40)))
 
   def copyFromJSON(self, json):
     self.level = json.get('cost',None)
