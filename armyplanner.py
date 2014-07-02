@@ -3,6 +3,9 @@
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
 
+# Run file in interpreter:
+# exec(open("./armyplanner.py").read())
+
 from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
 from units_specific import Barbarian, Archer
@@ -46,8 +49,6 @@ def insertUnit(session, targetUnit):
   VALUES ( " + valueSubsString + ") ";
 
   
-  print( "\n\nInsertJson: ", json )
-  print( "Query: ", _query )
   session.execute( _query, json)
 
 def resetDB(session, schemaDataFile):
@@ -55,11 +56,13 @@ def resetDB(session, schemaDataFile):
   line_number = 0
   with open('./data.cql', encoding='utf-8') as schemaDataFile:
     for command in schemaDataFile:
-      print('{:>4} {}'.format(line_number, command.rstrip()))  
+      # print('{:>4} {}'.format(line_number, command.rstrip()))  
       session.execute(command.strip())
       # line_number += 1
 
 
+def printUnit(session, targetUnit):
+  print("unit: ", targetUnit.reprJSON() )
 
 def queryAll(session, targetUnit):
   table = targetUnit.sql_getTable()
@@ -96,10 +99,14 @@ resetDB(session, cqlFile)
 copiedBarbarian = Barbarian()
 copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
 
-print( "\nTargetNew: ", copiedBarbarian.reprJSON() )
 # queryAll(session, barbarian)
-insertUnit(session, barbarian)
+# insertUnit(session, barbarian)
+unitList = [ Barbarian() for i in range(29)]
+# map(printUnit, (session, unitList) )
+# mapHpLevel
+# Pythonically insert all the new units
+[insertUnit(session, barbarian)  for barbarian in unitList]
 
-bomb = Bomb(2)
+# bomb = Bomb(2)
 
 session.shutdown();

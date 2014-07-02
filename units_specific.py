@@ -1,7 +1,12 @@
 from clan_active_unit import ActiveUnit
+import random
 class Barbarian(ActiveUnit):
-  name = "Barbarian"
+  # name = "Barbarian"
   _range = 1
+
+  def __init__(self, level=1):
+    super(Barbarian, self).__init__(level)
+    self.name = "Barbarian" + str( random.randint(0,1000) )
 
   _prop_levels_cost = { 
       1:25,
