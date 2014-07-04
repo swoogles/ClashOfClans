@@ -1,4 +1,4 @@
-from numpy import random
+from numpy import array, random
 
 class Unit():
   _table = "unit"
