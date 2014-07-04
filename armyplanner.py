@@ -101,11 +101,12 @@ copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
 
 # queryAll(session, barbarian)
 # insertUnit(session, barbarian)
-unitList = [ Barbarian() for i in range(29)]
+unitList = [ Barbarian() for i in range(5)]
 # map(printUnit, (session, unitList) )
 # mapHpLevel
 # Pythonically insert all the new units
 [insertUnit(session, barbarian)  for barbarian in unitList]
+[print( barbarian.reprJSON() )  for barbarian in unitList]
 
 # bomb = Bomb(2)
 
