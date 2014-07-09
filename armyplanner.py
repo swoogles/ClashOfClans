@@ -111,8 +111,14 @@ print( "Main Pos: ", copiedBarbarian.reprJSON().get("pos_3d") )
 
 for barbarian in unitList:
   print( "Pos: ", barbarian.reprJSON().get("pos_3d") )
-  print( "Distance: " + str( copiedBarbarian.distanceFrom(barbarian) ) )
+  print( "Distance: ", copiedBarbarian.distanceFrom(barbarian) ) 
 
+distanceList = ([ (idx, copiedBarbarian.distanceFrom(barbarian) ) for idx, barbarian in enumerate(unitList) ])
+
+
+print ("distanceList: ", distanceList)
+
+print("Max:", max(distanceList, key=lambda x: x[1]) )
 # bomb = Bomb(2)
 
 session.shutdown();
