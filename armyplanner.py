@@ -102,11 +102,16 @@ copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
 # queryAll(session, barbarian)
 # insertUnit(session, barbarian)
 unitList = [ Barbarian() for i in range(5)]
-# map(printUnit, (session, unitList) )
-# mapHpLevel
+
 # Pythonically insert all the new units
 # [insertUnit(session, barbarian)  for barbarian in unitList]
-[print( barbarian.reprJSON() )  for barbarian in unitList]
+# [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in unitList]
+
+print( "Main Pos: ", copiedBarbarian.reprJSON().get("pos_3d") )
+
+for barbarian in unitList:
+  print( "Pos: ", barbarian.reprJSON().get("pos_3d") )
+  print( "Distance: " + str( copiedBarbarian.distanceFrom(barbarian) ) )
 
 # bomb = Bomb(2)
 

@@ -1,4 +1,4 @@
-from numpy import array, random
+from numpy import array, random, linalg
 
 class Unit():
   _table = "unit"
@@ -31,6 +31,8 @@ class Unit():
   def printLevels(self, prop_levels):
     print( "Values: ", prop_levels.values())
 
+  def distanceFrom(self, target):
+    return linalg.norm(self.pos_3d - target.pos_3d)
 
   def isAlive(self):
     return ( self.hp_cur > 0 )
