@@ -132,7 +132,6 @@ print("Unit vec:", copiedBarbarian.unitVecTo(targetedUnit))
 
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 
-copiedBarbarian.kill()
 
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 bomb = Bomb(2)
@@ -157,14 +156,18 @@ while not done:
   if copiedBarbarian.distanceFrom(targetedUnit) > 20:
     moveVec = copiedBarbarian.unitVecTo(targetedUnit)
     copiedBarbarian.move(moveVec)
+  else:
+    copiedBarbarian.kill()
 
-  for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
-    if isinstance(barbarian, ActiveUnit):
-      color, pos, width = barbarian.drawingInfo()
-      pygame.draw.circle(screen, color, pos, width, 1)
-    elif isinstance(barbarian, DefensiveUnit):
-      color, spatialInfo = barbarian.drawingInfo()
-      pygame.draw.rect(screen, color, spatialInfo, 1)
+
+  for unit in itertools.chain( unitList, [copiedBarbarian] ):
+    if unit.isAlive():
+      if isinstance(unit, ActiveUnit):
+        color, pos, width = unit.drawingInfo()
+        pygame.draw.circle(screen, color, pos, width, 1)
+      elif isinstance(unit, DefensiveUnit):
+        color, spatialInfo = unit.drawingInfo()
+        pygame.draw.rect(screen, color, spatialInfo, 1)
 
   pygame.display.update()
   pygame.display.flip()
