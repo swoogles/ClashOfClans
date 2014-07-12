@@ -32,10 +32,13 @@ class ActiveUnit(Unit):
     self.setTarget( enemyUnits[targetTuple[0]] )
 
   def drawingInfo(self):
-    return self.color, (self.pos_3d[0]*10, self.pos_3d[1]*10), self.width*10
+    return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width*10
 
   def moveUp(self):
     self.pos_3d[1] += 1
+
+  def move(self, moveVec):
+    self.pos_3d += moveVec
 
 
 
