@@ -137,7 +137,7 @@ print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 # bomb = Bomb(2)
 
 # Opening and setting the window size
-size = (700, 500)
+size = (40*10, 40*10)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
@@ -148,6 +148,15 @@ clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
   # --- Main event loop
+  # pygame.display.flip()
+  for barbarian in unitList:
+    pos3d = barbarian.reprJSON().get("pos_3d")
+    xPos = pos3d[0]*10
+    yPos = pos3d[1]*10
+    pygame.draw.rect(screen, WHITE, [xPos, yPos, 10, 10], 1)
+    pygame.display.update()
+    pygame.display.flip()
+
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       print("User asked to quit.")
@@ -163,10 +172,16 @@ while not done:
       clock.tick(60)
       pygame.quit()
     elif event.type == pygame.KEYDOWN:
+      # pygame.draw.rect(screen, WHITE, [55, 500, 10, 5], 1)
+      # pygame.draw.rect(screen, WHITE, [55, 200, 10, 5], 1)
+      # pygame.display.update()
+      # pygame.display.flip()
+      # clock.tick(60)
       print("User pressed a key.")
     elif event.type == pygame.KEYUP:
       print("User let go of a key.")
     elif event.type == pygame.MOUSEBUTTONDOWN:
       print("User pressed a mouse button")
+
 
 session.shutdown();
