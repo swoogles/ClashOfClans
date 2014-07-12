@@ -148,14 +148,7 @@ clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
   # --- Main event loop
-  # pygame.display.flip()
   for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
-    pos3d = barbarian.reprJSON().get("pos_3d")
-    xPos = pos3d[0]*10
-    yPos = pos3d[1]*10
-    width = 10
-    spatialInfo = [ xPos, yPos, width, width ]
-    drawingInfo = (WHITE, spatialInfo)
     if isinstance(barbarian, ActiveUnit):
       color, pos, width = barbarian.drawingInfo()
       pygame.draw.circle(screen, color, pos, width, 1)
