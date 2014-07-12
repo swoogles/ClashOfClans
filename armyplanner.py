@@ -140,6 +140,8 @@ size = (40*10, 40*10)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
+drawingList = unitList.append(copiedBarbarian)
+
 # Loop until the user clicks the close button.
 done = False
 # Used to manage how fast the screen updates
