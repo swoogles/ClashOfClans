@@ -154,8 +154,9 @@ while not done:
   # --- Main event loop
   copiedBarbarian.acquireTarget(unitList)
   targetedUnit = copiedBarbarian.getTarget()
-  moveVec = copiedBarbarian.unitVecTo(targetedUnit)
-  copiedBarbarian.move(moveVec)
+  if copiedBarbarian.distanceFrom(targetedUnit) > 20:
+    moveVec = copiedBarbarian.unitVecTo(targetedUnit)
+    copiedBarbarian.move(moveVec)
 
   for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
     if isinstance(barbarian, ActiveUnit):
