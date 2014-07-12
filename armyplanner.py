@@ -182,11 +182,11 @@ while not done:
       clock.tick(60)
       pygame.quit()
     elif event.type == pygame.KEYDOWN:
-      # pygame.draw.rect(screen, WHITE, [55, 500, 10, 5], 1)
-      # pygame.draw.rect(screen, WHITE, [55, 200, 10, 5], 1)
-      # pygame.display.update()
-      # pygame.display.flip()
-      # clock.tick(60)
+      if event.key == pygame.K_q:
+        done = True # Flag that we are done so we exit this loop
+        screen.fill(WHITE)
+        pygame.display.flip()
+        pygame.quit()
       print("User pressed a key.")
     elif event.type == pygame.KEYUP:
       print("User let go of a key.")
