@@ -121,20 +121,17 @@ unitList = [ Barbarian() for i in range(5)]
 
 print( "Main Pos: ", copiedBarbarian.reprJSON().get("pos_3d") )
 
+copiedBarbarian.color = GREEN
 copiedBarbarian.acquireTarget(unitList)
 
 targetedUnit = copiedBarbarian.getTarget()
+targetedUnit.color = RED
 
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 
 copiedBarbarian.kill()
 
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
-
-# for barbarian in unitList:
-#   print( "Pos: ", barbarian.reprJSON().get("pos_3d") )
-#   print( "Distance: ", copiedBarbarian.distanceFrom(barbarian) ) 
-
 bomb = Bomb(2)
 unitList.append(bomb)
 
