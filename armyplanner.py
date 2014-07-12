@@ -8,8 +8,9 @@
 
 from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
-from units_specific import Barbarian, Archer
 from clan_unit import Unit
+from clan_active_unit import ActiveUnit
+from clan_stationary_unit import DefensiveUnit
 from game_mechanics import Battle
 from numpy import array,arange
 from cassandra.cluster import Cluster
@@ -20,11 +21,11 @@ import pygame
 # Initialize the game engine
 pygame.init()
 
-# Define some colors
 BLACK = ( 0, 0, 0)
 WHITE = ( 255, 255, 255)
 GREEN = ( 0, 255, 0)
 RED = ( 255, 0, 0)
+
 
 class GameBoard():
   width = 40
@@ -134,7 +135,8 @@ print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 #   print( "Pos: ", barbarian.reprJSON().get("pos_3d") )
 #   print( "Distance: ", copiedBarbarian.distanceFrom(barbarian) ) 
 
-# bomb = Bomb(2)
+bomb = Bomb(2)
+unitList.append(bomb)
 
 # Opening and setting the window size
 size = (40*10, 40*10)
@@ -153,9 +155,18 @@ while not done:
     pos3d = barbarian.reprJSON().get("pos_3d")
     xPos = pos3d[0]*10
     yPos = pos3d[1]*10
-    pygame.draw.rect(screen, WHITE, [xPos, yPos, 10, 10], 1)
-    pygame.display.update()
-    pygame.display.flip()
+    width = 10
+    spatialInfo = [ xPos, yPos, width, width ]
+    drawingInfo = (WHITE, spatialInfo)
+    if isinstance(barbarian, ActiveUnit):
+      color, pos, width = barbarian.drawingInfo()
+      pygame.draw.circle(screen, color, pos, width, 1)
+    elif isinstance(barbarian, DefensiveUnit):
+      color, spatialInfo = barbarian.drawingInfo()
+      pygame.draw.rect(screen, color, spatialInfo, 1)
+
+  pygame.display.update()
+  pygame.display.flip()
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
