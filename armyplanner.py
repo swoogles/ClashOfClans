@@ -128,6 +128,8 @@ copiedBarbarian.acquireTarget(unitList)
 targetedUnit = copiedBarbarian.getTarget()
 targetedUnit.color = RED
 
+print("Unit vec:", copiedBarbarian.unitVecTo(targetedUnit))
+
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 
 copiedBarbarian.kill()
@@ -148,9 +150,13 @@ clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
   screen.fill(BLACK)
-  clock.tick(1)
+  clock.tick(10)
   # --- Main event loop
-  copiedBarbarian.moveUp()
+  copiedBarbarian.acquireTarget(unitList)
+  targetedUnit = copiedBarbarian.getTarget()
+  moveVec = copiedBarbarian.unitVecTo(targetedUnit)
+  copiedBarbarian.move(moveVec)
+
   for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
     if isinstance(barbarian, ActiveUnit):
       color, pos, width = barbarian.drawingInfo()
