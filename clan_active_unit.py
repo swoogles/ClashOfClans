@@ -31,6 +31,9 @@ class ActiveUnit(Unit):
     targetTuple = min(distanceList, key=lambda x: x[1])
     self.setTarget( enemyUnits[targetTuple[0]] )
 
+  def drawingInfo(self):
+    return self.color, (self.pos_3d[0]*10, self.pos_3d[1]*10), self.width*10
+
 
   def reprJSON(self):
     stats = dict(
