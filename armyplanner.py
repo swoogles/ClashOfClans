@@ -109,16 +109,20 @@ unitList = [ Barbarian() for i in range(5)]
 
 print( "Main Pos: ", copiedBarbarian.reprJSON().get("pos_3d") )
 
+copiedBarbarian.acquireTarget(unitList)
+
+targetedUnit = copiedBarbarian.getTarget()
+
+print("TargetedUnit.alive: ", targetedUnit.isAlive() )
+
+copiedBarbarian.kill()
+
+print("TargetedUnit.alive: ", targetedUnit.isAlive() )
+
 for barbarian in unitList:
   print( "Pos: ", barbarian.reprJSON().get("pos_3d") )
   print( "Distance: ", copiedBarbarian.distanceFrom(barbarian) ) 
 
-distanceList = ([ (idx, copiedBarbarian.distanceFrom(barbarian) ) for idx, barbarian in enumerate(unitList) ])
-
-
-print ("distanceList: ", distanceList)
-
-print("Max:", max(distanceList, key=lambda x: x[1]) )
 # bomb = Bomb(2)
 
 session.shutdown();

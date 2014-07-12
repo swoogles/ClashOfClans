@@ -13,7 +13,6 @@ class ActiveUnit(Unit):
 
   def kill(self):
     while hasattr( self, '_target' ):
-      self._target.printHpCur()
       self.attack()
 
   def setTarget(self, target):
@@ -24,6 +23,14 @@ class ActiveUnit(Unit):
 
   def hasTarget(self):
     return hasattr( self, '_target' )
+
+  def acquireTarget(self, enemyUnits):
+    distanceList = ([ (idx, self.distanceFrom(enemyUnit) ) 
+      for idx, enemyUnit in enumerate(enemyUnits) ])
+
+    targetTuple = min(distanceList, key=lambda x: x[1])
+    self.setTarget( enemyUnits[targetTuple[0]] )
+
 
   def reprJSON(self):
     stats = dict(
