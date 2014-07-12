@@ -1,8 +1,19 @@
 from numpy import array, random, linalg
+import pygame
+
+BLACK = ( 0, 0, 0)
+WHITE = ( 255, 255, 255)
+GREEN = ( 0, 255, 0)
+RED = ( 255, 0, 0)
+
 
 class Unit():
+  # Define some colors
   _table = "unit"
   name = "Abstract Unit"
+  width = 1
+  color = WHITE
+
 
   def __init__(self, level=1):
     self.level = level
@@ -20,6 +31,12 @@ class Unit():
     self.cost = json.get('cost',None)
     self.pos = json.get('pos',None)
     self.pos_3d = json.get('pos_3d',None)
+    self.width = json.get('width',None)
+    self.color = json.get('color',None)
+
+  # def getDrawingInfo(self):
+
+
 
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
@@ -49,4 +66,6 @@ class Unit():
         name=self.name, 
         pos=self.pos, 
         pos_3d=self.pos_3d, 
+        width=self.width, 
+        color=self.color, 
     )
