@@ -153,6 +153,7 @@ while not done:
   # --- Main event loop
   copiedBarbarian.acquireTarget(unitList)
   targetedUnit = copiedBarbarian.getTarget()
+  targetedUnit.color = RED
   if copiedBarbarian.distanceFrom(targetedUnit) > 20:
     moveVec = copiedBarbarian.unitVecTo(targetedUnit)
     copiedBarbarian.move(moveVec)
