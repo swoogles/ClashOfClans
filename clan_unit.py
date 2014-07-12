@@ -21,7 +21,7 @@ class Unit():
     self.hp_cur = self.hp_max 
     self.cost = self._prop_levels_cost[level]
     self.pos = random.randint(0,40)
-    self.pos_3d = array( [random.randint(0,40),random.randint(0,40),0] )
+    self.pos_3d = array( [random.randint(0,40)*10.0,random.randint(0,40)*10.0,0] )
 
   def copyFromJSON(self, json):
     self.level = json.get('cost',None)
@@ -49,7 +49,10 @@ class Unit():
     print( "Values: ", prop_levels.values())
 
   def distanceFrom(self, target):
-    return linalg.norm(self.pos_3d - target.pos_3d)
+    return linalg.norm(target.pos_3d - self.pos_3d)
+
+  def unitVecTo(self, target):
+    return (target.pos_3d - self.pos_3d) / linalg.norm(target.pos_3d - self.pos_3d)
 
   def isAlive(self):
     return ( self.hp_cur > 0 )
