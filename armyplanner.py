@@ -147,7 +147,10 @@ done = False
 clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
+  screen.fill(BLACK)
+  clock.tick(1)
   # --- Main event loop
+  copiedBarbarian.moveUp()
   for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
     if isinstance(barbarian, ActiveUnit):
       color, pos, width = barbarian.drawingInfo()
