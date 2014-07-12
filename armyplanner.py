@@ -15,6 +15,7 @@ from game_mechanics import Battle
 from numpy import array,arange
 from cassandra.cluster import Cluster
 import json
+import itertools
 
 # Import a library of functions called 'pygame'
 import pygame
@@ -140,8 +141,6 @@ size = (40*10, 40*10)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
-drawingList = unitList.append(copiedBarbarian)
-
 # Loop until the user clicks the close button.
 done = False
 # Used to manage how fast the screen updates
@@ -150,7 +149,7 @@ clock = pygame.time.Clock()
 while not done:
   # --- Main event loop
   # pygame.display.flip()
-  for barbarian in unitList:
+  for barbarian in itertools.chain( unitList, [copiedBarbarian] ):
     pos3d = barbarian.reprJSON().get("pos_3d")
     xPos = pos3d[0]*10
     yPos = pos3d[1]*10
