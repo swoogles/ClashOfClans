@@ -25,11 +25,12 @@ class ActiveUnit(Unit):
     return hasattr( self, '_target' )
 
   def acquireTarget(self, enemyUnits):
+    livingUnits = [unit for unit in enemyUnits if unit.hp_cur > 0]
     distanceList = ([ (idx, self.distanceFrom(enemyUnit) ) 
-      for idx, enemyUnit in enumerate(enemyUnits) ])
+      for idx, enemyUnit in enumerate(livingUnits) ])
 
     targetTuple = min(distanceList, key=lambda x: x[1])
-    self.setTarget( enemyUnits[targetTuple[0]] )
+    self.setTarget( livingUnits[targetTuple[0]] )
 
   def drawingInfo(self):
     return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width*10
