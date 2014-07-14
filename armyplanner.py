@@ -138,7 +138,7 @@ bomb = Bomb(2)
 unitList.append(bomb)
 
 # Opening and setting the window size
-size = (40*10, 40*10)
+size = (40*30, 40*30)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
@@ -149,16 +149,17 @@ clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
   screen.fill(BLACK)
-  clock.tick(10)
+  clock.tick(40)
   # --- Main event loop
   copiedBarbarian.acquireTarget(unitList)
   targetedUnit = copiedBarbarian.getTarget()
-  targetedUnit.color = RED
-  if copiedBarbarian.distanceFrom(targetedUnit) > 20:
-    moveVec = copiedBarbarian.unitVecTo(targetedUnit)
-    copiedBarbarian.move(moveVec)
-  else:
-    copiedBarbarian.kill()
+  if targetedUnit is not None:
+    targetedUnit.color = RED
+    if copiedBarbarian.distanceFrom(targetedUnit) > 20:
+      moveVec = copiedBarbarian.unitVecTo(targetedUnit)
+      copiedBarbarian.move(moveVec)
+    else:
+      copiedBarbarian.kill()
 
 
   for unit in itertools.chain( unitList, [copiedBarbarian] ):

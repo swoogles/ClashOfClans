@@ -29,8 +29,12 @@ class ActiveUnit(Unit):
     distanceList = ([ (idx, self.distanceFrom(enemyUnit) ) 
       for idx, enemyUnit in enumerate(livingUnits) ])
 
-    targetTuple = min(distanceList, key=lambda x: x[1])
-    self.setTarget( livingUnits[targetTuple[0]] )
+    try:
+      targetTuple = min(distanceList, key=lambda x: x[1])
+      self.setTarget( livingUnits[targetTuple[0]] )
+    except ValueError:
+      self.setTarget( None )
+
 
   def drawingInfo(self):
     return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width*10
