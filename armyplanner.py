@@ -75,9 +75,6 @@ cqlFile = open('./data.cql', encoding='utf-8')
 
 resetDB(session, cqlFile)
 
-copiedBarbarian = Barbarian()
-copiedBarbarian.copyFromJSON( barbarian.reprJSON() )
-
 # queryAll(session, barbarian)
 # insertUnit(session, barbarian)
 unitList = [ Barbarian() for i in range(5)]
@@ -86,7 +83,7 @@ unitList = [ Barbarian() for i in range(5)]
 # [insertUnit(session, barbarian)  for barbarian in unitList]
 # [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in unitList]
 
-copiedBarbarian.color = GREEN
+barbarian.color = GREEN
 
 # bomb = Bomb(2)
 # unitList.append(bomb)
@@ -105,18 +102,18 @@ while not done:
   screen.fill(BLACK)
   clock.tick(FPS)
   # --- Main event loop
-  copiedBarbarian.acquireTarget(unitList)
-  targetedUnit = copiedBarbarian.getTarget()
+  barbarian.acquireTarget(unitList)
+  targetedUnit = barbarian.getTarget()
   if targetedUnit is not None:
     targetedUnit.color = RED
-    if copiedBarbarian.distanceFrom(targetedUnit) > (copiedBarbarian.width+targetedUnit.width):
-      moveVec = copiedBarbarian.unitVecTo(targetedUnit)
-      copiedBarbarian.move(moveVec)
+    if barbarian.distanceFrom(targetedUnit) > (barbarian.width+targetedUnit.width):
+      moveVec = barbarian.unitVecTo(targetedUnit)
+      barbarian.move(moveVec)
     else:
-      copiedBarbarian.kill()
+      barbarian.kill()
 
 
-  for unit in itertools.chain( unitList, [copiedBarbarian] ):
+  for unit in itertools.chain( unitList, [barbarian] ):
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
         color, pos, width = unit.drawingInfo()
