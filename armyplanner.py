@@ -22,6 +22,9 @@ import pygame
 # Initialize the game engine
 pygame.init()
 
+FPS = 60
+PIXELS_PER_SPACE = 30
+
 BLACK = ( 0, 0, 0)
 WHITE = ( 255, 255, 255)
 GREEN = ( 0, 255, 0)
@@ -33,7 +36,7 @@ class GameBoard():
   height = 40
 
   def __init__(self):
-    self._boardSpots = arange(1600).reshape(40,40)
+    self._boardSpots = arange(1600).reshape(self.width,self.height)
 
 class Barracks():
   _prop_levels_capacity = {}
@@ -138,7 +141,7 @@ bomb = Bomb(2)
 unitList.append(bomb)
 
 # Opening and setting the window size
-size = (40*30, 40*30)
+size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
@@ -149,7 +152,7 @@ clock = pygame.time.Clock()
 # -------- Main Program Loop -----------
 while not done:
   screen.fill(BLACK)
-  clock.tick(40)
+  clock.tick(FPS)
   # --- Main event loop
   copiedBarbarian.acquireTarget(unitList)
   targetedUnit = copiedBarbarian.getTarget()
