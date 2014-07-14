@@ -72,8 +72,6 @@ cqlFile = open('./data.cql', encoding='utf-8')
 
 resetDB(session, cqlFile)
 
-# queryAll(session, barbarian)
-# insertUnit(session, barbarian)
 unitList = [ Barbarian() for i in range(5)]
 
 # Pythonically insert all the new units
@@ -109,15 +107,11 @@ while not done:
     else:
       barbarian.kill()
 
-
   for unit in itertools.chain( unitList, [barbarian] ):
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
         color, pos, width = unit.drawingInfo()
-        # print("Pos:", pos)
-        # scaledPos = pos
         scaledPos = tuple( [ e * PIXELS_PER_SPACE for e in pos ] )
-        # print("scaledPos:", scaledPos)
         pygame.draw.circle(screen, color, scaledPos, width * PIXELS_PER_SPACE, 1)
       elif isinstance(unit, DefensiveUnit):
         color, spatialInfo = unit.drawingInfo()
