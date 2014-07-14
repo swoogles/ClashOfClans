@@ -22,7 +22,7 @@ import pygame
 # Initialize the game engine
 pygame.init()
 
-FPS = 60
+FPS = 10
 PIXELS_PER_SPACE = 30
 
 BLACK = ( 0, 0, 0)
@@ -137,8 +137,8 @@ print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 
 
 print("TargetedUnit.alive: ", targetedUnit.isAlive() )
-bomb = Bomb(2)
-unitList.append(bomb)
+# bomb = Bomb(2)
+# unitList.append(bomb)
 
 # Opening and setting the window size
 size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
@@ -158,7 +158,7 @@ while not done:
   targetedUnit = copiedBarbarian.getTarget()
   if targetedUnit is not None:
     targetedUnit.color = RED
-    if copiedBarbarian.distanceFrom(targetedUnit) > 20:
+    if copiedBarbarian.distanceFrom(targetedUnit) > (copiedBarbarian.width+targetedUnit.width):
       moveVec = copiedBarbarian.unitVecTo(targetedUnit)
       copiedBarbarian.move(moveVec)
     else:
@@ -169,7 +169,11 @@ while not done:
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
         color, pos, width = unit.drawingInfo()
-        pygame.draw.circle(screen, color, pos, width, 1)
+        # print("Pos:", pos)
+        # scaledPos = pos
+        scaledPos = tuple( [ e * PIXELS_PER_SPACE for e in pos ] )
+        # print("scaledPos:", scaledPos)
+        pygame.draw.circle(screen, color, scaledPos, width * PIXELS_PER_SPACE, 1)
       elif isinstance(unit, DefensiveUnit):
         color, spatialInfo = unit.drawingInfo()
         pygame.draw.rect(screen, color, spatialInfo, 1)
