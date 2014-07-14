@@ -103,7 +103,6 @@ curBattle.step()
 barbarian.setTarget(archer)
 
 board = GameBoard()
-# print board._boardSpots
 
 cluster = Cluster()
 session = cluster.connect('demo')
@@ -123,20 +122,8 @@ unitList = [ Barbarian() for i in range(5)]
 # [insertUnit(session, barbarian)  for barbarian in unitList]
 # [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in unitList]
 
-print( "Main Pos: ", copiedBarbarian.reprJSON().get("pos_3d") )
-
 copiedBarbarian.color = GREEN
-copiedBarbarian.acquireTarget(unitList)
 
-targetedUnit = copiedBarbarian.getTarget()
-targetedUnit.color = RED
-
-print("Unit vec:", copiedBarbarian.unitVecTo(targetedUnit))
-
-print("TargetedUnit.alive: ", targetedUnit.isAlive() )
-
-
-print("TargetedUnit.alive: ", targetedUnit.isAlive() )
 # bomb = Bomb(2)
 # unitList.append(bomb)
 
