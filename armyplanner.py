@@ -49,9 +49,6 @@ class Barracks():
     self.capacity = self._prop_levels_capacity[level]
     self.level = level
 
-def printUnit(session, targetUnit):
-  print("unit: ", targetUnit.reprJSON() )
-
 curBattle = Battle()
 
 barbarian = Barbarian(2)
