@@ -148,6 +148,7 @@ while not done:
       print("User let go of a key.")
     elif event.type == pygame.MOUSEBUTTONDOWN:
       print("User pressed a mouse button")
+      unitList.append(Barbarian())
 
 
 session.shutdown();
