@@ -18,14 +18,6 @@ class Battle:
   def numDefendingUnits(self):
     return len(self._defending_units)
 
-  def step(self):
-    for curAttacker in self._attacking_units_deployed:
-      findTarget(curAttacker, self._defending_units)
-
   def deployAttackingUnit(self, targetUnitIdx):
     self._attacking_units_deployed.append( self._attacking_units_queued.pop(targetUnitIdx) )
 
-
-def findTarget(attacker, targets):
-  attacker.setTarget( random.choice(targets) )
-  

@@ -60,7 +60,7 @@ archer = Archer(2)
 barbarian = Barbarian(2)
 curBattle.addAttackingUnit(archer)
 
-curBattle.step()
+# curBattle.step()
 # barbarian.setTarget(archer)
 
 board = GameBoard()
