@@ -92,10 +92,13 @@ pygame.display.set_caption("Bill's Cool Game")
 done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
+gameTime = 0.0
 # -------- Main Program Loop -----------
 while not done:
   screen.fill(BLACK)
   clock.tick(FPS)
+  gameTime += 1.0/FPS
+  print("Gametime: ", gameTime )
   # --- Main event loop
   barbarian.acquireTarget(unitList)
   targetedUnit = barbarian.getTarget()
@@ -105,7 +108,7 @@ while not done:
       moveVec = barbarian.unitVecTo(targetedUnit)
       barbarian.move(moveVec)
     else:
-      barbarian.kill()
+      barbarian.attackIfPossible(gameTime)
 
   for unit in itertools.chain( unitList, [barbarian] ):
     if unit.isAlive():

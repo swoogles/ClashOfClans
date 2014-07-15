@@ -5,8 +5,16 @@ class ActiveUnit(Unit):
   def __init__(self, level=1):
     super(ActiveUnit, self).__init__(level)
     self.dps = self._prop_levels_dps[level]
+    self.lastAttack = 0.0
+    self.attackSpeed = 1.0
+
+  def attackIfPossible(self, gameTime):
+    if ( self.lastAttack + self.attackSpeed < gameTime ):
+      self.lastAttack = gameTime
+      self.attack()
 
   def attack(self):
+    print("Attack.")
     self._target.hp_cur -= self.dps
     if ( self._target.isAlive() == False ):
       del self._target
