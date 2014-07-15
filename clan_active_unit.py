@@ -7,6 +7,7 @@ class ActiveUnit(Unit):
     self.dps = self._prop_levels_dps[level]
     self.lastAttack = 0.0
     self.attackSpeed = 1.0
+    self._target = None
 
   def attackIfPossible(self, gameTime):
     if ( self.lastAttack + self.attackSpeed < gameTime ):
@@ -18,6 +19,7 @@ class ActiveUnit(Unit):
     self._target.hp_cur -= self.dps
     if ( self._target.isAlive() == False ):
       del self._target
+      self._target = None
 
   def kill(self):
     while hasattr( self, '_target' ):

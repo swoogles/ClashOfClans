@@ -61,7 +61,7 @@ barbarian = Barbarian(2)
 curBattle.addAttackingUnit(archer)
 
 curBattle.step()
-barbarian.setTarget(archer)
+# barbarian.setTarget(archer)
 
 board = GameBoard()
 
@@ -100,8 +100,10 @@ while not done:
   gameTime += 1.0/FPS
   print("Gametime: ", gameTime )
   # --- Main event loop
-  barbarian.acquireTarget(unitList)
-  targetedUnit = barbarian.getTarget()
+  if barbarian.getTarget() is None:
+    barbarian.acquireTarget(unitList)
+    targetedUnit = barbarian.getTarget()
+
   if targetedUnit is not None:
     targetedUnit.color = RED
     if barbarian.distanceFrom(targetedUnit) > (barbarian.width+targetedUnit.width):
