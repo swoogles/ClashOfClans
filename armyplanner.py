@@ -75,6 +75,8 @@ board = GameBoard()
 defendingList = [ Barbarian() for i in range(5)]
 defendingList.extend( Archer() for i in range(5) )
 
+# [False for x.fill in defendingList]
+
 # Pythonically insert all the new units
 # [insertUnit(session, barbarian)  for barbarian in defendingList]
 # [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in defendingList]
@@ -83,6 +85,9 @@ defendingList.extend( Archer() for i in range(5) )
 attackingList = [ Barbarian() for i in range(2)]
 for attacker in attackingList:
   attacker.color = GREEN
+  attacker.fill = 1
+# map( lambda x : setattr(x, 'fill', 1), attackingList )
+# map( lambda x : setattr(x, 'color', GREEN), attackingList )
 
 # bomb = Bomb(2)
 # defendingList.append(bomb)
@@ -123,12 +128,12 @@ while not done:
   for unit in itertools.chain( defendingList, attackingList ):
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
-        color, pos, width = unit.drawingInfo()
+        color, pos, width, fill = unit.drawingInfo()
         scaledPos = tuple( [ e * PIXELS_PER_SPACE for e in pos ] )
-        pygame.draw.circle(screen, color, scaledPos, width * PIXELS_PER_SPACE, 1)
+        pygame.draw.circle(screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
       elif isinstance(unit, DefensiveUnit):
-        color, spatialInfo = unit.drawingInfo()
-        pygame.draw.rect(screen, color, spatialInfo, 1)
+        color, spatialInfo, fill = unit.drawingInfo()
+        pygame.draw.rect(screen, color, spatialInfo, fill)
 
   pygame.display.update()
   pygame.display.flip()
