@@ -100,7 +100,7 @@ pygame.display.set_caption("Bill's Cool Game")
 myfont = pygame.font.SysFont("monospace", 25)
 
 # render text
-label = myfont.render("  TARGET!", 1, (255,255,0))
+targetLabel = myfont.render("X", 1, (255,255,0))
 
 # attackingList = []
 # attackingList.append(barbarian)
@@ -117,6 +117,7 @@ while not done:
   gameTime += 1.0/FPS
   # print("Gametime: ", gameTime )
   # --- Main event loop
+  targetedUnits = []
   for attacker in attackingList:
     if attacker.getTarget() is None:
       attacker.acquireTarget(defendingList)
@@ -124,7 +125,7 @@ while not done:
     targetedUnit = attacker.getTarget()
 
     if targetedUnit is not None:
-      screen.blit(label, (targetedUnit.pos_3d[0]*PIXELS_PER_SPACE, targetedUnit.pos_3d[1]*PIXELS_PER_SPACE))
+      targetedUnits.append(targetedUnit)
 
       if attacker.distanceFrom(targetedUnit) > (attacker.width+targetedUnit.width):
         moveVec = attacker.unitVecTo(targetedUnit)
@@ -141,6 +142,10 @@ while not done:
       elif isinstance(unit, DefensiveUnit):
         color, spatialInfo, fill = unit.drawingInfo()
         pygame.draw.rect(screen, color, spatialInfo, fill)
+
+  for targetedUnit in targetedUnits:
+    screen.blit(targetLabel, (targetedUnit.pos_3d[0]*PIXELS_PER_SPACE-targetedUnit.width/3*PIXELS_PER_SPACE, targetedUnit.pos_3d[1]*PIXELS_PER_SPACE-targetedUnit.width/3*PIXELS_PER_SPACE))
+
 
   pygame.display.update()
   pygame.display.flip()
