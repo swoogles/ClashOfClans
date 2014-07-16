@@ -96,6 +96,12 @@ size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
+# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+myfont = pygame.font.SysFont("monospace", 15)
+
+# render text
+label = myfont.render("      TARGET!", 1, (255,255,0))
+
 # attackingList = []
 # attackingList.append(barbarian)
 
@@ -118,7 +124,8 @@ while not done:
     targetedUnit = attacker.getTarget()
 
     if targetedUnit is not None:
-      targetedUnit.color = RED
+      screen.blit(label, (targetedUnit.pos_3d[0]*PIXELS_PER_SPACE, targetedUnit.pos_3d[1]*PIXELS_PER_SPACE))
+
       if attacker.distanceFrom(targetedUnit) > (attacker.width+targetedUnit.width):
         moveVec = attacker.unitVecTo(targetedUnit)
         attacker.move(moveVec)
