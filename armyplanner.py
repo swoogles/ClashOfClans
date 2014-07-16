@@ -156,8 +156,11 @@ while not done:
     elif event.type == pygame.KEYUP:
       print("User let go of a key.")
     elif event.type == pygame.MOUSEBUTTONDOWN:
-      print("User pressed a mouse button")
-      unitList.append(Barbarian())
+      pos = pygame.mouse.get_pos()
+      newUnit = Barbarian()
+      newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
+      newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
+      unitList.append(newUnit)
 
 
 session.shutdown();
