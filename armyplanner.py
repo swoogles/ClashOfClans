@@ -78,7 +78,10 @@ unitList = [ Barbarian() for i in range(5)]
 # [insertUnit(session, barbarian)  for barbarian in unitList]
 # [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in unitList]
 
-barbarian.color = GREEN
+
+attackingList = [ Barbarian() for i in range(2)]
+for attacker in attackingList:
+  attacker.color = GREEN
 
 # bomb = Bomb(2)
 # unitList.append(bomb)
@@ -87,8 +90,8 @@ size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
-attackingList = []
-attackingList.append(barbarian)
+# attackingList = []
+# attackingList.append(barbarian)
 
 # Loop until the user clicks the close button.
 done = False
