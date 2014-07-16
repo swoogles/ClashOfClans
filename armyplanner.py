@@ -23,7 +23,7 @@ import pygame
 # Initialize the game engine
 pygame.init()
 
-FPS = 10
+FPS = 60
 PIXELS_PER_SPACE = 30
 
 BLACK = ( 0, 0, 0)
@@ -83,10 +83,12 @@ barbarian.color = GREEN
 # bomb = Bomb(2)
 # unitList.append(bomb)
 
-# Opening and setting the window size
 size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
+
+attackingList = []
+attackingList.append(barbarian)
 
 # Loop until the user clicks the close button.
 done = False
@@ -98,21 +100,22 @@ while not done:
   screen.fill(BLACK)
   clock.tick(FPS)
   gameTime += 1.0/FPS
-  print("Gametime: ", gameTime )
+  # print("Gametime: ", gameTime )
   # --- Main event loop
-  if barbarian.getTarget() is None:
-    barbarian.acquireTarget(unitList)
-    targetedUnit = barbarian.getTarget()
+  for attacker in attackingList:
+    if attacker.getTarget() is None:
+      attacker.acquireTarget(unitList)
+      targetedUnit = attacker.getTarget()
 
-  if targetedUnit is not None:
-    targetedUnit.color = RED
-    if barbarian.distanceFrom(targetedUnit) > (barbarian.width+targetedUnit.width):
-      moveVec = barbarian.unitVecTo(targetedUnit)
-      barbarian.move(moveVec)
-    else:
-      barbarian.attackIfPossible(gameTime)
+    if targetedUnit is not None:
+      targetedUnit.color = RED
+      if attacker.distanceFrom(targetedUnit) > (attacker.width+targetedUnit.width):
+        moveVec = attacker.unitVecTo(targetedUnit)
+        attacker.move(moveVec)
+      else:
+        attacker.attackIfPossible(gameTime)
 
-  for unit in itertools.chain( unitList, [barbarian] ):
+  for unit in itertools.chain( unitList, attackingList ):
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
         color, pos, width = unit.drawingInfo()
