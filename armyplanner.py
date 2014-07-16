@@ -72,12 +72,12 @@ board = GameBoard()
 # cqlFile = open('./data.cql', encoding='utf-8')
 # resetDB(session, cqlFile)
 
-unitList = [ Barbarian() for i in range(5)]
-unitList.extend( Archer() for i in range(5) )
+defendingList = [ Barbarian() for i in range(5)]
+defendingList.extend( Archer() for i in range(5) )
 
 # Pythonically insert all the new units
-# [insertUnit(session, barbarian)  for barbarian in unitList]
-# [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in unitList]
+# [insertUnit(session, barbarian)  for barbarian in defendingList]
+# [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in defendingList]
 
 
 attackingList = [ Barbarian() for i in range(2)]
@@ -85,7 +85,7 @@ for attacker in attackingList:
   attacker.color = GREEN
 
 # bomb = Bomb(2)
-# unitList.append(bomb)
+# defendingList.append(bomb)
 
 size = (board.width*PIXELS_PER_SPACE, board.height*PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
@@ -108,7 +108,7 @@ while not done:
   # --- Main event loop
   for attacker in attackingList:
     if attacker.getTarget() is None:
-      attacker.acquireTarget(unitList)
+      attacker.acquireTarget(defendingList)
 
     targetedUnit = attacker.getTarget()
 
@@ -120,7 +120,7 @@ while not done:
       else:
         attacker.attackIfPossible(gameTime)
 
-  for unit in itertools.chain( unitList, attackingList ):
+  for unit in itertools.chain( defendingList, attackingList ):
     if unit.isAlive():
       if isinstance(unit, ActiveUnit):
         color, pos, width = unit.drawingInfo()
@@ -161,7 +161,7 @@ while not done:
       newUnit = Barbarian()
       newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
       newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
-      unitList.append(newUnit)
+      defendingList.append(newUnit)
 
 
 # session.shutdown();
