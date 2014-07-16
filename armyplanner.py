@@ -108,7 +108,8 @@ while not done:
   for attacker in attackingList:
     if attacker.getTarget() is None:
       attacker.acquireTarget(unitList)
-      targetedUnit = attacker.getTarget()
+
+    targetedUnit = attacker.getTarget()
 
     if targetedUnit is not None:
       targetedUnit.color = RED
