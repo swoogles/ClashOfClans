@@ -47,7 +47,7 @@ class ActiveUnit(Unit):
 
 
   def drawingInfo(self):
-    return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width
+    return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width, self.fill
 
   def moveUp(self):
     self.pos_3d[1] += 1

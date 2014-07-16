@@ -13,7 +13,7 @@ class Unit():
   name = "Abstract Unit"
   width = 1
   color = WHITE
-  fill = False
+  fill = 0
 
 
   def __init__(self, level=1):
