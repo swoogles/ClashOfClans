@@ -53,7 +53,7 @@ class Archer(ActiveUnit):
   def __init__(self, level=1):
     super(Archer, self).__init__(level)
     self.name = "Archer" + str( random.randint(0,1000) )
-    self.color = name_to_rgb('azure')
+    self.color = name_to_rgb('yellow')
 
   _range = 5
   _prop_levels_hp = { 
