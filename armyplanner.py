@@ -17,6 +17,8 @@ from cassandra.cluster import Cluster
 import json
 import itertools
 from database_functions import *
+from webcolors import *
+from colors import ClanColors
 
 # Import a library of functions called 'pygame'
 import pygame
