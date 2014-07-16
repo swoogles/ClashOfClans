@@ -13,6 +13,7 @@ class Unit():
   name = "Abstract Unit"
   width = 1
   color = WHITE
+  fill = False
 
 
   def __init__(self, level=1):
@@ -22,6 +23,7 @@ class Unit():
     self.cost = self._prop_levels_cost[level]
     self.pos = random.randint(0,40)
     self.pos_3d = array( [random.randint(0,40)*1.0,random.randint(0,40)*1.0,0] )
+
 
   def copyFromJSON(self, json):
     self.level = json.get('cost',None)
@@ -33,6 +35,7 @@ class Unit():
     self.pos_3d = json.get('pos_3d',None)
     self.width = json.get('width',None)
     self.color = json.get('color',None)
+    self.fill = json.get('fill',None)
 
   # def getDrawingInfo(self):
 
@@ -71,4 +74,5 @@ class Unit():
         pos_3d=self.pos_3d, 
         width=self.width, 
         color=self.color, 
+        fill=self.fill, 
     )
