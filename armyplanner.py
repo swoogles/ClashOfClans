@@ -97,10 +97,10 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
 
 # initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
-myfont = pygame.font.SysFont("monospace", 15)
+myfont = pygame.font.SysFont("monospace", 25)
 
 # render text
-label = myfont.render("      TARGET!", 1, (255,255,0))
+label = myfont.render("  TARGET!", 1, (255,255,0))
 
 # attackingList = []
 # attackingList.append(barbarian)
