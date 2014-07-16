@@ -58,7 +58,6 @@ curBattle.addDefendingUnit(barbarian)
 archer = Archer(2)
 curBattle.addDefendingUnit(archer)
 
-archer = Archer(2)
 barbarian = Barbarian(2)
 curBattle.addAttackingUnit(archer)
 
@@ -67,14 +66,14 @@ curBattle.addAttackingUnit(archer)
 
 board = GameBoard()
 
-cluster = Cluster()
-session = cluster.connect('demo')
-
-cqlFile = open('./data.cql', encoding='utf-8')
-
-resetDB(session, cqlFile)
+# Cassandra DB commands
+# cluster = Cluster()
+# session = cluster.connect('demo')
+# cqlFile = open('./data.cql', encoding='utf-8')
+# resetDB(session, cqlFile)
 
 unitList = [ Barbarian() for i in range(5)]
+unitList.extend( Archer() for i in range(5) )
 
 # Pythonically insert all the new units
 # [insertUnit(session, barbarian)  for barbarian in unitList]
@@ -165,4 +164,4 @@ while not done:
       unitList.append(newUnit)
 
 
-session.shutdown();
+# session.shutdown();
