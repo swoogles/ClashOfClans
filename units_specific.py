@@ -1,4 +1,5 @@
 from clan_active_unit import ActiveUnit
+from webcolors import name_to_rgb
 import random
 class Barbarian(ActiveUnit):
   # name = "Barbarian"
@@ -7,6 +8,7 @@ class Barbarian(ActiveUnit):
   def __init__(self, level=1):
     super(Barbarian, self).__init__(level)
     self.name = "Barbarian" + str( random.randint(0,1000) )
+    self.color = name_to_rgb('blue')
 
   _prop_levels_cost = { 
       1:25,
@@ -47,18 +49,27 @@ class Barbarian(ActiveUnit):
 
 class Archer(ActiveUnit):
   name = "Archer"
+
+  def __init__(self, level=1):
+    super(Archer, self).__init__(level)
+    self.name = "Archer" + str( random.randint(0,1000) )
+    self.color = name_to_rgb('azure')
+
   _range = 5
   _prop_levels_hp = { 
+      1:1,
       2:23, 
       3:28,
   }
 
   _prop_levels_dps = { 
+      1:1,
       2:9, 
       3:12,
   }
 
   _prop_levels_cost = { 
+      1:1,
       2:40, 
       3:80,
   }
