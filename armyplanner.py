@@ -82,7 +82,7 @@ defendingList.extend( Archer() for i in range(5) )
 # [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in defendingList]
 
 
-attackingList = [ Barbarian() for i in range(2)]
+attackingList = [ Barbarian() for i in range(4)]
 for attacker in attackingList:
   attacker.color = GREEN
   attacker.fill = 1
@@ -119,19 +119,36 @@ while not done:
   # --- Main event loop
   targetedUnits = []
   for attacker in attackingList:
-    if attacker.getTarget() is None:
-      attacker.acquireTarget(defendingList)
+    if attacker.isAlive():
+      if attacker.getTarget() is None:
+        attacker.acquireTarget(defendingList)
 
-    targetedUnit = attacker.getTarget()
+      targetedUnit = attacker.getTarget()
 
-    if targetedUnit is not None:
-      targetedUnits.append(targetedUnit)
+      if targetedUnit is not None:
+        targetedUnits.append(targetedUnit)
 
-      if attacker.distanceFrom(targetedUnit) > (attacker.width+targetedUnit.width):
-        moveVec = attacker.unitVecTo(targetedUnit)
-        attacker.move(moveVec)
-      else:
-        attacker.attackIfPossible(gameTime)
+        if attacker.distanceFrom(targetedUnit) > (attacker.width+targetedUnit.width):
+          moveVec = attacker.unitVecTo(targetedUnit)
+          attacker.move(moveVec)
+        else:
+          attacker.attackIfPossible(gameTime)
+
+  for defender in defendingList:
+    if defender.isAlive():
+      if defender.getTarget() is None:
+        defender.acquireTarget(attackingList)
+
+      targetedUnit = defender.getTarget()
+
+      if targetedUnit is not None:
+        targetedUnits.append(targetedUnit)
+
+        if defender.distanceFrom(targetedUnit) > (defender.width+targetedUnit.width):
+          moveVec = defender.unitVecTo(targetedUnit)
+          defender.move(moveVec)
+        else:
+          defender.attackIfPossible(gameTime)
 
   for unit in itertools.chain( defendingList, attackingList ):
     if unit.isAlive():
