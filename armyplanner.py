@@ -102,22 +102,7 @@ myfont = pygame.font.SysFont("monospace", 25)
 # render text
 targetLabel = myfont.render("X", 1, (255,255,0))
 
-# attackingList = []
-# attackingList.append(barbarian)
-
-# Loop until the user clicks the close button.
-done = False
-# Used to manage how fast the screen updates
-clock = pygame.time.Clock()
-gameTime = 0.0
-# -------- Main Program Loop -----------
-while not done:
-  screen.fill(BLACK)
-  clock.tick(FPS)
-  gameTime += 1.0/FPS
-  # print("Gametime: ", gameTime )
-  # --- Main event loop
-  targetedUnits = []
+def attackTeam(attackingList, defendingList, targetedUnits):
   for attacker in attackingList:
     if attacker.isAlive():
       if attacker.getTarget() is None:
@@ -134,21 +119,21 @@ while not done:
         else:
           attacker.attackIfPossible(gameTime)
 
-  for defender in defendingList:
-    if defender.isAlive():
-      if defender.getTarget() is None:
-        defender.acquireTarget(attackingList)
-
-      targetedUnit = defender.getTarget()
-
-      if targetedUnit is not None:
-        targetedUnits.append(targetedUnit)
-
-        if defender.distanceFrom(targetedUnit) > (defender.width+targetedUnit.width):
-          moveVec = defender.unitVecTo(targetedUnit)
-          defender.move(moveVec)
-        else:
-          defender.attackIfPossible(gameTime)
+# Loop until the user clicks the close button.
+done = False
+# Used to manage how fast the screen updates
+clock = pygame.time.Clock()
+gameTime = 0.0
+# -------- Main Program Loop -----------
+while not done:
+  screen.fill(BLACK)
+  clock.tick(FPS)
+  gameTime += 1.0/FPS
+  # print("Gametime: ", gameTime )
+  # --- Main event loop
+  targetedUnits = []
+  attackTeam(attackingList, defendingList, targetedUnits)
+  attackTeam(defendingList, attackingList, targetedUnits)
 
   for unit in itertools.chain( defendingList, attackingList ):
     if unit.isAlive():
