@@ -180,7 +180,11 @@ while not done:
       newUnit = Barbarian()
       newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
       newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
-      defendingList.append(newUnit)
+      if event.button == 1:
+        newUnit.fill = 1
+        attackingList.append(newUnit)
+      elif event.button == 3:
+        defendingList.append(newUnit)
 
 
 # session.shutdown();
