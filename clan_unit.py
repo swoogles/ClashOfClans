@@ -63,6 +63,8 @@ class Unit():
   def sql_getTable(self):
     return self._table 
 
+  # Use some variant of this to determine fields
+  # [print ("Var: ", var) for var in vars(attackingList[0])]
   def reprJSON(self):
     return dict(
         cost=self.cost,
