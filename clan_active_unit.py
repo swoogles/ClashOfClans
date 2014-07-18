@@ -7,7 +7,7 @@ class ActiveUnit(Unit):
     self.dps = self._prop_levels_dps[level]
     self.lastAttack = 0.0
     self.attackSpeed = 1.0
-    self._target = None
+    self.target = None
 
   def attackIfPossible(self, gameTime):
     if ( self.lastAttack + self.attackSpeed < gameTime ):
@@ -16,23 +16,17 @@ class ActiveUnit(Unit):
 
   def attack(self):
     print("Attack.")
-    self._target.hp_cur -= self.dps
-    if ( self._target.isAlive() == False ):
-      del self._target
-      self._target = None
+    self.target.hp_cur -= self.dps
+    if ( self.target.isAlive() == False ):
+      del self.target
+      self.target = None
 
   def kill(self):
-    while hasattr( self, '_target' ):
+    while hasattr( self, 'target' ):
       self.attack()
 
-  def setTarget(self, target):
-    self._target = target
-
-  def getTarget(self):
-    return self._target
-
   def hasTarget(self):
-    return hasattr( self, '_target' )
+    return hasattr( self, 'target' )
 
   def acquireTarget(self, enemyUnits):
     livingUnits = [unit for unit in enemyUnits if unit.hp_cur > 0]
@@ -41,9 +35,9 @@ class ActiveUnit(Unit):
 
     try:
       targetTuple = min(distanceList, key=lambda x: x[1])
-      self.setTarget( livingUnits[targetTuple[0]] )
+      self.target = livingUnits[targetTuple[0]]
     except ValueError:
-      self.setTarget( None )
+      self.target = None
 
 
   def drawingInfo(self):

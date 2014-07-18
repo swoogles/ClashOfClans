@@ -105,10 +105,10 @@ targetLabel = myfont.render("X", 1, (255,255,0))
 def attackTeam(attackingList, defendingList, targetedUnits):
   for attacker in attackingList:
     if attacker.isAlive():
-      if attacker.getTarget() is None:
+      if attacker.target is None:
         attacker.acquireTarget(defendingList)
 
-      targetedUnit = attacker.getTarget()
+      targetedUnit = attacker.target
 
       if targetedUnit is not None:
         targetedUnits.append(targetedUnit)
