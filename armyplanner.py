@@ -141,6 +141,10 @@ while not done:
         color, pos, width, fill = unit.drawingInfo()
         scaledPos = tuple( [ e * PIXELS_PER_SPACE for e in pos ] )
         pygame.draw.circle(screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
+        if ( unit.target is not None ):
+          targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
+          scaledTargetPos = tuple( [ e * PIXELS_PER_SPACE for e in targetPos ] )
+          pygame.draw.line(screen, WHITE, scaledPos, scaledTargetPos, 1)
       elif isinstance(unit, DefensiveUnit):
         color, spatialInfo, fill = unit.drawingInfo()
         pygame.draw.rect(screen, color, spatialInfo, fill)
