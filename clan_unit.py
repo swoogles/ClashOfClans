@@ -67,14 +67,6 @@ class Unit():
   # [print ("Var: ", var) for var in vars(attackingList[0])]
   def reprJSON(self):
     return dict(
-        cost=self.cost,
-        hp_cur=self.hp_cur, 
-        hp_max=self.hp_max, 
-        level=self.level, 
-        name=self.name, 
-        pos=self.pos, 
-        pos_3d=self.pos_3d, 
-        width=self.width, 
-        color=self.color, 
-        fill=self.fill, 
+        [( var, getattr(self,var) ) for var in vars(self) 
+          if var != 'target']
     )
