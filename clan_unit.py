@@ -26,20 +26,8 @@ class Unit():
 
 
   def copyFromJSON(self, json):
-    self.level = json.get('cost',None)
-    self.hp_max = json.get('hp_max',None)
-    self.hp_cur = json.get('hp_cur',None)
-    self.dps = json.get('dps',None)
-    self.cost = json.get('cost',None)
-    self.pos = json.get('pos',None)
-    self.pos_3d = json.get('pos_3d',None)
-    self.width = json.get('width',None)
-    self.color = json.get('color',None)
-    self.fill = json.get('fill',None)
-
-  # def getDrawingInfo(self):
-
-
+    for key,value in json.items():
+      setattr(self, key, value)
 
   def mapHpLevels(self):
     newmap = map(double, self._prop_levels_hp.values() )
