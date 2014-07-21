@@ -15,7 +15,6 @@ class ActiveUnit(Unit):
       self.attack()
 
   def attack(self):
-    print("Attack.")
     self.target.hp_cur -= self.dps
     if ( self.target.isAlive() == False ):
       del self.target
