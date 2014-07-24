@@ -1,5 +1,4 @@
 from numpy import array, random, linalg
-import pygame
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -7,7 +6,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 
-class Unit():
+class Unit(Object):
     # Define some colors
     _table = "unit"
     name = "Abstract Unit"

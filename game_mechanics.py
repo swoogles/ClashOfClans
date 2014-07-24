@@ -1,7 +1,7 @@
 import random
 
 
-class Battle:
+class Battle(Object):
     _units = []
 
     _attacking_units_queued = []

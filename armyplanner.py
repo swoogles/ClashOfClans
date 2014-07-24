@@ -1,4 +1,3 @@
-# class ArmyPlanner():
 #   """
 #   Want to explore some functions that would allow me to easily build armies in this damn game
 #   """
@@ -34,7 +33,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 
-class GameBoard():
+class GameBoard(Object):
     width = 40
     height = 40
 
@@ -42,7 +41,7 @@ class GameBoard():
         self._boardSpots = arange(1600).reshape(self.width, self.height)
 
 
-class Barracks():
+class Barracks(Object):
     _prop_levels_capacity = {}
     _prop_levels_capacity[4] = 35
     _prop_levels_capacity[5] = 40

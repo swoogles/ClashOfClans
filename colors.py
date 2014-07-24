@@ -1,7 +1,7 @@
 from webcolors import name_to_rgb
 
 
-class ClanColors:
+class ClanColors(Object):
     x = 3
     ALICEBLUE = name_to_rgb('aliceblue')
     ANTIQUEWHITE = name_to_rgb('antiquewhite')
