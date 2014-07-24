@@ -5,9 +5,8 @@
 # Run file in interpreter:
 # exec(open("./armyplanner.py").read())
 
-from clan_bomb import Bomb
+# from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
-from clan_unit import Unit
 from clan_active_unit import ActiveUnit
 from clan_stationary_unit import DefensiveUnit
 from game_mechanics import Battle
@@ -17,7 +16,7 @@ import json
 import itertools
 from database_functions import *
 from webcolors import *
-from colors import ClanColors
+# from colors import ClanColors
 
 # Import a library of functions called 'pygame'
 import pygame

@@ -18,7 +18,7 @@ class ActiveUnit(Unit):
 
     def attack(self):
         self.target.hp_cur -= self.dps
-        if (self.target.isAlive() == False):
+        if (self.target.isAlive() is False):
             del self.target
             self.target = None
 
