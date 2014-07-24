@@ -58,8 +58,12 @@ curBattle.addDefendingUnit(barbarian)
 archer = Archer(2)
 curBattle.addDefendingUnit(archer)
 
-barbarian = Barbarian(2)
+nextBarbarian = Barbarian(2)
+print("Orig:",nextBarbarian.reprJSON())
+nextBarbarian.copyFromJSON(barbarian.reprJSON())
 curBattle.addAttackingUnit(archer)
+nextBarbarian.reprJSON()
+print("Copied:",nextBarbarian.reprJSON())
 
 # curBattle.step()
 # barbarian.setTarget(archer)
