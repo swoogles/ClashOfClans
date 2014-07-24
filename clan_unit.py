@@ -54,3 +54,38 @@ class Unit(Object):
             [(var, getattr(self, var)) for var in vars(self)
              if var != 'target']
         )
+
+    _prop_levels_cost = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+
+    _prop_levels_dps = {
+        1: 1,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+    }
+
+    _prop_levels_hp = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+    }
+
+    _prop_levels_cost_list = [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ]
