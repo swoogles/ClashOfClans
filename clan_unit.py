@@ -27,10 +27,6 @@ class Unit(object):
         for key, value in json.items():
             setattr(self, key, value)
 
-    def mapHpLevels(self):
-        newmap = map(double, self._prop_levels_hp.values())
-        print(self._prop_levels_hp)
-
     def printCostLevels(self):
         self.printLevels(self._prop_levels_cost)
 
