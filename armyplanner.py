@@ -10,11 +10,10 @@ from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
 from clan_stationary_unit import DefensiveUnit
 from game_mechanics import Battle
-from numpy import array, arange
-from cassandra.cluster import Cluster
-import json
+from numpy import arange
+# from cassandra.cluster import Cluster
 import itertools
-from database_functions import *
+# from database_functions import *
 from webcolors import *
 # from colors import ClanColors
 

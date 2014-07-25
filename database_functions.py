@@ -19,7 +19,7 @@ def insertUnit(session, targetUnit):
 
 def resetDB(session, schemaDataFile):
     # session.execute( cqlCommands)
-    line_number = 0
+    # line_number = 0
     with open('./data.cql', encoding='utf-8') as schemaDataFile:
         for command in schemaDataFile:
             # print('{:>4} {}'.format(line_number, command.rstrip()))
