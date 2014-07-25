@@ -5,7 +5,7 @@ class ActiveUnit(Unit):
     name = "Abstract ActiveUnit"
 
     def __init__(self, level=1):
-        super(ActiveUnit, self).__init__(level)
+        super().__init__(level)
         self.dps = self._prop_levels_dps[level]
         self.lastAttack = 0.0
         self.attackSpeed = 1.0
