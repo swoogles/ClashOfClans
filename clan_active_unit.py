@@ -11,14 +11,14 @@ class ActiveUnit(Unit):
         self.attackSpeed = 1.0
         self.target = None
 
-    def attackIfPossible(self, gameTime):
+    def attack_if_possible(self, gameTime):
         if (self.lastAttack + self.attackSpeed < gameTime):
             self.lastAttack = gameTime
             self.attack()
 
     def attack(self):
         self.target.hp_cur -= self.dps
-        if (self.target.isAlive() is False):
+        if (self.target.is_alive() is False):
             del self.target
             self.target = None
 
@@ -26,12 +26,12 @@ class ActiveUnit(Unit):
         while hasattr(self, 'target'):
             self.attack()
 
-    def hasTarget(self):
+    def has_target(self):
         return hasattr(self, 'target')
 
-    def acquireTarget(self, enemyUnits):
+    def acquire_target(self, enemyUnits):
         livingUnits = [unit for unit in enemyUnits if unit.hp_cur > 0]
-        distanceList = ([(idx, self.distanceFrom(enemyUnit))
+        distanceList = ([(idx, self.distance_from(enemyUnit))
                          for idx, enemyUnit in enumerate(livingUnits)])
 
         try:
@@ -40,18 +40,18 @@ class ActiveUnit(Unit):
         except ValueError:
             self.target = None
 
-    def drawingInfo(self):
+    def drawing_info(self):
         return self.color, (int(self.pos_3d[0]), int(self.pos_3d[1])), self.width, self.fill
 
-    def moveUp(self):
+    def move_up(self):
         self.pos_3d[1] += 1
 
     def move(self, moveVec):
         self.pos_3d += moveVec
 
-    def reprJSON(self):
+    def repr_json(self):
         stats = dict(
             dps=self.dps,
         )
-        parentStats = super(ActiveUnit, self).reprJSON()
+        parentStats = super(ActiveUnit, self).repr_json()
         return dict(list(parentStats.items()) + list(stats.items()))

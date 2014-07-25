@@ -53,16 +53,16 @@ class Barracks(object):
 curBattle = Battle()
 
 barbarian = Barbarian(2)
-curBattle.addDefendingUnit(barbarian)
+curBattle.add_defending_unit(barbarian)
 archer = Archer(2)
-curBattle.addDefendingUnit(archer)
+curBattle.add_defending_unit(archer)
 
 nextBarbarian = Barbarian(2)
-print("Orig:", nextBarbarian.reprJSON())
-nextBarbarian.copyFromJSON(barbarian.reprJSON())
-curBattle.addAttackingUnit(archer)
-nextBarbarian.reprJSON()
-print("Copied:", nextBarbarian.reprJSON())
+print("Orig:", nextBarbarian.repr_json())
+nextBarbarian.copy_from_json(barbarian.repr_json())
+curBattle.add_attacking_unit(archer)
+nextBarbarian.repr_json()
+print("Copied:", nextBarbarian.repr_json())
 
 # curBattle.step()
 # barbarian.setTarget(archer)
@@ -107,22 +107,22 @@ myfont = pygame.font.SysFont("monospace", 25)
 targetLabel = myfont.render("X", 1, (255, 255, 0))
 
 
-def attackTeam(attackingList, defendingList, targetedUnits):
+def attack_team(attackingList, defendingList, targetedUnits):
     for attacker in attackingList:
-        if attacker.isAlive():
+        if attacker.is_alive():
             if attacker.target is None:
-                attacker.acquireTarget(defendingList)
+                attacker.acquire_target(defendingList)
 
             targetedUnit = attacker.target
 
             if targetedUnit is not None:
                 targetedUnits.append(targetedUnit)
 
-                if attacker.distanceFrom(targetedUnit) > (attacker.width + targetedUnit.width):
-                    moveVec = attacker.unitVecTo(targetedUnit)
+                if attacker.distance_from(targetedUnit) > (attacker.width + targetedUnit.width):
+                    moveVec = attacker.unit_vec_to(targetedUnit)
                     attacker.move(moveVec)
                 else:
-                    attacker.attackIfPossible(gameTime)
+                    attacker.attack_if_possible(gameTime)
 
 # Loop until the user clicks the close button.
 done = False
@@ -137,13 +137,13 @@ while not done:
     # print("Gametime: ", gameTime )
     # --- Main event loop
     targetedUnits = []
-    attackTeam(attackingList, defendingList, targetedUnits)
-    attackTeam(defendingList, attackingList, targetedUnits)
+    attack_team(attackingList, defendingList, targetedUnits)
+    attack_team(defendingList, attackingList, targetedUnits)
 
     for unit in itertools.chain(defendingList, attackingList):
-        if unit.isAlive():
+        if unit.is_alive():
             if isinstance(unit, ActiveUnit):
-                color, pos, width, fill = unit.drawingInfo()
+                color, pos, width, fill = unit.drawing_info()
                 scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
                 pygame.draw.circle(
                     screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
@@ -154,7 +154,7 @@ while not done:
                     pygame.draw.line(
                         screen, WHITE, scaledPos, scaledTargetPos, 1)
             elif isinstance(unit, DefensiveUnit):
-                color, spatialInfo, fill = unit.drawingInfo()
+                color, spatialInfo, fill = unit.drawing_info()
                 pygame.draw.rect(screen, color, spatialInfo, fill)
 
     for targetedUnit in targetedUnits:

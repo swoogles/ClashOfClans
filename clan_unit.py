@@ -23,29 +23,29 @@ class Unit(object):
         self.pos_3d = array(
             [random.randint(0, 40) * 1.0, random.randint(0, 40) * 1.0, 0])
 
-    def copyFromJSON(self, json):
+    def copy_from_json(self, json):
         for key, value in json.items():
             setattr(self, key, value)
 
-    def printCostLevels(self):
-        self.printLevels(self._prop_levels_cost)
+    def print_cost_levels(self):
+        self.print_levels(self._prop_levels_cost)
 
-    def printLevels(self, prop_levels):
+    def print_levels(self, prop_levels):
         print("Values: ", prop_levels.values())
 
-    def distanceFrom(self, target):
+    def distance_from(self, target):
         return linalg.norm(target.pos_3d - self.pos_3d)
 
-    def unitVecTo(self, target):
+    def unit_vec_to(self, target):
         return (target.pos_3d - self.pos_3d) / linalg.norm(target.pos_3d - self.pos_3d)
 
-    def isAlive(self):
+    def is_alive(self):
         return (self.hp_cur > 0)
 
-    def sql_getTable(self):
+    def sql_get_table(self):
         return self._table
 
-    def reprJSON(self):
+    def repr_json(self):
         return dict(
             [(var, getattr(self, var)) for var in vars(self)
              if var != 'target']
