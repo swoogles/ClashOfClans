@@ -118,6 +118,7 @@ def draw_teams(defendingList, attackingList):
 
 
 def process_events():
+    done = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             print("User asked to quit.")
@@ -151,6 +152,7 @@ def process_events():
                 attackingList.append(newUnit)
             elif event.button == 3:
                 defendingList.append(newUnit)
+    return done
 
 size = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
@@ -202,7 +204,7 @@ while not done:
     pygame.display.update()
     pygame.display.flip()
 
-    process_events()
+    done = process_events()
 
 
 # session.shutdown();
