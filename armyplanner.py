@@ -32,7 +32,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 
-class GameBoard(Object):
+class GameBoard(object):
     width = 40
     height = 40
 
@@ -40,7 +40,7 @@ class GameBoard(Object):
         self._boardSpots = arange(1600).reshape(self.width, self.height)
 
 
-class Barracks(Object):
+class Barracks(object):
     _prop_levels_capacity = {}
     _prop_levels_capacity[4] = 35
     _prop_levels_capacity[5] = 40

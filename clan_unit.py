@@ -6,7 +6,7 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 
-class Unit(Object):
+class Unit(object):
     # Define some colors
     _table = "unit"
     name = "Abstract Unit"
@@ -62,6 +62,7 @@ class Unit(Object):
         4: 0,
         5: 0,
         6: 0,
+    }
 
     _prop_levels_dps = {
         1: 1,

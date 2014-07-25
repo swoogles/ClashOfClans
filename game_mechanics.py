@@ -1,4 +1,4 @@
-class Battle(Object):
+class Battle(object):
     _units = []
 
     _attacking_units_queued = []
