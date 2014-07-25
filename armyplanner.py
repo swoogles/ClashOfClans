@@ -94,6 +94,64 @@ for attacker in attackingList:
 # bomb = Bomb(2)
 # defendingList.append(bomb)
 
+def draw_teams(defendingList, attackingList):
+    for unit in itertools.chain(defendingList, attackingList):
+        if unit.is_alive():
+            if isinstance(unit, ActiveUnit):
+                color, pos, width, fill = unit.drawing_info()
+                scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
+                pygame.draw.circle(
+                    screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
+                if (unit.target is not None):
+                    targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
+                    scaledTargetPos = tuple(
+                        [e * PIXELS_PER_SPACE for e in targetPos])
+                    pygame.draw.line(
+                        screen, WHITE, scaledPos, scaledTargetPos, 1)
+            elif isinstance(unit, DefensiveUnit):
+                color, spatialInfo, fill = unit.drawing_info()
+                pygame.draw.rect(screen, color, spatialInfo, fill)
+
+    for targetedUnit in targetedUnits:
+        screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
+                                  PIXELS_PER_SPACE, targetedUnit.pos_3d[1] * PIXELS_PER_SPACE - targetedUnit.width / 3 * PIXELS_PER_SPACE))
+
+
+def process_events():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            print("User asked to quit.")
+            done = True  # Flag that we are done so we exit this loop
+            # --- Game logic should go here
+            # --- Drawing code should go here
+            # First, clear the screen to white. Don't put other drawing commands
+            # above this, or they will be erased with this command.
+            screen.fill(WHITE)
+            # --- Go ahead and update the screen with what we've drawn.
+            pygame.display.flip()
+            # --- Limit to 60 frames per second
+            clock.tick(60)
+            pygame.quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                done = True  # Flag that we are done so we exit this loop
+                screen.fill(WHITE)
+                pygame.display.flip()
+                pygame.quit()
+            print("User pressed a key.")
+        elif event.type == pygame.KEYUP:
+            print("User let go of a key.")
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            newUnit = Barbarian()
+            newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
+            newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
+            if event.button == 1:
+                newUnit.fill = 1
+                attackingList.append(newUnit)
+            elif event.button == 3:
+                defendingList.append(newUnit)
+
 size = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Bill's Cool Game")
@@ -139,63 +197,12 @@ while not done:
     attack_team(attackingList, defendingList, targetedUnits)
     attack_team(defendingList, attackingList, targetedUnits)
 
-    for unit in itertools.chain(defendingList, attackingList):
-        if unit.is_alive():
-            if isinstance(unit, ActiveUnit):
-                color, pos, width, fill = unit.drawing_info()
-                scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
-                pygame.draw.circle(
-                    screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
-                if (unit.target is not None):
-                    targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
-                    scaledTargetPos = tuple(
-                        [e * PIXELS_PER_SPACE for e in targetPos])
-                    pygame.draw.line(
-                        screen, WHITE, scaledPos, scaledTargetPos, 1)
-            elif isinstance(unit, DefensiveUnit):
-                color, spatialInfo, fill = unit.drawing_info()
-                pygame.draw.rect(screen, color, spatialInfo, fill)
-
-    for targetedUnit in targetedUnits:
-        screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
-                                  PIXELS_PER_SPACE, targetedUnit.pos_3d[1] * PIXELS_PER_SPACE - targetedUnit.width / 3 * PIXELS_PER_SPACE))
+    draw_teams(defendingList, attackingList)
 
     pygame.display.update()
     pygame.display.flip()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            print("User asked to quit.")
-            done = True  # Flag that we are done so we exit this loop
-            # --- Game logic should go here
-            # --- Drawing code should go here
-            # First, clear the screen to white. Don't put other drawing commands
-            # above this, or they will be erased with this command.
-            screen.fill(WHITE)
-            # --- Go ahead and update the screen with what we've drawn.
-            pygame.display.flip()
-            # --- Limit to 60 frames per second
-            clock.tick(60)
-            pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                done = True  # Flag that we are done so we exit this loop
-                screen.fill(WHITE)
-                pygame.display.flip()
-                pygame.quit()
-            print("User pressed a key.")
-        elif event.type == pygame.KEYUP:
-            print("User let go of a key.")
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            newUnit = Barbarian()
-            newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
-            newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
-            if event.button == 1:
-                newUnit.fill = 1
-                attackingList.append(newUnit)
-            elif event.button == 3:
-                defendingList.append(newUnit)
+    process_events()
 
 
 # session.shutdown();
