@@ -8,7 +8,7 @@ class Barbarian(ActiveUnit):
     _range = 1
 
     def __init__(self, level=1):
-        super().__init__(level)
+        super(self.__class__).__init__(level)
         self.name = "Barbarian" + str(random.randint(0, 1000))
         self.color = name_to_rgb('blue')
 
@@ -54,7 +54,7 @@ class Archer(ActiveUnit):
     name = "Archer"
 
     def __init__(self, level=1):
-        super().__init__(level)
+        super(self.__class__).__init__(level)
         self.name = "Archer" + str(random.randint(0, 1000))
         self.color = name_to_rgb('yellow')
 

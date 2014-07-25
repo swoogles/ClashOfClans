@@ -6,7 +6,7 @@ class Bomb(DefensiveUnit):
     _range = 1
 
     def __init__(self, level=1):
-        super().__init__(level)
+        super(self.__class__).__init__(level)
 
     _prop_levels_hp = {
         2: 23,
