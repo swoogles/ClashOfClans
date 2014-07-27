@@ -19,9 +19,10 @@ class ActiveUnit(Unit):
             return coolDownPercentage
 
     def attack_if_possible(self, gameTime):
-        if (self.lastAttack + self.attackSpeed < gameTime):
-            self.lastAttack = gameTime
-            self.attack()
+        if ( self.distance_from(self.target) < self._range ):
+            if (self.lastAttack + self.attackSpeed < gameTime):
+                self.lastAttack = gameTime
+                self.attack()
 
     def attack(self):
         self.target.hp_cur -= self.dps
