@@ -55,37 +55,20 @@ curBattle.add_defending_unit(barbarian)
 archer = Archer(2)
 curBattle.add_defending_unit(archer)
 
-nextBarbarian = Barbarian(2)
-print("Orig:", nextBarbarian.repr_json())
-nextBarbarian.copy_from_json(barbarian.repr_json())
-curBattle.add_attacking_unit(archer)
-nextBarbarian.repr_json()
-print("Copied:", nextBarbarian.repr_json())
-
-# curBattle.step()
-# barbarian.setTarget(archer)
-
 board = GameBoard()
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
 
-# [False for x.fill in defendingList]
-
 # Pythonically insert all the new units
 # [insertUnit(session, barbarian)  for barbarian in defendingList]
-# [print( barbarian.reprJSON().get("pos_3d") )  for barbarian in defendingList]
 
 
 attackingList = [Barbarian() for i in range(4)]
 for attacker in attackingList:
     attacker.color = GREEN
     attacker.fill = 1
-# map( lambda x : setattr(x, 'fill', 1), attackingList )
 # map( lambda x : setattr(x, 'color', GREEN), attackingList )
-
-# bomb = Bomb(2)
-# defendingList.append(bomb)
 
 def draw_teams(defendingList, attackingList):
     for unit in itertools.chain(defendingList, attackingList):
