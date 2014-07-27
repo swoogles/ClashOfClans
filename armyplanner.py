@@ -128,6 +128,8 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 gameTime = 0.0
+PI = 3.14
+fuse = 0.0
 # -------- Main Program Loop -----------
 while not done:
     screen.fill(BLACK)
@@ -141,8 +143,18 @@ while not done:
 
     draw_teams(defendingList, attackingList)
 
+    start_angle = 0
+    stop_angle = 10
+    # arc(screen, GREEN, Rect, start_angle, stop_angle, width=1) -> Rect
+    myRect = pygame.Rect(100,100,100,100)
+    # pygame.draw.arc(screen, GREEN, myRect , start_angle, stop_angle)
+    pygame.draw.arc(screen, GREEN, myRect, 0, fuse) # radiant instead of grad
+
     pygame.display.update()
     pygame.display.flip()
 
     done = process_events()
 
+    fuse += .01
+    if fuse > 2*PI:
+        fuse = 0
