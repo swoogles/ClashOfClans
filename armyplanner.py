@@ -76,9 +76,14 @@ def draw_teams(defendingList, attackingList):
         if unit.is_alive():
             if isinstance(unit, ActiveUnit):
                 color, pos, width, fill = unit.drawing_info()
+                drawWidth = width * PIXELS_PER_SPACE
                 scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
                 pygame.draw.circle(
-                    screen, color, scaledPos, width * PIXELS_PER_SPACE, fill)
+                    screen, color, scaledPos, drawWidth, fill)
+                myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
+                arcLength = unit.cooldown_percentage(gameTime) * 2 * PI
+                pygame.draw.arc(screen, RED, myRect, 0, arcLength,4) # radiant instead of grad
+
                 if (unit.target is not None):
                     targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
                     scaledTargetPos = tuple(
@@ -142,13 +147,6 @@ while not done:
     attack_team(defendingList, attackingList, targetedUnits)
 
     draw_teams(defendingList, attackingList)
-
-    start_angle = 0
-    stop_angle = 10
-    # arc(screen, GREEN, Rect, start_angle, stop_angle, width=1) -> Rect
-    myRect = pygame.Rect(100,100,100,100)
-    # pygame.draw.arc(screen, GREEN, myRect , start_angle, stop_angle)
-    pygame.draw.arc(screen, GREEN, myRect, 0, fuse) # radiant instead of grad
 
     pygame.display.update()
     pygame.display.flip()
