@@ -57,6 +57,7 @@ class Archer(ActiveUnit):
         super(Archer, self).__init__(level)
         self.name = "Archer" + str(random.randint(0, 1000))
         self.color = name_to_rgb('yellow')
+        self.attackSpeed = 2.0
 
     _range = 5
     _prop_levels_hp = {
