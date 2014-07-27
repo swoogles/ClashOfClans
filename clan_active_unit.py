@@ -11,6 +11,13 @@ class ActiveUnit(Unit):
         self.attackSpeed = 1.0
         self.target = None
 
+    def cooldown_percentage(self, gameTime):
+        coolDownPercentage = (gameTime - self.lastAttack)/self.attackSpeed
+        if (coolDownPercentage > 1.0):
+            return 1.0
+        else:
+            return coolDownPercentage
+
     def attack_if_possible(self, gameTime):
         if (self.lastAttack + self.attackSpeed < gameTime):
             self.lastAttack = gameTime
