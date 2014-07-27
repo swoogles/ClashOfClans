@@ -1,3 +1,12 @@
+from cassandra.cluster import Cluster
+
+def init():
+    cluster = Cluster()
+    session = cluster.connect('demo')
+    cqlFile = open('./data.cql', encoding='utf-8')
+    resetDB(session, cqlFile)
+
+
 def insertUnit(session, targetUnit):
     table = targetUnit.sql_getTable()
 

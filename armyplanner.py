@@ -11,7 +11,6 @@ from clan_active_unit import ActiveUnit
 from clan_stationary_unit import DefensiveUnit
 from game_mechanics import Battle
 from numpy import arange
-# from cassandra.cluster import Cluster
 import itertools
 # from database_functions import *
 from webcolors import *
@@ -67,12 +66,6 @@ print("Copied:", nextBarbarian.repr_json())
 # barbarian.setTarget(archer)
 
 board = GameBoard()
-
-# Cassandra DB commands
-# cluster = Cluster()
-# session = cluster.connect('demo')
-# cqlFile = open('./data.cql', encoding='utf-8')
-# resetDB(session, cqlFile)
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
