@@ -122,7 +122,7 @@ def attack_team(attackingList, defendingList, targetedUnits):
             if targetedUnit is not None:
                 targetedUnits.append(targetedUnit)
 
-                if attacker.distance_from(targetedUnit) > (attacker.width + targetedUnit.width):
+                if attacker.distance_from(targetedUnit) > attacker._range:
                     moveVec = attacker.unit_vec_to(targetedUnit)
                     attacker.move(moveVec)
                 else:
