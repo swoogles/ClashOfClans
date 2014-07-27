@@ -182,5 +182,3 @@ while not done:
 
     done = process_events()
 
-
-# session.shutdown();

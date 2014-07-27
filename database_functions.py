@@ -5,7 +5,10 @@ def init():
     session = cluster.connect('demo')
     cqlFile = open('./data.cql', encoding='utf-8')
     resetDB(session, cqlFile)
+    return session
 
+def shutdown(session):
+    session.shutdown();
 
 def insertUnit(session, targetUnit):
     table = targetUnit.sql_getTable()
