@@ -9,3 +9,8 @@ class Structure(Unit):
 
     def drawing_info(self):
         return self.color, (self.pos_3d[0] * 10, self.pos_3d[1] * 10, self.width * 10, self.width * 10), self.fill
+
+class Wall(Structure):
+    def __init__(self, level=1):
+        super(Wall, self).__init__(level)
+        width = 5
