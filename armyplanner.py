@@ -91,7 +91,7 @@ def draw_teams(defendingList, attackingList):
                         [e * PIXELS_PER_SPACE for e in targetPos])
                     pygame.draw.line(
                         screen, WHITE, scaledPos, scaledTargetPos, 1)
-            elif isinstance(unit, Wall):
+            elif isinstance(unit, Structure):
                 color, spatialInfo, fill = unit.drawing_info()
                 scaledSpatialInfo = (
                     spatialInfo[0]*PIXELS_PER_SPACE,
