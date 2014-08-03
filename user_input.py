@@ -11,15 +11,9 @@ def process_events(screen, pixelsPerSpace, attackingList, defendingList):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             print("User asked to quit.")
-            done = True  # Flag that we are done so we exit this loop
-            # --- Game logic should go here
-            # --- Drawing code should go here
-            # First, clear the screen to white. Don't put other drawing commands
-            # above this, or they will be erased with this command.
+            done = True  
             screen.fill(WHITE)
-            # --- Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
-            # --- Limit to 60 frames per second
             pygame.quit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
@@ -35,6 +29,9 @@ def process_events(screen, pixelsPerSpace, attackingList, defendingList):
             newUnit = Barbarian()
             newUnit.pos_3d[0] = pos[0] / pixelsPerSpace
             newUnit.pos_3d[1] = pos[1] / pixelsPerSpace
+            # Failed attempts at getting this down to one line
+            # newUnit.pos_3d = pos / pixelsPerSpace
+            # newUnit.pos_3d = tuple(dimension/pixelsPerSpace for dimension in pos)
             if event.button == 1:
                 newUnit.fill = 1
                 attackingList.append(newUnit)
