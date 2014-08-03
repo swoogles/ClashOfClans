@@ -8,7 +8,7 @@
 # from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
-from clan_stationary_unit import Structure
+from clan_stationary_unit import Structure, Wall
 from game_mechanics import Battle
 from numpy import arange
 import itertools
@@ -60,6 +60,7 @@ board = GameBoard()
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
+defendingList.append(Wall())
 
 # Pythonically insert all the new units
 # [insertUnit(session, barbarian)  for barbarian in defendingList]
@@ -90,9 +91,10 @@ def draw_teams(defendingList, attackingList):
                         [e * PIXELS_PER_SPACE for e in targetPos])
                     pygame.draw.line(
                         screen, WHITE, scaledPos, scaledTargetPos, 1)
-            elif isinstance(unit, Structure):
-                color, spatialInfo, fill = unit.drawing_info()
-                pygame.draw.rect(screen, color, spatialInfo, fill)
+        elif isinstance(unit, Wall):
+            color, spatialInfo, fill = unit.drawing_info()
+            color = WHITE
+            pygame.draw.rect(screen, color, spatialInfo, fill)
 
     for targetedUnit in targetedUnits:
         screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
@@ -113,7 +115,7 @@ targetLabel = myfont.render("X", 1, (255, 255, 0))
 
 def attack_team(attackingList, defendingList, targetedUnits):
     for attacker in attackingList:
-        if attacker.is_alive():
+        if isinstance(attacker, ActiveUnit) and attacker.is_alive():
             if attacker.target is None:
                 attacker.acquire_target(defendingList)
 

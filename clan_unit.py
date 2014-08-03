@@ -16,7 +16,7 @@ class Unit(object):
 
     def __init__(self, level=1):
         self.level = level
-        self.hp_max = self._prop_levels_hp[level]
+        self.hp_max = max(self._prop_levels_hp[level],1)
         self.hp_cur = self.hp_max
         self.cost = self._prop_levels_cost[level]
         self.pos = random.randint(0, 40)
