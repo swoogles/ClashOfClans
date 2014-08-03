@@ -1,7 +1,7 @@
-from clan_stationary_unit import DefensiveUnit
+from clan_stationary_unit import Structure
 
 
-class Bomb(DefensiveUnit):
+class Bomb(Structure):
     name = "Bomb"
     _range = 1
 

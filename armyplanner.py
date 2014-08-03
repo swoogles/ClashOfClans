@@ -8,7 +8,7 @@
 # from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
-from clan_stationary_unit import DefensiveUnit
+from clan_stationary_unit import Structure
 from game_mechanics import Battle
 from numpy import arange
 import itertools
@@ -90,7 +90,7 @@ def draw_teams(defendingList, attackingList):
                         [e * PIXELS_PER_SPACE for e in targetPos])
                     pygame.draw.line(
                         screen, WHITE, scaledPos, scaledTargetPos, 1)
-            elif isinstance(unit, DefensiveUnit):
+            elif isinstance(unit, Structure):
                 color, spatialInfo, fill = unit.drawing_info()
                 pygame.draw.rect(screen, color, spatialInfo, fill)
 
