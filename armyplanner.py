@@ -91,10 +91,17 @@ def draw_teams(defendingList, attackingList):
                         [e * PIXELS_PER_SPACE for e in targetPos])
                     pygame.draw.line(
                         screen, WHITE, scaledPos, scaledTargetPos, 1)
-        elif isinstance(unit, Wall):
-            color, spatialInfo, fill = unit.drawing_info()
-            color = WHITE
-            pygame.draw.rect(screen, color, spatialInfo, fill)
+            elif isinstance(unit, Wall):
+                color, spatialInfo, fill = unit.drawing_info()
+                scaledSpatialInfo = (
+                    spatialInfo[0]*PIXELS_PER_SPACE,
+                    spatialInfo[1]*PIXELS_PER_SPACE,
+                    spatialInfo[2]*PIXELS_PER_SPACE,
+                    spatialInfo[3]*PIXELS_PER_SPACE
+                )
+                print("scaledSpatialInfo", scaledSpatialInfo)
+                color = WHITE
+                pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
 
     for targetedUnit in targetedUnits:
         screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
