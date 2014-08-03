@@ -10,7 +10,7 @@ from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
 from clan_stationary_unit import Structure, Wall
 from game_mechanics import Battle
-from numpy import arange
+from numpy import arange, array
 import itertools
 # from database_functions import *
 from webcolors import *
@@ -60,10 +60,10 @@ board = GameBoard()
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
+
 wallList = [Wall() for i in range(5)]
 for i in range(5):
-    wallList[i].pos_3d[0] = 10
-    wallList[i].pos_3d[1] = i+10
+    wallList[i].pos_3d = array([10, i+10, 0])
 defendingList.extend(wallList)
 
 attackingList = [Barbarian() for i in range(4)]
