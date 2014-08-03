@@ -1,6 +1,12 @@
 import pygame
+from units_specific import Barbarian, Archer
 
-def process_events():
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+
+def process_events(screen, pixelsPerSpace, attackingList, defendingList):
     done = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -14,7 +20,6 @@ def process_events():
             # --- Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
             # --- Limit to 60 frames per second
-            clock.tick(60)
             pygame.quit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
@@ -28,8 +33,8 @@ def process_events():
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             newUnit = Barbarian()
-            newUnit.pos_3d[0] = pos[0] / PIXELS_PER_SPACE
-            newUnit.pos_3d[1] = pos[1] / PIXELS_PER_SPACE
+            newUnit.pos_3d[0] = pos[0] / pixelsPerSpace
+            newUnit.pos_3d[1] = pos[1] / pixelsPerSpace
             if event.button == 1:
                 newUnit.fill = 1
                 attackingList.append(newUnit)

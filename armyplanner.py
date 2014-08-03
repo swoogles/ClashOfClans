@@ -151,7 +151,7 @@ while not done:
     pygame.display.update()
     pygame.display.flip()
 
-    done = process_events()
+    done = process_events(screen, PIXELS_PER_SPACE, attackingList, defendingList)
 
     fuse += .01
     if fuse > 2*PI:
