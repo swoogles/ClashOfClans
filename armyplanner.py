@@ -134,7 +134,6 @@ done = False
 clock = pygame.time.Clock()
 gameTime = 0.0
 PI = 3.14
-fuse = 0.0
 # -------- Main Program Loop -----------
 while not done:
     screen.fill(BLACK)
@@ -152,7 +151,3 @@ while not done:
     pygame.display.flip()
 
     done = process_events(screen, PIXELS_PER_SPACE, attackingList, defendingList)
-
-    fuse += .01
-    if fuse > 2*PI:
-        fuse = 0
