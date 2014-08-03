@@ -60,17 +60,16 @@ board = GameBoard()
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
-defendingList.append(Wall())
-
-# Pythonically insert all the new units
-# [insertUnit(session, barbarian)  for barbarian in defendingList]
-
+wallList = [Wall() for i in range(5)]
+for i in range(5):
+    wallList[i].pos_3d[0] = 10
+    wallList[i].pos_3d[1] = i+10
+defendingList.extend(wallList)
 
 attackingList = [Barbarian() for i in range(4)]
 for attacker in attackingList:
     attacker.color = GREEN
     attacker.fill = 1
-# map( lambda x : setattr(x, 'color', GREEN), attackingList )
 
 def draw_teams(defendingList, attackingList):
     for unit in itertools.chain(defendingList, attackingList):
