@@ -13,4 +13,4 @@ class Structure(Unit):
 class Wall(Structure):
     def __init__(self, level=1):
         super(Wall, self).__init__(level)
-        width = 5
+        self.width = 1
