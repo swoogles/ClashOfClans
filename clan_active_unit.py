@@ -10,6 +10,7 @@ class ActiveUnit(Unit):
         self.lastAttack = 0.0
         self.attackSpeed = 1.0
         self.target = None
+        self._range = 1
 
     def cooldown_percentage(self, gameTime):
         coolDownPercentage = (gameTime - self.lastAttack)/self.attackSpeed
