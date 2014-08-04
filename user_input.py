@@ -1,5 +1,5 @@
 import pygame
-from units_specific import Barbarian, Archer
+from units_specific import Barbarian
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
