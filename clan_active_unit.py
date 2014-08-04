@@ -8,12 +8,12 @@ class ActiveUnit(Unit):
         super(ActiveUnit, self).__init__(level)
         self.dps = self._prop_levels_dps[level]
         self.lastAttack = 0.0
-        self.attackSpeed = 1.0
+        self._attackSpeed = 1.0
         self.target = None
         self._range = 1
 
     def cooldown_percentage(self, gameTime):
-        coolDownPercentage = (gameTime - self.lastAttack)/self.attackSpeed
+        coolDownPercentage = (gameTime - self.lastAttack)/self._attackSpeed
         if (coolDownPercentage > 1.0):
             return 1.0
         else:
@@ -21,7 +21,7 @@ class ActiveUnit(Unit):
 
     def attack_if_possible(self, gameTime):
         if ( self.distance_from(self.target) < self._range ):
-            if (self.lastAttack + self.attackSpeed < gameTime):
+            if (self.lastAttack + self._attackSpeed < gameTime):
                 self.lastAttack = gameTime
                 self.attack()
 
