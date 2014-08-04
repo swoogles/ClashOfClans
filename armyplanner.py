@@ -98,7 +98,6 @@ def draw_teams(defendingList, attackingList):
                     spatialInfo[2]*PIXELS_PER_SPACE,
                     spatialInfo[3]*PIXELS_PER_SPACE
                 )
-                print("scaledSpatialInfo", scaledSpatialInfo)
                 color = WHITE
                 pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
 
