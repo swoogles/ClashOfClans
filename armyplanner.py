@@ -104,8 +104,8 @@ def draw_teams(screen, defendingList, attackingList):
                 draw_structure(screen, unit)
 
     for targetedUnit in targetedUnits:
-        screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
-                                  PIXELS_PER_SPACE, targetedUnit.pos_3d[1] * PIXELS_PER_SPACE - targetedUnit.width / 3 * PIXELS_PER_SPACE))
+        screen.blit(targetLabel, ( (targetedUnit.pos_3d[0] - targetedUnit.width / 3) * PIXELS_PER_SPACE, 
+                                    (targetedUnit.pos_3d[1] - targetedUnit.width / 3) * PIXELS_PER_SPACE))
 
 
 size = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
