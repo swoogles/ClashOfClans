@@ -71,35 +71,37 @@ for attacker in attackingList:
     attacker.color = GREEN
     attacker.fill = 1
 
-def draw_teams(defendingList, attackingList):
+def draw_active_unit(screen, unit):
+    color, pos, width, fill = unit.drawing_info()
+    drawWidth = width * PIXELS_PER_SPACE
+    scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
+    pygame.draw.circle(
+        screen, color, scaledPos, drawWidth, fill)
+    myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
+    arcLength = unit.cooldown_percentage(gameTime) * 2 * PI
+    pygame.draw.arc(screen, RED, myRect, 0, arcLength, 4)
+
+    if unit.target is not None:
+        targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
+        scaledTargetPos = tuple(
+            [e * PIXELS_PER_SPACE for e in targetPos])
+        pygame.draw.line(
+            screen, WHITE, scaledPos, scaledTargetPos, 1)
+
+def draw_structure(screen, unit):
+    color, spatialInfo, fill = unit.drawing_info()
+    scaledSpatialInfo = tuple([e * PIXELS_PER_SPACE 
+                                for e in spatialInfo])
+    color = WHITE
+    pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
+
+def draw_teams(screen, defendingList, attackingList):
     for unit in itertools.chain(defendingList, attackingList):
         if unit.is_alive():
             if isinstance(unit, ActiveUnit):
-                color, pos, width, fill = unit.drawing_info()
-                drawWidth = width * PIXELS_PER_SPACE
-                scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
-                pygame.draw.circle(
-                    screen, color, scaledPos, drawWidth, fill)
-                myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
-                arcLength = unit.cooldown_percentage(gameTime) * 2 * PI
-                pygame.draw.arc(screen, RED, myRect, 0, arcLength,4) # radiant instead of grad
-
-                if (unit.target is not None):
-                    targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
-                    scaledTargetPos = tuple(
-                        [e * PIXELS_PER_SPACE for e in targetPos])
-                    pygame.draw.line(
-                        screen, WHITE, scaledPos, scaledTargetPos, 1)
+                draw_active_unit(screen, unit)
             elif isinstance(unit, Structure):
-                color, spatialInfo, fill = unit.drawing_info()
-                scaledSpatialInfo = (
-                    spatialInfo[0]*PIXELS_PER_SPACE,
-                    spatialInfo[1]*PIXELS_PER_SPACE,
-                    spatialInfo[2]*PIXELS_PER_SPACE,
-                    spatialInfo[3]*PIXELS_PER_SPACE
-                )
-                color = WHITE
-                pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
+                draw_structure(screen, unit)
 
     for targetedUnit in targetedUnits:
         screen.blit(targetLabel, (targetedUnit.pos_3d[0] * PIXELS_PER_SPACE - targetedUnit.width / 3 *
@@ -152,7 +154,7 @@ while not done:
     attack_team(attackingList, defendingList, targetedUnits)
     attack_team(defendingList, attackingList, targetedUnits)
 
-    draw_teams(defendingList, attackingList)
+    draw_teams(screen, defendingList, attackingList)
 
     pygame.display.update()
     pygame.display.flip()
