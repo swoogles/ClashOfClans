@@ -25,6 +25,11 @@ class ActiveUnit(Unit):
                 self.lastAttack = gameTime
                 self.attack()
 
+        else:
+            moveVec = self.unit_vec_to(self.target)
+            self.move(moveVec)
+
+
     def attack(self):
         self.target.hp_cur -= self.dps
         if (self.target.is_alive() is False):
