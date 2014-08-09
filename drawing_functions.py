@@ -25,7 +25,7 @@ def draw_active_unit(screen, unit, gameTime):
     pygame.draw.arc(screen, RED, myRect, 0, arcLength, 4)
 
     if unit.target is not None:
-        targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
+        targetPos = unit.target.pos_3d[0:2]
         scaledTargetPos = scale_tuple(targetPos, PIXELS_PER_SPACE)
         pygame.draw.line(
             screen, WHITE, scaledPos, scaledTargetPos, 1)
