@@ -43,8 +43,7 @@ def draw_target_marker(screen, unit, pixelsPerSpace):
     # render text
     targetLabel = myfont.render("X", 1, (255, 255, 0))
 
-    screen.blit(targetLabel, ( (unit.pos_3d[0] - unit.width / 3) * pixelsPerSpace, 
-                                (unit.pos_3d[1] - unit.width / 3) * pixelsPerSpace))
+    screen.blit(targetLabel, scale_tuple(unit.pos_3d[0:2], PIXELS_PER_SPACE))
 
 def draw_teams(screen, defendingList, attackingList, targetedUnits, gameTime):
     for unit in itertools.chain(defendingList, attackingList):
