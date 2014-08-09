@@ -8,11 +8,10 @@
 # from clan_bomb import Bomb
 from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
-from clan_stationary_unit import Structure, Wall
+from clan_stationary_unit import Wall
 from game_mechanics import Battle
 from drawing_functions import draw_teams
 from numpy import arange, array
-import itertools
 # from database_functions import *
 from webcolors import *
 from user_input import process_events
@@ -26,7 +25,7 @@ import pygame
 pygame.init()
 
 
-class ClanConfig:
+class ClanConfig(object):
     PIXELS_PER_SPACE = 0
     def __init__(self):
         config = configparser.ConfigParser()
