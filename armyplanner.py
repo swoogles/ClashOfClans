@@ -39,16 +39,6 @@ class GameBoard(object):
         self._boardSpots = arange(1600).reshape(self.width, self.height)
 
 
-class Barracks(object):
-    _prop_levels_capacity = {}
-    _prop_levels_capacity[4] = 35
-    _prop_levels_capacity[5] = 40
-    _prop_levels_capacity[6] = 45
-
-    def __init__(self, level=1):
-        self.capacity = self._prop_levels_capacity[level]
-        self.level = level
-
 curBattle = Battle()
 
 barbarian = Barbarian(2)

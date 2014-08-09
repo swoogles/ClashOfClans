@@ -14,3 +14,14 @@ class Wall(Structure):
     def __init__(self, level=1):
         super(Wall, self).__init__(level)
         self.width = 1
+
+class Barracks(object):
+    _prop_levels_capacity = {}
+    _prop_levels_capacity[4] = 35
+    _prop_levels_capacity[5] = 40
+    _prop_levels_capacity[6] = 45
+
+    def __init__(self, level=1):
+        self.capacity = self._prop_levels_capacity[level]
+        self.level = level
+
