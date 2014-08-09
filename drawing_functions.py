@@ -26,15 +26,13 @@ def draw_active_unit(screen, unit, gameTime):
 
     if unit.target is not None:
         targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
-        scaledTargetPos = tuple(
-            [e * PIXELS_PER_SPACE for e in targetPos])
+        scaledTargetPos = scale_tuple_for_drawing(targetPos, PIXELS_PER_SPACE)
         pygame.draw.line(
             screen, WHITE, scaledPos, scaledTargetPos, 1)
 
 def draw_structure(screen, unit):
     color, spatialInfo, fill = unit.drawing_info()
-    scaledSpatialInfo = tuple([e * PIXELS_PER_SPACE 
-                                for e in spatialInfo])
+    scaledSpatialInfo = scale_tuple_for_drawing(spatialInfo, PIXELS_PER_SPACE)
     color = WHITE
     pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
 
