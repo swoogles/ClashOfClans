@@ -92,7 +92,6 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 gameTime = 0.0
-PI = 3.14
 # -------- Main Program Loop -----------
 while not done:
     screen.fill(ClanColors.BLACK)

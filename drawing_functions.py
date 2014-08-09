@@ -2,9 +2,9 @@ import itertools
 from clan_active_unit import ActiveUnit
 from clan_stationary_unit import Structure
 from colors import ClanColors
+from math import pi
 import pygame
 
-PI = 3.14
 PIXELS_PER_SPACE = 30
 
 def scale_tuple(origTuple, scalar):
@@ -17,7 +17,7 @@ def draw_active_unit(screen, unit, gameTime):
     pygame.draw.circle(
         screen, color, scaledPos, drawWidth, fill)
     myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
-    arcLength = unit.cooldown_percentage(gameTime) * 2 * PI
+    arcLength = unit.cooldown_percentage(gameTime) * 2 * pi
     pygame.draw.arc(screen, ClanColors.RED, myRect, 0, arcLength, 4)
 
     if unit.target is not None:
