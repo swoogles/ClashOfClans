@@ -11,13 +11,13 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
-def scale_tuple_for_drawing(origTuple, scalar):
+def scale_tuple(origTuple, scalar):
     return tuple([e * scalar for e in origTuple])
 
 def draw_active_unit(screen, unit, gameTime):
     color, pos, width, fill = unit.drawing_info()
     drawWidth = width * PIXELS_PER_SPACE
-    scaledPos = scale_tuple_for_drawing(pos, PIXELS_PER_SPACE)
+    scaledPos = scale_tuple(pos, PIXELS_PER_SPACE)
     pygame.draw.circle(
         screen, color, scaledPos, drawWidth, fill)
     myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
@@ -26,13 +26,13 @@ def draw_active_unit(screen, unit, gameTime):
 
     if unit.target is not None:
         targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
-        scaledTargetPos = scale_tuple_for_drawing(targetPos, PIXELS_PER_SPACE)
+        scaledTargetPos = scale_tuple(targetPos, PIXELS_PER_SPACE)
         pygame.draw.line(
             screen, WHITE, scaledPos, scaledTargetPos, 1)
 
 def draw_structure(screen, unit):
     color, spatialInfo, fill = unit.drawing_info()
-    scaledSpatialInfo = scale_tuple_for_drawing(spatialInfo, PIXELS_PER_SPACE)
+    scaledSpatialInfo = scale_tuple(spatialInfo, PIXELS_PER_SPACE)
     color = WHITE
     pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
 
