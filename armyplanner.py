@@ -30,13 +30,12 @@ class ClanConfig(object):
     def __init__(self):
         config = configparser.ConfigParser()
         config.read('config.ini')
-        self.PIXELS_PER_SPACE = config['DEFAULT']['PixelsPerSpace']
+        self.PIXELS_PER_SPACE = int(config['DEFAULT']['PixelsPerSpace'])
 
 curConfig = ClanConfig()
 print( curConfig.PIXELS_PER_SPACE )
 
 FPS = 60
-PIXELS_PER_SPACE = 30
 
 class GameBoard(object):
     width = 40
@@ -69,7 +68,7 @@ for attacker in attackingList:
     attacker.fill = 1
 
 
-screenSize = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
+screenSize = (board.width * curConfig.PIXELS_PER_SPACE, board.height * curConfig.PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(screenSize)
 pygame.display.set_caption("Bill's Cool Game")
 
@@ -113,4 +112,4 @@ while not done:
     pygame.display.update()
     pygame.display.flip()
 
-    done = process_events(screen, PIXELS_PER_SPACE, attackingList, defendingList)
+    done = process_events(screen, curConfig.PIXELS_PER_SPACE, attackingList, defendingList)
