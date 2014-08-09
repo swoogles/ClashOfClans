@@ -15,7 +15,7 @@ from numpy import arange, array
 # from database_functions import *
 from webcolors import *
 from user_input import process_events
-# from colors import ClanColors
+from colors import ClanColors
 
 import configparser 
 
@@ -37,12 +37,6 @@ print( curConfig.PIXELS_PER_SPACE )
 
 FPS = 60
 PIXELS_PER_SPACE = 30
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-
 
 class GameBoard(object):
     width = 40
@@ -71,7 +65,7 @@ defendingList.extend(wallList)
 
 attackingList = [Barbarian() for i in range(4)]
 for attacker in attackingList:
-    attacker.color = GREEN
+    attacker.color = ClanColors.GREEN
     attacker.fill = 1
 
 
@@ -106,7 +100,7 @@ gameTime = 0.0
 PI = 3.14
 # -------- Main Program Loop -----------
 while not done:
-    screen.fill(BLACK)
+    screen.fill(ClanColors.BLACK)
     clock.tick(FPS)
     gameTime += 1.0 / FPS
     # --- Main event loop
