@@ -10,6 +10,7 @@ from units_specific import Barbarian, Archer
 from clan_active_unit import ActiveUnit
 from clan_stationary_unit import Structure, Wall
 from game_mechanics import Battle
+from drawing_functions import draw_teams
 from numpy import arange, array
 import itertools
 # from database_functions import *
@@ -61,56 +62,11 @@ for attacker in attackingList:
     attacker.color = GREEN
     attacker.fill = 1
 
-def draw_active_unit(screen, unit):
-    color, pos, width, fill = unit.drawing_info()
-    drawWidth = width * PIXELS_PER_SPACE
-    scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
-    pygame.draw.circle(
-        screen, color, scaledPos, drawWidth, fill)
-    myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
-    arcLength = unit.cooldown_percentage(gameTime) * 2 * PI
-    pygame.draw.arc(screen, RED, myRect, 0, arcLength, 4)
-
-    if unit.target is not None:
-        targetPos = (unit.target.pos_3d[0], unit.target.pos_3d[1])
-        scaledTargetPos = tuple(
-            [e * PIXELS_PER_SPACE for e in targetPos])
-        pygame.draw.line(
-            screen, WHITE, scaledPos, scaledTargetPos, 1)
-
-def draw_structure(screen, unit):
-    color, spatialInfo, fill = unit.drawing_info()
-    scaledSpatialInfo = tuple([e * PIXELS_PER_SPACE 
-                                for e in spatialInfo])
-    color = WHITE
-    pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
-
-def draw_target_marker(screen, unit, pixelsPerSpace):
-    screen.blit(targetLabel, ( (unit.pos_3d[0] - unit.width / 3) * pixelsPerSpace, 
-                                (unit.pos_3d[1] - unit.width / 3) * pixelsPerSpace))
-
-def draw_teams(screen, defendingList, attackingList):
-    for unit in itertools.chain(defendingList, attackingList):
-        if unit.is_alive():
-            if isinstance(unit, ActiveUnit):
-                draw_active_unit(screen, unit)
-            elif isinstance(unit, Structure):
-                draw_structure(screen, unit)
-
-    for targetedUnit in targetedUnits:
-        draw_target_marker(screen, targetedUnit, PIXELS_PER_SPACE )
-
 
 screenSize = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
 screen = pygame.display.set_mode(screenSize)
 pygame.display.set_caption("Bill's Cool Game")
 
-# initialize font; must be called after 'pygame.init()' to avoid 'Font not
-# Initialized' error
-myfont = pygame.font.SysFont("monospace", 25)
-
-# render text
-targetLabel = myfont.render("X", 1, (255, 255, 0))
 
 
 def attack_team(attackingList, defendingList, targetedUnits):
@@ -147,7 +103,7 @@ while not done:
     attack_team(attackingList, defendingList, targetedUnits)
     attack_team(defendingList, attackingList, targetedUnits)
 
-    draw_teams(screen, defendingList, attackingList)
+    draw_teams(screen, defendingList, attackingList, targetedUnits, gameTime)
 
     pygame.display.update()
     pygame.display.flip()
