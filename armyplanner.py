@@ -18,10 +18,23 @@ from webcolors import *
 from user_input import process_events
 # from colors import ClanColors
 
+import configparser 
+
 # Import a library of functions called 'pygame'
 import pygame
 # Initialize the game engine
 pygame.init()
+
+
+class ClanConfig:
+    PIXELS_PER_SPACE = 0
+    def __init__(self):
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        self.PIXELS_PER_SPACE = config['DEFAULT']['PixelsPerSpace']
+
+curConfig = ClanConfig()
+print( curConfig.PIXELS_PER_SPACE )
 
 FPS = 60
 PIXELS_PER_SPACE = 30
@@ -97,7 +110,6 @@ while not done:
     screen.fill(BLACK)
     clock.tick(FPS)
     gameTime += 1.0 / FPS
-    # print("Gametime: ", gameTime )
     # --- Main event loop
     targetedUnits = []
     attack_team(attackingList, defendingList, targetedUnits)
