@@ -11,10 +11,13 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
+def scale_tuple_for_drawing(origTuple, scalar):
+    return tuple([e * scalar for e in origTuple])
+
 def draw_active_unit(screen, unit, gameTime):
     color, pos, width, fill = unit.drawing_info()
     drawWidth = width * PIXELS_PER_SPACE
-    scaledPos = tuple([e * PIXELS_PER_SPACE for e in pos])
+    scaledPos = scale_tuple_for_drawing(pos, PIXELS_PER_SPACE)
     pygame.draw.circle(
         screen, color, scaledPos, drawWidth, fill)
     myRect = pygame.Rect(scaledPos[0]-drawWidth,scaledPos[1]-drawWidth,drawWidth*2,drawWidth*2)
