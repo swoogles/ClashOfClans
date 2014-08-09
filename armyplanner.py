@@ -85,6 +85,10 @@ def draw_structure(screen, unit):
     color = WHITE
     pygame.draw.rect(screen, color, scaledSpatialInfo, fill)
 
+def draw_target_marker(screen, unit, pixelsPerSpace):
+    screen.blit(targetLabel, ( (unit.pos_3d[0] - unit.width / 3) * pixelsPerSpace, 
+                                (unit.pos_3d[1] - unit.width / 3) * pixelsPerSpace))
+
 def draw_teams(screen, defendingList, attackingList):
     for unit in itertools.chain(defendingList, attackingList):
         if unit.is_alive():
@@ -94,12 +98,11 @@ def draw_teams(screen, defendingList, attackingList):
                 draw_structure(screen, unit)
 
     for targetedUnit in targetedUnits:
-        screen.blit(targetLabel, ( (targetedUnit.pos_3d[0] - targetedUnit.width / 3) * PIXELS_PER_SPACE, 
-                                    (targetedUnit.pos_3d[1] - targetedUnit.width / 3) * PIXELS_PER_SPACE))
+        draw_target_marker(screen, targetedUnit, PIXELS_PER_SPACE )
 
 
-size = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
-screen = pygame.display.set_mode(size)
+screenSize = (board.width * PIXELS_PER_SPACE, board.height * PIXELS_PER_SPACE)
+screen = pygame.display.set_mode(screenSize)
 pygame.display.set_caption("Bill's Cool Game")
 
 # initialize font; must be called after 'pygame.init()' to avoid 'Font not
