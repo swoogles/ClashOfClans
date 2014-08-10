@@ -46,6 +46,14 @@ archer = Archer(2)
 curBattle.add_defending_unit(archer)
 
 board = GameBoard()
+board.printSpots()
+neighbors = board.find_neighbors(0,2)
+
+for neighbor in neighbors:
+    print(neighbor)
+
+for i in range(0,2):
+    print("i: ", i)
 
 defendingList = [Barbarian() for i in range(5)]
 defendingList.extend(Archer() for i in range(5))
