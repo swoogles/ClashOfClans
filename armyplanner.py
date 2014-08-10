@@ -11,11 +11,12 @@ from clan_active_unit import ActiveUnit
 from clan_stationary_unit import Wall
 from game_mechanics import Battle
 from drawing_functions import draw_teams
-from numpy import arange, array
+from numpy import array
 # from database_functions import *
 from webcolors import *
 from user_input import process_events
 from colors import ClanColors
+from gameboard import GameBoard
 
 import configparser 
 
@@ -36,14 +37,6 @@ curConfig = ClanConfig()
 print( curConfig.PIXELS_PER_SPACE )
 
 FPS = 60
-
-class GameBoard(object):
-    width = 40
-    height = 40
-
-    def __init__(self):
-        self._boardSpots = arange(1600).reshape(self.width, self.height)
-
 
 curBattle = Battle()
 
