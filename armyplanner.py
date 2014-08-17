@@ -47,10 +47,11 @@ curBattle.add_defending_unit(archer)
 
 board = GameBoard()
 board.printSpots()
-neighbors = board.find_neighbors(0,2)
+# print(board.find_neighbors(1,1))
+neighbors = board.find_neighbors(1,7)
 
 for neighbor in neighbors:
-    print(neighbor)
+    print("Neighbor.pos:", neighbor.x, neighbor.y)
 
 for i in range(0,2):
     print("i: ", i)
