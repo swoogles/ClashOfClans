@@ -34,17 +34,15 @@ class GameBoard(object):
 
     def connectSpots(self):
         width, height = self.lattice.shape
-        for row in range(0,height-1):
-            for col in range(0,width-1):
+        for row in range(0,height):
+            for col in range(0,width):
                 self.lattice[row][col].vertex = self.graphMain.add_vertex()
 
-        for row in range(0,height-1):
-            for col in range(0,width-1):
+        for row in range(0,height):
+            for col in range(0,width):
                 neighbors = self.find_neighbors(row,col)
                 for neighbor in neighbors:
                     if neighbor.vertex is not None:
-                        # print("Self.vertex: ", self.lattice[row][col].vertex)
-                        # print("Neighbor.vertex:,", neighbor.vertex)
                         self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
 
         # graphMain = Graph()
