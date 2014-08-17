@@ -1,10 +1,15 @@
 from graph_tool.all import *
 import random
+from gameboard import GameBoard
+
+myGameBoard = GameBoard()
+myGameBoard.printSpots()
+
 
 # from Queue import Queue
-ug = Graph(directed=False)
-ug.set_directed(False)
-assert(ug.is_directed() == False)
+ug = Graph(directed=True)
+# ug.set_directed(False)
+# assert(ug.is_directed() == False)
 vertices = []
 g1 = Graph()
 v1 = ug.add_vertex()
