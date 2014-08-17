@@ -3,17 +3,19 @@ from graph_tool.all import *
 
 class BoardSpot(object):
     occupied = False
+    vertex = None
     # def __init__(self, x=0,y=0,vertex):
     def __init__(self, x=0,y=0):
         self.x = x
         self.y = y
         # self.vertex
-        # v1 = ug.add_vertex()
+        # v1 = graphMain.add_vertex()
 
 class GameBoard(object):
     width = 8
     height = 8
-    ug = Graph(directed=False)
+
+    graphMain = Graph(directed=False)
 
     def __init__(self):
         totalSpots = self.width*self.height
@@ -28,7 +30,22 @@ class GameBoard(object):
 
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
+        self.connectSpots()
 
+    def connectSpots(self):
+        width, height = self.lattice.shape
+        for row in range(0,height-1):
+            for col in range(0,width-1):
+                self.lattice[row][col].vertex = self.graphMain.add_vertex()
+
+        for row in range(0,height-1):
+            for col in range(0,width-1):
+                neighbors = self.find_neighbors(row,col)
+                for neighbor in neighbors:
+                    if neighbor.vertex is not None:
+                        # print("Self.vertex: ", self.lattice[row][col].vertex)
+                        # print("Neighbor.vertex:,", neighbor.vertex)
+                        self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
 
         # graphMain = Graph()
         # for i in range(4):
@@ -43,7 +60,7 @@ class GameBoard(object):
     def printSpots(self):
         for row in self.lattice:
             for column in row:
-                # column.vertex = self.ug.add_vertex()
+                # column.vertex = self.graphMain.add_vertex()
                 print(column,end=",")
             print()
 
@@ -52,6 +69,7 @@ class GameBoard(object):
         width, height = self.lattice.shape
         print("width %s", width)
         print("height %s", height)
+        print("Target: ", targetRow, ",", targetCol)
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
                 valid = True
@@ -83,3 +101,5 @@ class GameBoard(object):
         return spotList
 
 
+myGameBoard = GameBoard()
+graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=18, output_size=(200, 200))
