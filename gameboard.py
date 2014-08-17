@@ -12,8 +12,8 @@ class BoardSpot(object):
         # v1 = graphMain.add_vertex()
 
 class GameBoard(object):
-    width = 8
-    height = 8
+    width = 4
+    height = 4
 
     graphMain = Graph(directed=False)
 
@@ -102,4 +102,7 @@ class GameBoard(object):
 
 
 myGameBoard = GameBoard()
-graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=18, output_size=(200, 200))
+
+# graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=18, output_size=(200, 200))
+
+graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4)
