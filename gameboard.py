@@ -3,9 +3,12 @@ from graph_tool.all import *
 
 class BoardSpot(object):
     occupied = False
+    # def __init__(self, x=0,y=0,vertex):
     def __init__(self, x=0,y=0):
         self.x = x
         self.y = y
+        # self.vertex
+        # v1 = ug.add_vertex()
 
 class GameBoard(object):
     width = 8
@@ -51,22 +54,28 @@ class GameBoard(object):
         print("height %s", height)
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
+                valid = True
                 finalRow = row
                 finalCol = col
                 if row < 0:
                     finalRow = height-1
+                    valid = False
 
                 if row > height-1:
                     finalRow = 0
+                    valid = False
 
                 if col < 0:
                     finalCol = width-1
+                    valid = False
 
                 if col > width-1:
                     print("Col:", col)
                     finalCol = 0
+                    valid = False
 
-                spotList.append( self.lattice[finalRow][finalCol] )
+                if valid:
+                    spotList.append( self.lattice[finalRow][finalCol] )
                 # if i > 0 and i < len(self.lattice[row]):
                 #     if j > 0 and i < len(self.lattice[row]):
                 # Out[9]: (4, 4)
