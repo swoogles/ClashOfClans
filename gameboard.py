@@ -15,12 +15,13 @@ class GameBoard(object):
     width = 4
     height = 4
 
+
     graphMain = Graph(directed=False)
+    color = graphMain.new_vertex_property("int")
 
     def __init__(self):
         totalSpots = self.width*self.height
         self._boardSpots = arange(totalSpots).reshape(self.width, self.height)
-
         # vSite = vectorize(BoardSpot)
 
         init_arry = arange(totalSpots).reshape((self.width, self.height))
@@ -31,6 +32,12 @@ class GameBoard(object):
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
         self.connectSpots()
+        self.color[self.lattice[1][1].vertex] = 10000
+        # color[1,1] = 0
+        # print(self.lattice[1][1].find_neighbors())
+        for neighbor in self.find_neighbors(1,1):
+            print("Damn")
+            self.color[neighbor.vertex] = 5000
 
     def connectSpots(self):
         width, height = self.lattice.shape
@@ -65,9 +72,7 @@ class GameBoard(object):
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
-        print("width %s", width)
-        print("height %s", height)
-        print("Target: ", targetRow, ",", targetCol)
+        # print("Target: ", targetRow, ",", targetCol)
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
                 valid = True
@@ -86,7 +91,6 @@ class GameBoard(object):
                     valid = False
 
                 if col > width-1:
-                    print("Col:", col)
                     finalCol = 0
                     valid = False
 
@@ -103,4 +107,7 @@ myGameBoard = GameBoard()
 
 # graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=18, output_size=(200, 200))
 
-graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4)
+# age = myGameBoard.graphMain.vertex_properties["age"]
+
+graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+
