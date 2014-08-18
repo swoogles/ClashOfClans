@@ -12,8 +12,8 @@ class BoardSpot(object):
         # v1 = graphMain.add_vertex()
 
 class GameBoard(object):
-    width = 4
-    height = 4
+    width = 8
+    height = 8
 
 
     graphMain = Graph(directed=False)
@@ -32,12 +32,6 @@ class GameBoard(object):
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
         self.connectSpots()
-        self.color[self.lattice[1][1].vertex] = 10000
-        # color[1,1] = 0
-        # print(self.lattice[1][1].find_neighbors())
-        for neighbor in self.find_neighbors(1,1):
-            print("Damn")
-            self.color[neighbor.vertex] = 5000
 
     def connectSpots(self):
         width, height = self.lattice.shape
@@ -69,9 +63,15 @@ class GameBoard(object):
                 print(column,end=",")
             print()
 
+    def reset_colors(self):
+        width, height = self.lattice.shape
+        for row in range(0,height):
+            for col in range(0,width):
+                self.color[self.lattice[row][col].vertex] = 0
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
+                # myGameBoard.color[myGameBoard.lattice[1][1].vertex] = 10000
         # print("Target: ", targetRow, ",", targetCol)
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
@@ -84,6 +84,9 @@ class GameBoard(object):
 
                 if row > height-1:
                     finalRow = 0
+                    valid = False
+
+                if row == targetRow and col == targetCol:
                     valid = False
 
                 if col < 0:
@@ -109,5 +112,17 @@ myGameBoard = GameBoard()
 
 # age = myGameBoard.graphMain.vertex_properties["age"]
 
-graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+myGameBoard.color[myGameBoard.lattice[1][1].vertex] = 10000
+# color[1,1] = 0
+# print(self.lattice[1][1].find_neighbors())
+for neighbor in myGameBoard.find_neighbors(1,1):
+    myGameBoard.color[neighbor.vertex] = 5000
 
+# graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+
+
+for i in range(2,7):
+    graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+    myGameBoard.reset_colors()
+    for neighbor in myGameBoard.find_neighbors(i,i):
+        myGameBoard.color[neighbor.vertex] = 5000
