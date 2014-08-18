@@ -18,6 +18,7 @@ class GameBoard(object):
 
     graphMain = Graph(directed=False)
     color = graphMain.new_vertex_property("int")
+    pos = graphMain.new_vertex_property("vector<double>")
 
     def __init__(self):
         totalSpots = self.width*self.height
@@ -68,6 +69,8 @@ class GameBoard(object):
         for row in range(0,height):
             for col in range(0,width):
                 self.color[self.lattice[row][col].vertex] = 0
+                self.color[self.lattice[row][col].vertex] = 0
+                self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
@@ -122,7 +125,7 @@ for neighbor in myGameBoard.find_neighbors(1,1):
 
 
 for i in range(2,7):
-    graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+    graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
     myGameBoard.reset_colors()
     for neighbor in myGameBoard.find_neighbors(i,i):
         myGameBoard.color[neighbor.vertex] = 5000
