@@ -107,6 +107,12 @@ frontier = Queue()
 startIdx = 5
 frontier.put( myGameBoard.lattice[startIdx][startIdx] )
 
+picCnt=0
+
+def graphSnapshot(myGameBoard,picCnt):
+    # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
+    result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos, output="board"+str(picCnt)+".png")
+    print(result)
 
 for i in range(startIdx,startIdx+5):
     myGameBoard.reset_colors()
@@ -123,10 +129,10 @@ for i in range(startIdx,startIdx+5):
                 nextFrontier.put(neighbor)
                 visited.append(neighbor)
 
+        graphSnapshot(myGameBoard,picCnt)
+        picCnt+=1
+
         visited.append(target)
 
     frontier = nextFrontier
 
-    # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
-    result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos, output="board"+str(i)+".png")
-    print(result)
