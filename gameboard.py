@@ -1,5 +1,6 @@
 from numpy import arange, array, empty, vectorize
 from graph_tool.all import *
+from queue import Queue
 
 class BoardSpot(object):
     occupied = False
@@ -12,8 +13,8 @@ class BoardSpot(object):
         # v1 = graphMain.add_vertex()
 
 class GameBoard(object):
-    width = 8
-    height = 8
+    width = 20
+    height = 20
 
 
     graphMain = Graph(directed=False)
@@ -68,9 +69,9 @@ class GameBoard(object):
         width, height = self.lattice.shape
         for row in range(0,height):
             for col in range(0,width):
-                self.color[self.lattice[row][col].vertex] = 0
-                self.color[self.lattice[row][col].vertex] = 0
+                self.color[self.lattice[row][col].vertex] = 10000
                 self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
+
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
@@ -111,21 +112,36 @@ class GameBoard(object):
 
 myGameBoard = GameBoard()
 
-# graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=18, output_size=(200, 200))
+myQueue = Queue()
+visited = []
+# frontier = []
+frontier = Queue()
 
-# age = myGameBoard.graphMain.vertex_properties["age"]
-
-myGameBoard.color[myGameBoard.lattice[1][1].vertex] = 10000
-# color[1,1] = 0
-# print(self.lattice[1][1].find_neighbors())
-for neighbor in myGameBoard.find_neighbors(1,1):
-    myGameBoard.color[neighbor.vertex] = 5000
-
-# graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), output="board.png", vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color)
+startIdx = 5
+frontier.put( myGameBoard.lattice[startIdx][startIdx] )
 
 
-for i in range(2,7):
-    graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=30, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
+for i in range(startIdx,startIdx+5):
     myGameBoard.reset_colors()
-    for neighbor in myGameBoard.find_neighbors(i,i):
-        myGameBoard.color[neighbor.vertex] = 5000
+    nextFrontier = Queue()
+
+    while ( frontier.empty() != True ):
+        target = frontier.get()
+        # myGameBoard.color[target.vertex] = 5000
+        myGameBoard.color[target.vertex] = 5000
+        row = target.y
+        col = target.x
+
+        for neighbor in myGameBoard.find_neighbors(row,col):
+            if neighbor not in visited:
+                nextFrontier.put(neighbor)
+                visited.append(neighbor)
+            # myGameBoard.color[neighbor.vertex] = 5000
+
+        visited.append(target)
+
+    frontier = nextFrontier
+
+    # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
+    result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos, output="board"+str(i)+".png")
+    print(result)
