@@ -16,7 +16,7 @@ class GameBoard(object):
 
 
     graphMain = Graph(directed=False)
-    color = graphMain.new_vertex_property("int")
+    color = graphMain.new_vertex_property("string")
     pos = graphMain.new_vertex_property("vector<double>")
 
     def __init__(self):
@@ -57,13 +57,13 @@ class GameBoard(object):
         width, height = self.lattice.shape
         for row in range(0,height):
             for col in range(0,width):
-                self.color[self.lattice[row][col].vertex] = 10000
+                self.color[self.lattice[row][col].vertex] = "green"
                 self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
 
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
-                # myGameBoard.color[myGameBoard.lattice[1][1].vertex] = 10000
+                # myGameBoard.color[myGameBoard.lattice[1][1].vertex] = "red"
         # print("Target: ", targetRow, ",", targetCol)
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
@@ -113,26 +113,37 @@ def graphSnapshot(myGameBoard,picCnt):
     # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
     result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos, output="board"+str(picCnt)+".png")
     print(result)
+    return picCnt + 1
 
-for i in range(startIdx,startIdx+5):
-    myGameBoard.reset_colors()
+myGameBoard.reset_colors()
+
+for i in range(startIdx,startIdx+3):
+    for spot in visited:
+        myGameBoard.color[spot.vertex] = "green"
     nextFrontier = Queue()
 
     while ( frontier.empty() != True ):
         target = frontier.get()
-        myGameBoard.color[target.vertex] = 5000
+        visited.append(target)
+        myGameBoard.color[target.vertex] = "white"
         row = target.y
         col = target.x
 
         for neighbor in myGameBoard.find_neighbors(row,col):
             if neighbor not in visited:
                 nextFrontier.put(neighbor)
-                visited.append(neighbor)
+                # visited.append(neighbor)
 
-        graphSnapshot(myGameBoard,picCnt)
-        picCnt+=1
+        picCnt = graphSnapshot(myGameBoard,picCnt)
+        myGameBoard.reset_colors()
 
         visited.append(target)
 
-    frontier = nextFrontier
+    # frontier = nextFrontier
+
+    while nextFrontier.empty() == False:
+        transitionSpot = nextFrontier.get()
+
+        myGameBoard.color[transitionSpot.vertex] = "blue"
+        frontier.put(transitionSpot)
 
