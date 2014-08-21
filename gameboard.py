@@ -5,12 +5,10 @@ from queue import Queue
 class BoardSpot(object):
     occupied = False
     vertex = None
-    # def __init__(self, x=0,y=0,vertex):
+
     def __init__(self, x=0,y=0):
         self.x = x
         self.y = y
-        # self.vertex
-        # v1 = graphMain.add_vertex()
 
 class GameBoard(object):
     width = 20
@@ -48,20 +46,10 @@ class GameBoard(object):
                     if neighbor.vertex is not None:
                         self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
 
-        # graphMain = Graph()
-        # for i in range(4):
-        #     for j in range(4):
-        #         self.find_neighbors(i,j)
-
-
-
-        # self.lattice = array( [ [BoardSpot() for i in range(self.width)] for j in range(self.height) ],
-        #                             dtype=object)
 
     def printSpots(self):
         for row in self.lattice:
             for column in row:
-                # column.vertex = self.graphMain.add_vertex()
                 print(column,end=",")
             print()
 
@@ -114,7 +102,6 @@ myGameBoard = GameBoard()
 
 myQueue = Queue()
 visited = []
-# frontier = []
 frontier = Queue()
 
 startIdx = 5
@@ -127,7 +114,6 @@ for i in range(startIdx,startIdx+5):
 
     while ( frontier.empty() != True ):
         target = frontier.get()
-        # myGameBoard.color[target.vertex] = 5000
         myGameBoard.color[target.vertex] = 5000
         row = target.y
         col = target.x
@@ -136,7 +122,6 @@ for i in range(startIdx,startIdx+5):
             if neighbor not in visited:
                 nextFrontier.put(neighbor)
                 visited.append(neighbor)
-            # myGameBoard.color[neighbor.vertex] = 5000
 
         visited.append(target)
 
