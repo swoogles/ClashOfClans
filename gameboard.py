@@ -64,9 +64,9 @@ class GameBoard(object):
 
         # Draw walls
         startingDiagonal=12
-        squareSize=2
+        squareSize=4
         wallPositions = (
-                (3,3),(10,2),(7,3),
+                (3,20),(10,2),(7,1),
                 (24,22),(30,10)
                 )
         for x,y in wallPositions:
@@ -109,15 +109,11 @@ class GameBoard(object):
 
                 if valid:
                     spotList.append( self.lattice[finalRow][finalCol] )
-                # if i > 0 and i < len(self.lattice[row]):
-                #     if j > 0 and i < len(self.lattice[row]):
-                # Out[9]: (4, 4)
 
         return spotList
 
 
 myGameBoard = GameBoard()
-
 myQueue = Queue()
 visited = []
 frontier = Queue()
@@ -128,7 +124,6 @@ frontier.put( myGameBoard.lattice[startIdx][startIdx] )
 picCnt=0
 
 def graphSnapshot(myGameBoard,picCnt,fileName):
-    # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
     result = graph_draw(
             myGameBoard.graphMain, 
             vertex_text=myGameBoard.graphMain.vertex_index, 
@@ -138,6 +133,7 @@ def graphSnapshot(myGameBoard,picCnt,fileName):
             vertex_color=myGameBoard.color, 
             vertex_fill_color=myGameBoard.color, 
             pos=myGameBoard.pos, 
+            #Remove output parameter for interactive window
             output=fileName+str(picCnt)+".png"
             )
     print(result)
@@ -163,14 +159,10 @@ for i in range(startIdx,startIdx+numrounds):
             for neighbor in myGameBoard.find_neighbors(row,col):
                 if neighbor not in visited:
                     nextFrontier.put(neighbor)
-                    # visited.append(neighbor)
 
-            # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameMain)
             myGameBoard.reset_colors()
 
             visited.append(target)
-
-        # frontier = nextFrontier
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
