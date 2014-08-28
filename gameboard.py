@@ -2,7 +2,7 @@ from numpy import arange, array, empty, vectorize
 from graph_tool.all import *
 from queue import Queue
 
-numrounds = 50
+numrounds = 40
 
 class BoardSpot(object):
     occupied = False
@@ -13,8 +13,8 @@ class BoardSpot(object):
         self.y = y
 
 class GameBoard(object):
-    width = 20
-    height = 20
+    width = 40
+    height = 40
 
 
     graphMain = Graph(directed=False)
@@ -34,6 +34,10 @@ class GameBoard(object):
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
         self.connectSpots()
+
+        for row in range(12,15):
+            for col in range(12,15):
+                self.lattice[row][col].occupied = True
 
     def connectSpots(self):
         width, height = self.lattice.shape
@@ -89,6 +93,9 @@ class GameBoard(object):
 
                 if col > width-1:
                     finalCol = 0
+                    valid = False
+
+                if valid and self.lattice[row][col].occupied is True:
                     valid = False
 
                 if valid:
