@@ -2,7 +2,7 @@ from numpy import arange, array, empty, vectorize
 from graph_tool.all import *
 from queue import Queue
 
-numrounds = 10
+numrounds = 50
 
 class BoardSpot(object):
     occupied = False
@@ -138,22 +138,23 @@ for i in range(startIdx,startIdx+numrounds):
 
     while ( frontier.empty() != True ):
         target = frontier.get()
-        visited.append(target)
-        myGameBoard.color[target.vertex] = "white"
-        row = target.y
-        col = target.x
+        if target not in visited:
+            visited.append(target)
+            myGameBoard.color[target.vertex] = "white"
+            row = target.y
+            col = target.x
 
-        for neighbor in myGameBoard.find_neighbors(row,col):
-            if neighbor not in visited:
-                nextFrontier.put(neighbor)
-                # visited.append(neighbor)
+            for neighbor in myGameBoard.find_neighbors(row,col):
+                if neighbor not in visited:
+                    nextFrontier.put(neighbor)
+                    # visited.append(neighbor)
 
-        # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameMain)
-        myGameBoard.reset_colors()
+            # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameMain)
+            myGameBoard.reset_colors()
 
-        visited.append(target)
+            visited.append(target)
 
-    # frontier = nextFrontier
+        # frontier = nextFrontier
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
