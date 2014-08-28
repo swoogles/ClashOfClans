@@ -2,6 +2,8 @@ from numpy import arange, array, empty, vectorize
 from graph_tool.all import *
 from queue import Queue
 
+numrounds = 10
+
 class BoardSpot(object):
     occupied = False
     vertex = None
@@ -109,15 +111,27 @@ frontier.put( myGameBoard.lattice[startIdx][startIdx] )
 
 picCnt=0
 
-def graphSnapshot(myGameBoard,picCnt):
+def graphSnapshot(myGameBoard,picCnt,fileName):
     # result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos)
-    result = graph_draw(myGameBoard.graphMain, vertex_text=myGameBoard.graphMain.vertex_index, vertex_font_size=4, output_size=(600, 600), vertex_size=4, vertex_color=myGameBoard.color, vertex_fill_color=myGameBoard.color, pos=myGameBoard.pos, output="board"+str(picCnt)+".png")
+    result = graph_draw(
+            myGameBoard.graphMain, 
+            vertex_text=myGameBoard.graphMain.vertex_index, 
+            vertex_font_size=4, 
+            output_size=(600, 600), 
+            vertex_size=4, 
+            vertex_color=myGameBoard.color, 
+            vertex_fill_color=myGameBoard.color, 
+            pos=myGameBoard.pos, 
+            output=fileName+str(picCnt)+".png"
+            )
     print(result)
     return picCnt + 1
 
 myGameBoard.reset_colors()
+fileNameMain="board"
+fileNameFrontier="frontier"
 
-for i in range(startIdx,startIdx+3):
+for i in range(startIdx,startIdx+numrounds):
     for spot in visited:
         myGameBoard.color[spot.vertex] = "green"
     nextFrontier = Queue()
@@ -134,7 +148,7 @@ for i in range(startIdx,startIdx+3):
                 nextFrontier.put(neighbor)
                 # visited.append(neighbor)
 
-        picCnt = graphSnapshot(myGameBoard,picCnt)
+        # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameMain)
         myGameBoard.reset_colors()
 
         visited.append(target)
@@ -146,4 +160,6 @@ for i in range(startIdx,startIdx+3):
 
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put(transitionSpot)
+
+    picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
