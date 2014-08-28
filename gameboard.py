@@ -35,10 +35,6 @@ class GameBoard(object):
                                     dtype=object)
         self.connectSpots()
 
-        for row in range(12,15):
-            for col in range(12,15):
-                self.lattice[row][col].occupied = True
-
     def connectSpots(self):
         width, height = self.lattice.shape
         for row in range(0,height):
@@ -65,6 +61,19 @@ class GameBoard(object):
             for col in range(0,width):
                 self.color[self.lattice[row][col].vertex] = "green"
                 self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
+
+        # Draw walls
+        startingDiagonal=12
+        squareSize=2
+        wallPositions = (
+                (3,3),(10,2),(7,3),
+                (24,22),(30,10)
+                )
+        for x,y in wallPositions:
+            for row in range(y,y+squareSize):
+                for col in range(x,x+squareSize):
+                    self.lattice[row][col].occupied = True
+                    self.color[self.lattice[row][col].vertex] = "red"
 
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
