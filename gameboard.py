@@ -64,9 +64,9 @@ class GameBoard(object):
 
         # Draw walls
         startingDiagonal=12
-        squareSize=4
+        squareSize=6
         wallPositions = (
-                (3,20),(10,2),(7,1),
+                (3,20),(15,2),(12,1),
                 (24,22),(30,10)
                 )
         for x,y in wallPositions:
@@ -126,15 +126,15 @@ picCnt=0
 def graphSnapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
-            vertex_text=myGameBoard.graphMain.vertex_index, 
+            # vertex_text=myGameBoard.graphMain.vertex_index, 
             vertex_font_size=4, 
             output_size=(600, 600), 
-            vertex_size=4, 
+            vertex_size=6, 
             vertex_color=myGameBoard.color, 
             vertex_fill_color=myGameBoard.color, 
             pos=myGameBoard.pos, 
             #Remove output parameter for interactive window
-            output=fileName+str(picCnt)+".png"
+            output=fileName+format(picCnt, '02d')+".png"
             )
     print(result)
     return picCnt + 1
