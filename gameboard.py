@@ -174,9 +174,9 @@ for i in range(startIdx,startIdx+numrounds):
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
-
-        myGameBoard.color[transitionSpot.vertex] = "blue"
-        frontier.put(transitionSpot)
+        if transitionSpot not in visited:
+            myGameBoard.color[transitionSpot.vertex] = "blue"
+            frontier.put(transitionSpot)
 
     picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
