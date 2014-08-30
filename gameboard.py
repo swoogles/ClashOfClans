@@ -97,8 +97,11 @@ def findPath(start, goal, came_from, gameBoard):
         current = came_from[current]
         path.append(current)
 
+    return path
+
+def color_path(path,color, gameBoard):
     for spot in path:
-        gameBoard.color[spot.vertex] = "orange"
+        gameBoard.color[spot.vertex] = color
 
 def graphSnapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
@@ -160,6 +163,7 @@ while curRound < numrounds and goal not in came_from:
 
     curRound+=1
 
-findPath(start, goal, came_from, myGameBoard)
+successfulPath = findPath(start, goal, came_from, myGameBoard)
+color_path(successfulPath, "orange", myGameBoard)
 
 picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
