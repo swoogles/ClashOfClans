@@ -1,8 +1,8 @@
-from numpy import arange, array, empty, vectorize
+from numpy import arange, array, empty, ndenumerate, vectorize
 from graph_tool.all import *
 from queue import Queue
 
-numrounds = 40
+numrounds = 15
 
 class BoardSpot(object):
     occupied = False
@@ -37,9 +37,8 @@ class GameBoard(object):
 
     def connectSpots(self):
         width, height = self.lattice.shape
-        for row in range(0,height):
-            for col in range(0,width):
-                self.lattice[row][col].vertex = self.graphMain.add_vertex()
+        for (row, col), val in ndenumerate(self.lattice):
+            self.lattice[row][col].vertex = self.graphMain.add_vertex()
 
         for row in range(0,height):
             for col in range(0,width):
@@ -149,7 +148,6 @@ for i in range(startIdx,startIdx+numrounds):
     while ( frontier.empty() != True ):
         target = frontier.get()
         if target not in visited:
-            visited.append(target)
             # myGameBoard.color[target.vertex] = "white"
             row = target.y
             col = target.x
@@ -157,7 +155,6 @@ for i in range(startIdx,startIdx+numrounds):
             for neighbor in myGameBoard.find_neighbors(row,col):
                 if neighbor not in visited:
                     nextFrontier.put(neighbor)
-
 
             visited.append(target)
 
