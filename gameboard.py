@@ -144,8 +144,6 @@ fileNameFrontier="frontier"
 
 for i in range(startIdx,startIdx+numrounds):
     myGameBoard.reset_colors()
-    for spot in visited:
-        myGameBoard.color[spot.vertex] = "grey"
     nextFrontier = Queue()
 
     while ( frontier.empty() != True ):
@@ -162,6 +160,9 @@ for i in range(startIdx,startIdx+numrounds):
 
 
             visited.append(target)
+
+    for spot in visited:
+        myGameBoard.color[spot.vertex] = "grey"
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
