@@ -71,36 +71,22 @@ class GameBoard(object):
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
-        
+
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
                 valid = True
-                finalRow = row
-                finalCol = col
-                if row < 0:
-                    finalRow = height-1
+                if not 0 <= row <= height-1:
                     valid = False
 
-                if row > height-1:
-                    finalRow = 0
+                if not 0 <= col <= width-1:
                     valid = False
 
+                # Disallow being neighbor of self
                 if row == targetRow and col == targetCol:
                     valid = False
 
-                if col < 0:
-                    finalCol = width-1
-                    valid = False
-
-                if col > width-1:
-                    finalCol = 0
-                    valid = False
-
-                if valid and self.lattice[row][col].occupied is True:
-                    valid = False
-
-                if valid:
-                    spotList.append( self.lattice[finalRow][finalCol] )
+                if valid and not self.lattice[row][col].occupied:
+                    spotList.append( self.lattice[row][col] )
 
         return spotList
 
@@ -160,7 +146,7 @@ while curRound < numrounds and goal not in came_from:
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put(transitionSpot)
 
-    picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
+    # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
     curRound+=1
 
