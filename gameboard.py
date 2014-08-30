@@ -25,8 +25,6 @@ class GameBoard(object):
         totalSpots = self.width*self.height
         self._boardSpots = arange(totalSpots).reshape(self.width, self.height)
 
-        self.lattice = empty((self.width, self.height), dtype=object)
-
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
         self.connectSpots()
