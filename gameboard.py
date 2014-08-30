@@ -1,6 +1,8 @@
 from numpy import arange, array, empty, ndenumerate, vectorize
 from graph_tool.all import *
-from queue import Queue
+from queue import PriorityQueue
+from random import randrange
+import time
 
 numrounds = 20
 
@@ -20,6 +22,7 @@ class GameBoard(object):
     graphMain = Graph(directed=False)
     color = graphMain.new_vertex_property("string")
     pos = graphMain.new_vertex_property("vector<double>")
+    edge_weights = graphMain.new_edge_property('double')
 
     def __init__(self):
         totalSpots = self.width*self.height
@@ -38,7 +41,8 @@ class GameBoard(object):
             neighbors = self.find_neighbors(row,col)
             for neighbor in neighbors:
                 if neighbor.vertex is not None:
-                    self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
+                    newEdge = self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
+                    self.edge_weights[newEdge] = randrange(0, 10)
 
 
     def print_spots(self):
@@ -107,6 +111,7 @@ def graph_snapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
             # vertex_text=myGameBoard.graphMain.vertex_index, 
+            eweight=myGameBoard.edge_weights,
             vertex_font_size=4, 
             output_size=(600, 600), 
             vertex_size=6, 
@@ -119,16 +124,19 @@ def graph_snapshot(myGameBoard,picCnt,fileName):
     print(result)
     return picCnt + 1
 
-
 myGameBoard = GameBoard()
-myQueue = Queue()
-came_from = {}
-frontier = Queue()
-
 startIdx = 5
 start = myGameBoard.lattice[startIdx][startIdx]
 goal = myGameBoard.lattice[startIdx][startIdx+17]
-frontier.put( start )
+
+came_from = {}
+cost_so_far = {}
+frontier = PriorityQueue()
+frontier.put((0, time.time(), start))
+
+
+came_from[start] = None
+cost_so_far[start] = 0
 
 picCnt=0
 
@@ -139,25 +147,35 @@ fileNameFrontier="frontier"
 curRound = 0
 while curRound < numrounds and goal not in came_from:
     myGameBoard.reset_colors()
-    nextFrontier = Queue()
+    nextFrontier = PriorityQueue()
 
     while not frontier.empty():
-        target = frontier.get()
+        target = frontier.get()[2]
         row = target.y
         col = target.x
 
         for neighbor in myGameBoard.find_neighbors(row,col):
             if neighbor not in came_from:
                 came_from[neighbor] = target
-                nextFrontier.put(neighbor)
+                newItem = (10, time.time(), neighbor)
+                nextFrontier.put(newItem)
+                # print("nextFrontier.get: ", nextFrontier.get())
+
+            new_cost = cost_so_far[target] + 1
+            # new_cost = cost_so_far[target] + graph.cost(target, neighbor)
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost
+                frontier.put((priority, time.time(), neighbor))
+                came_from[neighbor] = target
 
     for spot in came_from:
         myGameBoard.color[spot.vertex] = "grey"
 
     while not nextFrontier.empty():
-        transitionSpot = nextFrontier.get()
+        transitionSpot = nextFrontier.get()[2]
         myGameBoard.color[transitionSpot.vertex] = "blue"
-        frontier.put(transitionSpot)
+        frontier.put((1, time.time(), transitionSpot))
 
     # picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
 
