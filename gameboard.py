@@ -153,21 +153,17 @@ while curRound < numrounds and goal not in came_from:
                 came_from[neighbor] = target
                 nextFrontier.put(neighbor)
 
-            # came_from.append(target)
-
     for spot in came_from:
         myGameBoard.color[spot.vertex] = "grey"
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
-        # if transitionSpot not in came_from:
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put(transitionSpot)
 
     picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
     curRound+=1
-
 
 current = goal
 path = [current]
