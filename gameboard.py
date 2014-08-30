@@ -40,12 +40,11 @@ class GameBoard(object):
         for (row, col), val in ndenumerate(self.lattice):
             self.lattice[row][col].vertex = self.graphMain.add_vertex()
 
-        for row in range(0,height):
-            for col in range(0,width):
-                neighbors = self.find_neighbors(row,col)
-                for neighbor in neighbors:
-                    if neighbor.vertex is not None:
-                        self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
+        for (row, col), val in ndenumerate(self.lattice):
+            neighbors = self.find_neighbors(row,col)
+            for neighbor in neighbors:
+                if neighbor.vertex is not None:
+                    self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
 
 
     def printSpots(self):
@@ -56,10 +55,9 @@ class GameBoard(object):
 
     def reset_colors(self):
         width, height = self.lattice.shape
-        for row in range(0,height):
-            for col in range(0,width):
-                self.color[self.lattice[row][col].vertex] = "green"
-                self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
+        for (row, col), val in ndenumerate(self.lattice):
+            self.color[self.lattice[row][col].vertex] = "green"
+            self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
 
         # Draw walls
         startingDiagonal=12
