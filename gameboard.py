@@ -25,8 +25,6 @@ class GameBoard(object):
         totalSpots = self.width*self.height
         self._boardSpots = arange(totalSpots).reshape(self.width, self.height)
 
-        init_arry = arange(totalSpots).reshape((self.width, self.height))
-
         self.lattice = empty((self.width, self.height), dtype=object)
 
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
@@ -54,8 +52,9 @@ class GameBoard(object):
     def reset_colors(self):
         width, height = self.lattice.shape
         for (row, col), val in ndenumerate(self.lattice):
-            self.color[self.lattice[row][col].vertex] = "green"
-            self.pos[self.lattice[row][col].vertex] = (self.lattice[row][col].x, self.lattice[row][col].y)
+            target = self.lattice[row][col]
+            self.color[target.vertex] = "green"
+            self.pos[target.vertex] = (target.x, target.y)
 
         # Draw walls
         startingDiagonal=12
@@ -63,11 +62,13 @@ class GameBoard(object):
         wallPositions = (
                 (3,18),(15,2),(12,1),
                 )
+
         for x,y in wallPositions:
             for row in range(y,y+squareSize):
                 for col in range(x,x+squareSize):
-                    self.lattice[row][col].occupied = True
-                    self.color[self.lattice[row][col].vertex] = "red"
+                    target = self.lattice[row][col]
+                    target.occupied = True
+                    self.color[target.vertex] = "red"
 
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
