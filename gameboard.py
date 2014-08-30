@@ -128,7 +128,9 @@ came_from = {}
 frontier = Queue()
 
 startIdx = 5
-frontier.put( myGameBoard.lattice[startIdx][startIdx] )
+start = myGameBoard.lattice[startIdx][startIdx]
+goal = myGameBoard.lattice[startIdx+3][startIdx+2]
+frontier.put( start )
 
 picCnt=0
 
@@ -163,3 +165,14 @@ for i in range(startIdx,startIdx+numrounds):
 
     picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
+
+current = goal
+path = [current]
+while current != start:
+    current = came_from[current]
+    path.append(current)
+
+for spot in path:
+    myGameBoard.color[spot.vertex] = "orange"
+
+picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
