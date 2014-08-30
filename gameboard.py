@@ -143,7 +143,7 @@ while curRound < numrounds and goal not in came_from:
     myGameBoard.reset_colors()
     nextFrontier = Queue()
 
-    while ( frontier.empty() != True ):
+    while not frontier.empty():
         target = frontier.get()
         row = target.y
         col = target.x
@@ -156,7 +156,7 @@ while curRound < numrounds and goal not in came_from:
     for spot in came_from:
         myGameBoard.color[spot.vertex] = "grey"
 
-    while nextFrontier.empty() == False:
+    while not nextFrontier.empty():
         transitionSpot = nextFrontier.get()
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put(transitionSpot)
