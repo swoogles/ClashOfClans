@@ -27,9 +27,9 @@ class GameBoard(object):
 
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
-        self.connectSpots()
+        self.connect_spots()
 
-    def connectSpots(self):
+    def connect_spots(self):
         width, height = self.lattice.shape
         for (row, col), val in ndenumerate(self.lattice):
             self.lattice[row][col].vertex = self.graphMain.add_vertex()
@@ -41,7 +41,7 @@ class GameBoard(object):
                     self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
 
 
-    def printSpots(self):
+    def print_spots(self):
         for row in self.lattice:
             for column in row:
                 print(column,end=",")
@@ -90,7 +90,7 @@ class GameBoard(object):
 
         return spotList
 
-def findPath(start, goal, came_from, gameBoard):
+def find_path(start, goal, came_from, gameBoard):
     current = goal
     path = [current]
     while current != start:
@@ -103,7 +103,7 @@ def color_path(path,color, gameBoard):
     for spot in path:
         gameBoard.color[spot.vertex] = color
 
-def graphSnapshot(myGameBoard,picCnt,fileName):
+def graph_snapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
             # vertex_text=myGameBoard.graphMain.vertex_index, 
@@ -159,11 +159,11 @@ while curRound < numrounds and goal not in came_from:
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put(transitionSpot)
 
-    # picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
+    # picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
 
     curRound+=1
 
-successfulPath = findPath(start, goal, came_from, myGameBoard)
+successfulPath = find_path(start, goal, came_from, myGameBoard)
 color_path(successfulPath, "orange", myGameBoard)
 
-picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
+picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
