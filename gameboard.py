@@ -2,7 +2,7 @@ from numpy import arange, array, empty, ndenumerate, vectorize
 from graph_tool.all import *
 from queue import Queue
 
-numrounds = 15
+numrounds = 4
 
 class BoardSpot(object):
     occupied = False
@@ -124,7 +124,7 @@ def graphSnapshot(myGameBoard,picCnt,fileName):
 
 myGameBoard = GameBoard()
 myQueue = Queue()
-visited = []
+came_from = {}
 frontier = Queue()
 
 startIdx = 5
@@ -142,24 +142,24 @@ for i in range(startIdx,startIdx+numrounds):
 
     while ( frontier.empty() != True ):
         target = frontier.get()
-        if target not in visited:
-            row = target.y
-            col = target.x
+        row = target.y
+        col = target.x
 
-            for neighbor in myGameBoard.find_neighbors(row,col):
-                if neighbor not in visited:
-                    nextFrontier.put(neighbor)
+        for neighbor in myGameBoard.find_neighbors(row,col):
+            if neighbor not in came_from:
+                came_from[neighbor] = target
+                nextFrontier.put(neighbor)
 
-            visited.append(target)
+            # came_from.append(target)
 
-    for spot in visited:
+    for spot in came_from:
         myGameBoard.color[spot.vertex] = "grey"
 
     while nextFrontier.empty() == False:
         transitionSpot = nextFrontier.get()
-        if transitionSpot not in visited:
-            myGameBoard.color[transitionSpot.vertex] = "blue"
-            frontier.put(transitionSpot)
+        # if transitionSpot not in came_from:
+        myGameBoard.color[transitionSpot.vertex] = "blue"
+        frontier.put(transitionSpot)
 
     picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
 
