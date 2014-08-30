@@ -2,7 +2,7 @@ from numpy import arange, array, empty, ndenumerate, vectorize
 from graph_tool.all import *
 from queue import Queue
 
-numrounds = 4
+numrounds = 20
 
 class BoardSpot(object):
     occupied = False
@@ -129,7 +129,7 @@ frontier = Queue()
 
 startIdx = 5
 start = myGameBoard.lattice[startIdx][startIdx]
-goal = myGameBoard.lattice[startIdx+3][startIdx+2]
+goal = myGameBoard.lattice[startIdx][startIdx+17]
 frontier.put( start )
 
 picCnt=0
@@ -138,7 +138,8 @@ myGameBoard.reset_colors()
 fileNameMain="board"
 fileNameFrontier="frontier"
 
-for i in range(startIdx,startIdx+numrounds):
+curRound = 0
+while curRound < numrounds and goal not in came_from:
     myGameBoard.reset_colors()
     nextFrontier = Queue()
 
@@ -164,6 +165,8 @@ for i in range(startIdx,startIdx+numrounds):
         frontier.put(transitionSpot)
 
     picCnt = graphSnapshot(myGameBoard,picCnt,fileNameFrontier)
+
+    curRound+=1
 
 
 current = goal
