@@ -98,8 +98,13 @@ def find_path(start, goal, came_from, gameBoard):
     current = goal
     path = [current]
     while current != start:
+        print("current:", current.vertex)
         current = came_from[current]
         path.append(current)
+
+    # for edge in gameBoard.graphMain.edges():
+    #     print("start:", start.vertex)
+    #     print("Edge: ", edge)
 
     return path
 
@@ -111,7 +116,7 @@ def graph_snapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
             # vertex_text=myGameBoard.graphMain.vertex_index, 
-            eweight=myGameBoard.edge_weights,
+            # eweight=myGameBoard.edge_weights,
             vertex_font_size=4, 
             output_size=(600, 600), 
             vertex_size=6, 
