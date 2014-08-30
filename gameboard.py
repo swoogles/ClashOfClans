@@ -24,12 +24,10 @@ class GameBoard(object):
     def __init__(self):
         totalSpots = self.width*self.height
         self._boardSpots = arange(totalSpots).reshape(self.width, self.height)
-        # vSite = vectorize(BoardSpot)
 
         init_arry = arange(totalSpots).reshape((self.width, self.height))
 
         self.lattice = empty((self.width, self.height), dtype=object)
-        # self.lattice[:,:] = vSite()
 
         self.lattice = array( [ [BoardSpot(i,j) for i in range(self.height)] for j in range(self.width) ],
                                     dtype=object)
@@ -74,8 +72,7 @@ class GameBoard(object):
     def find_neighbors(self, targetRow, targetCol):
         spotList = []
         width, height = self.lattice.shape
-                # myGameBoard.color[myGameBoard.lattice[1][1].vertex] = "red"
-        # print("Target: ", targetRow, ",", targetCol)
+        
         for row in range(targetRow-1, targetRow+2):
             for col in range(targetCol-1, targetCol+2):
                 valid = True
@@ -108,17 +105,6 @@ class GameBoard(object):
 
         return spotList
 
-
-myGameBoard = GameBoard()
-myQueue = Queue()
-visited = []
-frontier = Queue()
-
-startIdx = 5
-frontier.put( myGameBoard.lattice[startIdx][startIdx] )
-
-picCnt=0
-
 def graphSnapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
@@ -135,6 +121,17 @@ def graphSnapshot(myGameBoard,picCnt,fileName):
     print(result)
     return picCnt + 1
 
+
+myGameBoard = GameBoard()
+myQueue = Queue()
+visited = []
+frontier = Queue()
+
+startIdx = 5
+frontier.put( myGameBoard.lattice[startIdx][startIdx] )
+
+picCnt=0
+
 myGameBoard.reset_colors()
 fileNameMain="board"
 fileNameFrontier="frontier"
@@ -146,7 +143,6 @@ for i in range(startIdx,startIdx+numrounds):
     while ( frontier.empty() != True ):
         target = frontier.get()
         if target not in visited:
-            # myGameBoard.color[target.vertex] = "white"
             row = target.y
             col = target.x
 
