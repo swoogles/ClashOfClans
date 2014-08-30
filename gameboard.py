@@ -13,8 +13,8 @@ class BoardSpot(object):
         self.y = y
 
 class GameBoard(object):
-    width = 40
-    height = 40
+    width = 25
+    height = 25
 
 
     graphMain = Graph(directed=False)
@@ -66,8 +66,7 @@ class GameBoard(object):
         startingDiagonal=12
         squareSize=6
         wallPositions = (
-                (3,20),(15,2),(12,1),
-                (24,22),(30,10)
+                (3,18),(15,2),(12,1),
                 )
         for x,y in wallPositions:
             for row in range(y,y+squareSize):
@@ -144,15 +143,16 @@ fileNameMain="board"
 fileNameFrontier="frontier"
 
 for i in range(startIdx,startIdx+numrounds):
+    myGameBoard.reset_colors()
     for spot in visited:
-        myGameBoard.color[spot.vertex] = "green"
+        myGameBoard.color[spot.vertex] = "grey"
     nextFrontier = Queue()
 
     while ( frontier.empty() != True ):
         target = frontier.get()
         if target not in visited:
             visited.append(target)
-            myGameBoard.color[target.vertex] = "white"
+            # myGameBoard.color[target.vertex] = "white"
             row = target.y
             col = target.x
 
@@ -160,7 +160,6 @@ for i in range(startIdx,startIdx+numrounds):
                 if neighbor not in visited:
                     nextFrontier.put(neighbor)
 
-            myGameBoard.reset_colors()
 
             visited.append(target)
 
