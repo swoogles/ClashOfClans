@@ -42,6 +42,8 @@ class GameBoard(object):
             for neighbor in neighbors:
                 if neighbor.vertex is not None:
                     newEdge = self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
+                    # print("NewEdge: ", newEdge)
+                    # print("NewEdgeType: ", type(newEdge))
                     self.edge_weights[newEdge] = randrange(0, 10)
 
 
@@ -98,7 +100,6 @@ def find_path(start, goal, came_from, gameBoard):
     current = goal
     path = [current]
     while current != start:
-        print("current:", current.vertex)
         current = came_from[current]
         path.append(current)
 
@@ -107,6 +108,17 @@ def find_path(start, goal, came_from, gameBoard):
     #     print("Edge: ", edge)
 
     return path
+
+def get_edge_from_indices(source, target, myGameBoard):
+    if int(target.vertex) == 1:
+        print("source: ", source.vertex)
+        print("target: ", target.vertex)
+
+    for edge in myGameBoard.graphMain.edges():
+        if int(source.vertex) == int(edge.source()) and int(target.vertex) == int(edge.target()):
+            print("Good?")
+            return edge
+    return None
 
 def color_path(path,color, gameBoard):
     for spot in path:
@@ -150,6 +162,7 @@ fileNameMain="board"
 fileNameFrontier="frontier"
 
 curRound = 0
+# while curRound < numrounds and goal not in came_from:
 while curRound < numrounds and goal not in came_from:
     myGameBoard.reset_colors()
     nextFrontier = PriorityQueue()
@@ -160,18 +173,19 @@ while curRound < numrounds and goal not in came_from:
         col = target.x
 
         for neighbor in myGameBoard.find_neighbors(row,col):
-            if neighbor not in came_from:
-                came_from[neighbor] = target
-                newItem = (10, time.time(), neighbor)
-                nextFrontier.put(newItem)
-                # print("nextFrontier.get: ", nextFrontier.get())
-
-            new_cost = cost_so_far[target] + 1
-            # new_cost = cost_so_far[target] + graph.cost(target, neighbor)
             if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                # print("Target: ", target.vertex)
+                # print("neighbor: ", neighbor.vertex)
+                # new_cost = cost_so_far[target] + graph.cost(target, neighbor)
+                new_cost = cost_so_far[target] 
+                targetEdge = get_edge_from_indices(target, neighbor, myGameBoard)
+                # if targetEdge is not None:
+                #     print("Found edge!")
+                #     new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
+                #     print("Cost: ", new_cost)
                 cost_so_far[neighbor] = new_cost
                 priority = new_cost
-                frontier.put((priority, time.time(), neighbor))
+                nextFrontier.put((priority, time.time(), neighbor))
                 came_from[neighbor] = target
 
     for spot in came_from:
@@ -190,3 +204,8 @@ successfulPath = find_path(start, goal, came_from, myGameBoard)
 color_path(successfulPath, "orange", myGameBoard)
 
 picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
+
+# get_edge_from_indices(623, 624, myGameBoard)
+
+# for edge in myGameBoard.graphMain.edges():
+#     print("Edge: ", edge)
