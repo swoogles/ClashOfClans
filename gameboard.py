@@ -116,7 +116,6 @@ def get_edge_from_indices(source, target, myGameBoard):
 
     for edge in myGameBoard.graphMain.edges():
         if int(source.vertex) == int(edge.source()) and int(target.vertex) == int(edge.target()):
-            print("Good?")
             return edge
     return None
 
@@ -179,10 +178,9 @@ while curRound < numrounds and goal not in came_from:
                 # new_cost = cost_so_far[target] + graph.cost(target, neighbor)
                 new_cost = cost_so_far[target] 
                 targetEdge = get_edge_from_indices(target, neighbor, myGameBoard)
-                # if targetEdge is not None:
-                #     print("Found edge!")
-                #     new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
-                #     print("Cost: ", new_cost)
+                if targetEdge is not None:
+                    new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
+                    print("Cost: ", new_cost)
                 cost_so_far[neighbor] = new_cost
                 priority = new_cost
                 nextFrontier.put((priority, time.time(), neighbor))
@@ -196,7 +194,7 @@ while curRound < numrounds and goal not in came_from:
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put((1, time.time(), transitionSpot))
 
-    # picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
+    picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
 
     curRound+=1
 
