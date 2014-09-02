@@ -46,7 +46,10 @@ class GameBoard(object):
                         newEdge = self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
                         # print("NewEdge: ", newEdge)
                         # print("NewEdgeType: ", type(newEdge))
-                        newWeight = randrange(0, 10)
+                        newWeight = randrange(0, 2)
+                        # newWeight = randrange(0, 10)
+                        if newWeight == 0:
+                            newWeight = 10
                         self.edge_weights[newEdge] = newWeight
                         if newWeight > 5:
                             self.edge_colors [newEdge] = "purple"
@@ -110,17 +113,9 @@ def find_path(start, goal, came_from, gameBoard):
         current = came_from[current]
         path.append(current)
 
-    # for edge in gameBoard.graphMain.edges():
-    #     print("start:", start.vertex)
-    #     print("Edge: ", edge)
-
     return path
 
 def get_edge_from_indices(source, target, myGameBoard):
-    if int(target.vertex) == 1:
-        print("source: ", source.vertex)
-        print("target: ", target.vertex)
-
     for edge in myGameBoard.graphMain.edges():
         if int(source.vertex) == int(edge.source()) and int(target.vertex) == int(edge.target()):
             return edge
