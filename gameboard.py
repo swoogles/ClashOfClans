@@ -111,9 +111,6 @@ def find_path(start, goal, came_from, gameBoard):
     path = [current]
     while current != start:
         current = came_from[current]
-        if current in path: #We've hit a cycle
-            print("Shit!")
-            current = start #Abort
         path.append(current)
 
     return path
@@ -180,14 +177,13 @@ while curRound < numrounds and goal not in came_from:
         col = target.x
 
         for neighbor in myGameBoard.find_neighbors(row,col):
+            new_cost = cost_so_far[target] 
+            targetEdge = get_edge_from_indices(target, neighbor, myGameBoard)
+            if targetEdge is not None:
+                new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
+
             if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
-                # print("Target: ", target.vertex)
-                # print("neighbor: ", neighbor.vertex)
                 # new_cost = cost_so_far[target] + graph.cost(target, neighbor)
-                new_cost = cost_so_far[target] 
-                targetEdge = get_edge_from_indices(target, neighbor, myGameBoard)
-                if targetEdge is not None:
-                    new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
                 cost_so_far[neighbor] = new_cost
                 priority = new_cost
                 nextFrontier.put((priority, time.time(), neighbor))
