@@ -111,6 +111,9 @@ def find_path(start, goal, came_from, gameBoard):
     path = [current]
     while current != start:
         current = came_from[current]
+        if current in path: #We've hit a cycle
+            print("Shit!")
+            current = start #Abort
         path.append(current)
 
     return path
