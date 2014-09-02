@@ -23,6 +23,7 @@ class GameBoard(object):
     color = graphMain.new_vertex_property("string")
     pos = graphMain.new_vertex_property("vector<double>")
     edge_weights = graphMain.new_edge_property('double')
+    edge_colors = graphMain.new_edge_property("string")
 
     def __init__(self):
         totalSpots = self.width*self.height
@@ -41,10 +42,16 @@ class GameBoard(object):
             neighbors = self.find_neighbors(row,col)
             for neighbor in neighbors:
                 if neighbor.vertex is not None:
-                    newEdge = self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
-                    # print("NewEdge: ", newEdge)
-                    # print("NewEdgeType: ", type(newEdge))
-                    self.edge_weights[newEdge] = randrange(0, 10)
+                    if ( neighbor.vertex not in self.lattice[row][col].vertex.all_neighbours() ):
+                        newEdge = self.graphMain.add_edge(self.lattice[row][col].vertex, neighbor.vertex)
+                        # print("NewEdge: ", newEdge)
+                        # print("NewEdgeType: ", type(newEdge))
+                        newWeight = randrange(0, 10)
+                        self.edge_weights[newEdge] = newWeight
+                        if newWeight > 5:
+                            self.edge_colors [newEdge] = "purple"
+                        else:
+                            self.edge_colors [newEdge] = "green"
 
 
     def print_spots(self):
@@ -126,11 +133,14 @@ def color_path(path,color, gameBoard):
 def graph_snapshot(myGameBoard,picCnt,fileName):
     result = graph_draw(
             myGameBoard.graphMain, 
+            # edge_text=myGameBoard.edge_weights,
+            # edge_text_color="white",
             # vertex_text=myGameBoard.graphMain.vertex_index, 
             # eweight=myGameBoard.edge_weights,
+            edge_color=myGameBoard.edge_colors,
             vertex_font_size=4, 
-            output_size=(600, 600), 
-            vertex_size=6, 
+            output_size=(1200, 1200), 
+            vertex_size=15, 
             vertex_color=myGameBoard.color, 
             vertex_fill_color=myGameBoard.color, 
             pos=myGameBoard.pos, 
@@ -180,7 +190,6 @@ while curRound < numrounds and goal not in came_from:
                 targetEdge = get_edge_from_indices(target, neighbor, myGameBoard)
                 if targetEdge is not None:
                     new_cost = new_cost + myGameBoard.edge_weights[targetEdge]
-                    print("Cost: ", new_cost)
                 cost_so_far[neighbor] = new_cost
                 priority = new_cost
                 nextFrontier.put((priority, time.time(), neighbor))
@@ -194,7 +203,7 @@ while curRound < numrounds and goal not in came_from:
         myGameBoard.color[transitionSpot.vertex] = "blue"
         frontier.put((1, time.time(), transitionSpot))
 
-    picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
+    # picCnt = graph_snapshot(myGameBoard,picCnt,fileNameFrontier)
 
     curRound+=1
 
